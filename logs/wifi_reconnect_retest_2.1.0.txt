@@ -1,0 +1,58 @@
+SENTRY SWM-2 saved-network reconnect retest
+Date: 2026-10-19
+Port: COM6; UART: 115200 8N1
+Credentials not recorded; SSID redacted.
+
+> disconnect
+disconnect
+I (698769) wifi:state: run -> init (0x0)
+I (698769) wifi:pm stop, total sleep time: 57783802 us / 60128840 us
+
+I (698769) wifi:<ba-del>idx:0, tid:0
+I (698769) wifi:new:<4,0>, old:<4,0>, ap:<255,255>, sta:<4,0>, prof:1, snd_ch_cfg:0x0
+I (698779) sentry: [LINK] disconnected
+
+
+> reconnect
+reconnect
+I (702119) sentry: [LINK] raising buoy antenna, connecting to '[HOTSPOT]'...
+I (702119) wifi:new:<4,0>, old:<4,0>, ap:<255,255>, sta:<4,0>, prof:1, snd_ch_cfg:0x0
+I (702119) wifi:state: init -> auth (0xb0)
+I (702179) wifi:state: auth -> assoc (0x0)
+I (702179) wifi:state: assoc -> run (0x10)
+I (702239) wifi:connected with [HOTSPOT], aid = 2, channel 4, BW20, bssid = [MAC redacted]
+I (702239) wifi:security: WPA2-PSK, phy: bgn, rssi: -15, cipher(pairwise:0x3, group:0x3), pmf:0
+I (702239) wifi:pm start, type: 1
+
+I (702249) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (702249) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+I (702339) wifi:dp: 2, bi: 102400, li: 4, scale listen interval from 307200 us to 409600 us
+I (702339) wifi:AP's beacon interval = 102400 us, DTIM period = 2
+I (703279) esp_netif_handlers: sta ip: [IP redacted], mask: [IP redacted], gw: [IP redacted]
+I (703279) sentry: [LINK] got ip [IP redacted]
+I (703279) sentry: [LINK] connected to '[HOTSPOT]', rssi -13 dBm (excellent)
+I (703609) esp-x509-crt-bundle: Certificate validated
+I (704809) sentry: [LINK] fleet network reachable (internet OK)
+I (704829) wifi:<ba-add>idx:0 (ifx:0, [MAC redacted]), tid:0, ssn:17, winSize:64
+W (710809) sentry: W106 [LINK] time: NTP sync failed, timestamps disabled
+
+
+> time
+time
+I (724079) sentry: [LINK] time: 2026-10-19 23:02:30 (Kyiv)
+
+
+> status
+status
+I (727099) sentry: === SWM-2 status ===
+I (727099) sentry:   fw:       v2.1.0 (ota_0)
+I (727099) sentry:   state:    1 NORMAL
+I (727099) sentry:   link:     buoy link '[HOTSPOT]', ip [IP redacted], rssi -13 dBm (excellent), ch 4
+I (727099) sentry:   internet: OK
+I (727109) sentry:   user:     not logged in
+I (727109) sentry:   time:     23:02:33, uptime 0h 12m 06s
+I (727119) sentry:   valve:    closed
+I (727119) sentry:   sonar:    no contact
+I (727119) sentry:   carrier:  depth 42.1 m, hull 5.2 bar, water 8.1 C, battery 24.18 V (sim)
+I (727129) sentry:   heap:     258 KB free
+

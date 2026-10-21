@@ -1,0 +1,169 @@
+Non-Latin input (AC-2) and reboot persistence on 2.3.0 (sanitized)
+> whoami
+whoami
+I (92728) sentry: user: <user>, access: user
+
+
+=== non-Latin characters inside a valid command (PRD AC-2: ignored with W006) ===
+> lamp on
+lamp on
+I (94998) sentry: [BEACON] on (command) breathe, 55%, color (0,255,255)
+
+> lamp off
+lamp off
+I (97298) sentry: [BEACON] off (command)
+
+> lamp привіт on
+lamp  on
+W (99568) sentry: W006 non-latin characters ignored (use English layout)
+I (99568) sentry: [BEACON] on (command) breathe, 55%, color (0,255,255)
+
+> lamp on привіт
+lamp on 
+W (101878) sentry: W006 non-latin characters ignored (use English layout)
+W (101878) sentry: W510 lamp already on
+
+> lamp off
+lamp off
+I (104168) sentry: [BEACON] off (command)
+
+
+=== persistence across reboot ===
+> lamp color cyan
+lamp color cyan
+I (106458) sentry: [BEACON] color: cyan (0,255,255)
+
+> lamp brightness 55
+lamp brightness 55
+I (108748) sentry: [BEACON] brightness: 55%
+
+> lamp mode breathe
+lamp mode breathe
+I (111038) sentry: [BEACON] mode: breathe
+I (111118) sentry: [TELEMETRY #1] 22:37:42 up 00:01:50 heap 251KB rssi -41 temp 28.2C depth 41.4m hull 5.1bar batt 24.2V valve closed sonar - watch disarmed alerts 0 state NORMAL
+
+> lamp scene save 3
+lamp scene save 3
+I (113418) sentry: [BEACON] scene 3 saved
+
+> lamp on
+lamp on
+I (115708) sentry: [BEACON] on (command) breathe, 55%, color (0,255,255)
+
+> distance alarm 77
+distance alarm 77
+I (118018) sentry: [SONAR] alarm at 77 cm
+
+> distance filter off
+distance filter off
+I (120328) sentry: [SONAR] filter off
+
+> health interval 77
+health interval 77
+I (122638) sentry: [TELEMETRY] interval 77 s
+
+> relay auto on
+relay auto on
+I (124948) sentry: [VALVE] auto on - valve opens on sonar proximity alarm
+
+> relay on
+relay on
+I (128438) sentry: [VALVE] OPEN (command)
+
+> relay status
+relay status
+I (130718) sentry: [VALVE] OPEN, auto on, cycles 95
+
+> lamp status
+lamp status
+I (133008) sentry: [BEACON] ON, color (0,255,255), brightness 55%, mode breathe, timer off
+
+> reboot
+reboot
+I (135298) sentry: rebooting in 3...
+
+> reconnect
+reconnect
+I (11355) sentry: [LINK] raising buoy antenna, connecting to '<ssid>'...
+I (11805) wifi:new:<4,0>, old:<1,0>, ap:<255,255>, sta:<4,0>, prof:1, snd_ch_cfg:0x0
+I (11805) wifi:state: init -> auth (0xb0)
+I (11815) wifi:state: auth -> assoc (0x0)
+I (11815) wifi:state: assoc -> run (0x10)
+I (11835) wifi:connected with <ssid>, aid = 3, channel 4, BW20, bssid = <mac>
+I (11835) wifi:security: WPA2-PSK, phy: bgn, rssi: -39, cipher(pairwise:0x3, group:0x3), pmf:0
+I (11845) wifi:pm start, type: 1
+
+I (11845) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (11855) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+I (11865) wifi:<ba-add>idx:0 (ifx:0, <mac>), tid:5, ssn:2, winSize:64
+I (11875) wifi:AP's beacon interval = 102400 us, DTIM period = 1
+I (12875) esp_netif_handlers: sta ip: <ip>, mask: <ip>, gw: <ip>
+I (12875) sentry: [LINK] got ip <ip>
+I (12875) sentry: [LINK] connected to '<ssid>', rssi -41 dBm (excellent)
+I (12885) wifi:<ba-add>idx:1 (ifx:0, <mac>), tid:0, ssn:0, winSize:64
+I (13215) esp-x509-crt-bundle: Certificate validated
+I (13765) sentry: [LINK] fleet network reachable (internet OK)
+I (16685) sentry: [LINK] time: synced via NTP, 22:38:26
+I (20645) sentry: [NAV] depth 41.5 m, heading 275, speed 2.7 kn
+
+> whoami
+whoami
+I (29365) sentry: not logged in
+
+> login <user> <pw>
+login <user> <pw>
+I (31655) sentry: [AUTH] operator <user> on watch, console 2
+I (31845) sentry: [TELEMETRY] auto report every 77 s ('health off' to stop)
+
+> whoami
+whoami
+I (34755) sentry: user: <user>, access: user
+
+> lamp status
+lamp status
+I (37045) sentry: [BEACON] off, color (0,255,255), brightness 55%, mode breathe, timer off
+
+> relay status
+relay status
+I (39335) sentry: [VALVE] closed, auto on, cycles 94
+
+> distance alarm
+distance alarm
+I (41625) sentry: [SONAR] alarm at 77 cm, relay auto on
+
+> distance filter
+distance filter
+E (43915) sentry: E703 usage: distance filter on|off
+
+> health
+health
+I (46205) sentry: [TELEMETRY] auto on, interval 77 s (now 77 s in NORMAL)
+
+> lamp scene load 3
+lamp scene load 3
+I (48495) sentry: [BEACON] scene 3 loaded: (0,255,255) 55% breathe
+
+> lamp status
+lamp status
+I (50785) sentry: [BEACON] off, color (0,255,255), brightness 55%, mode breathe, timer off
+
+> lamp off
+lamp off
+W (53075) sentry: W510 lamp already off
+
+> relay auto off
+relay auto off
+I (55365) sentry: [VALVE] auto off - valve ignores on sonar proximity alarm
+
+> distance alarm off
+distance alarm off
+I (57675) sentry: [SONAR] alarm off
+
+> distance filter on
+distance filter on
+I (59975) sentry: [SONAR] filter on (median of 5)
+
+> health interval 30
+health interval 30
+I (62265) sentry: [TELEMETRY] interval 30 s
+

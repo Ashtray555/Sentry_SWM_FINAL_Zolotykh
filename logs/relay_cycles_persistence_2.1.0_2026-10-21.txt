@@ -1,0 +1,286 @@
+Relay cycles counter persistence across reboot on 2.1.0 (sanitized). PRD RL-2: counter stored in NVS.
+> whoami
+whoami
+I (150593) sentry: user: <user>, access: user
+I (152443) sentry: [TELEMETRY #3] 22:30:47 up 00:02:32 heap 257KB rssi -40 temp 28.2C depth 42.2m hull 5.2bar batt 24.2V valve closed sonar - state NORMAL
+
+> relay off
+relay off
+W (152883) sentry: W601 relay already off
+
+> relay off
+relay off
+W (155743) sentry: W601 relay already off
+
+> relay status
+relay status
+I (158293) sentry: [VALVE] closed, auto off, cycles 62
+
+> relay toggle
+relay toggle
+I (160573) sentry: [VALVE] OPEN (command)
+
+> relay toggle
+relay toggle
+I (162103) sentry: [VALVE] CLOSED (command)
+
+> relay toggle
+relay toggle
+I (163613) sentry: [VALVE] OPEN (command)
+
+> relay toggle
+relay toggle
+I (165133) sentry: [VALVE] CLOSED (command)
+
+> relay status
+relay status
+I (166643) sentry: [VALVE] closed, auto off, cycles 70
+
+> reboot
+reboot
+I (168913) sentry: rebooting in 3...
+
+> reconnect
+reconnect
+I (11333) sentry: [LINK] raising buoy antenna, connecting to '<ssid>'...
+I (11783) wifi:new:<4,0>, old:<1,0>, ap:<255,255>, sta:<4,0>, prof:1, snd_ch_cfg:0x0
+I (11783) wifi:state: init -> auth (0xb0)
+I (11793) wifi:state: auth -> assoc (0x0)
+I (11793) wifi:state: assoc -> run (0x10)
+I (11813) wifi:connected with <ssid>, aid = 3, channel 4, BW20, bssid = <mac>
+I (11813) wifi:security: WPA2-PSK, phy: bgn, rssi: -39, cipher(pairwise:0x3, group:0x3), pmf:0
+I (11823) wifi:pm start, type: 1
+
+I (11823) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (11833) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+I (11853) wifi:<ba-add>idx:0 (ifx:0, <mac>), tid:5, ssn:2, winSize:64
+I (11913) wifi:AP's beacon interval = 102400 us, DTIM period = 1
+I (12853) esp_netif_handlers: sta ip: <ip>, mask: <ip>, gw: <ip>
+I (12853) sentry: [LINK] got ip <ip>
+I (12853) sentry: [LINK] connected to '<ssid>', rssi -56 dBm (good)
+I (12863) wifi:<ba-add>idx:1 (ifx:0, <mac>), tid:0, ssn:0, winSize:64
+I (13183) esp-x509-crt-bundle: Certificate validated
+I (13723) sentry: [LINK] fleet network reachable (internet OK)
+I (16923) sentry: [LINK] time: synced via NTP, 22:31:24
+I (20643) sentry: [NAV] depth 41.9 m, heading 276, speed 3.4 kn
+
+> whoami
+whoami
+I (29323) sentry: not logged in
+
+> login <user> <pw>
+login <user> <pw>
+I (31593) sentry: [AUTH] operator <user> on watch, console 2
+I (31643) sentry: [TELEMETRY] auto report every 30 s ('health off' to stop)
+
+> whoami
+whoami
+I (34853) sentry: user: <user>, access: user
+
+> relay status
+relay status
+I (37143) sentry: [VALVE] closed, auto off, cycles 70
+
+RESULT switches=4: before=62 after_switches=70 after_reboot=70 (expected 70)
+> relay off
+relay off
+W (39413) sentry: W601 relay already off
+
+> relay status
+relay status
+I (41973) sentry: [VALVE] closed, auto off, cycles 70
+
+> relay toggle
+relay toggle
+I (44263) sentry: [VALVE] OPEN (command)
+
+> relay toggle
+relay toggle
+I (45793) sentry: [VALVE] CLOSED (command)
+
+> relay toggle
+relay toggle
+I (47313) sentry: [VALVE] OPEN (command)
+
+> relay status
+relay status
+I (48833) sentry: [VALVE] OPEN, auto off, cycles 76
+
+> reboot
+reboot
+I (51123) sentry: rebooting in 3...
+
+> reconnect
+reconnect
+I (11353) sentry: [LINK] raising buoy antenna, connecting to '<ssid>'...
+I (11803) wifi:new:<4,0>, old:<1,0>, ap:<255,255>, sta:<4,0>, prof:1, snd_ch_cfg:0x0
+I (11803) wifi:state: init -> auth (0xb0)
+I (11813) wifi:state: auth -> assoc (0x0)
+I (11813) wifi:state: assoc -> run (0x10)
+I (11833) wifi:connected with <ssid>, aid = 3, channel 4, BW20, bssid = <mac>
+I (11833) wifi:security: WPA2-PSK, phy: bgn, rssi: -40, cipher(pairwise:0x3, group:0x3), pmf:0
+I (11843) wifi:pm start, type: 1
+
+I (11843) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (11853) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+I (11863) wifi:<ba-add>idx:0 (ifx:0, <mac>), tid:5, ssn:2, winSize:64
+I (11933) wifi:AP's beacon interval = 102400 us, DTIM period = 1
+I (12873) esp_netif_handlers: sta ip: <ip>, mask: <ip>, gw: <ip>
+I (12873) sentry: [LINK] got ip <ip>
+I (12873) sentry: [LINK] connected to '<ssid>', rssi -40 dBm (excellent)
+I (12883) wifi:<ba-add>idx:1 (ifx:0, <mac>), tid:0, ssn:0, winSize:64
+I (13203) esp-x509-crt-bundle: Certificate validated
+I (13743) sentry: [LINK] fleet network reachable (internet OK)
+I (18063) sentry: [LINK] time: synced via NTP, 22:32:19
+I (20643) sentry: [NAV] depth 41.5 m, heading 272, speed 3.1 kn
+
+> whoami
+whoami
+I (29363) sentry: not logged in
+
+> login <user> <pw>
+login <user> <pw>
+I (31653) sentry: [AUTH] operator <user> on watch, console 2
+I (31843) sentry: [TELEMETRY] auto report every 30 s ('health off' to stop)
+
+> whoami
+whoami
+I (34753) sentry: user: <user>, access: user
+
+> relay status
+relay status
+I (37043) sentry: [VALVE] closed, auto off, cycles 74
+
+RESULT switches=3: before=70 after_switches=76 after_reboot=74 (expected 76)
+> relay off
+relay off
+W (39323) sentry: W601 relay already off
+
+> relay status
+relay status
+I (41883) sentry: [VALVE] closed, auto off, cycles 74
+
+> relay toggle
+relay toggle
+I (44173) sentry: [VALVE] OPEN (command)
+
+> relay status
+relay status
+I (45693) sentry: [VALVE] OPEN, auto off, cycles 76
+
+> reboot
+reboot
+I (47983) sentry: rebooting in 3...
+
+> reconnect
+reconnect
+I (11333) sentry: [LINK] raising buoy antenna, connecting to '<ssid>'...
+I (11783) wifi:new:<4,0>, old:<1,0>, ap:<255,255>, sta:<4,0>, prof:1, snd_ch_cfg:0x0
+I (11783) wifi:state: init -> auth (0xb0)
+I (11793) wifi:state: auth -> assoc (0x0)
+I (11793) wifi:state: assoc -> run (0x10)
+I (11813) wifi:connected with <ssid>, aid = 3, channel 4, BW20, bssid = <mac>
+I (11813) wifi:security: WPA2-PSK, phy: bgn, rssi: -39, cipher(pairwise:0x3, group:0x3), pmf:0
+I (11823) wifi:pm start, type: 1
+
+I (11823) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (11833) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+I (11843) wifi:<ba-add>idx:0 (ifx:0, <mac>), tid:5, ssn:2, winSize:64
+I (11883) wifi:AP's beacon interval = 102400 us, DTIM period = 1
+I (12853) esp_netif_handlers: sta ip: <ip>, mask: <ip>, gw: <ip>
+I (12853) sentry: [LINK] got ip <ip>
+I (12853) sentry: [LINK] connected to '<ssid>', rssi -41 dBm (excellent)
+I (12863) wifi:<ba-add>idx:1 (ifx:0, <mac>), tid:0, ssn:0, winSize:64
+I (13173) esp-x509-crt-bundle: Certificate validated
+I (13723) sentry: [LINK] fleet network reachable (internet OK)
+I (15273) sentry: [LINK] time: synced via NTP, 22:33:07
+W (20643) sentry: [ACU] biologics detected (snapping shrimp), passive filter on
+
+> whoami
+whoami
+I (29323) sentry: not logged in
+
+> login <user> <pw>
+login <user> <pw>
+I (31593) sentry: [AUTH] operator <user> on watch, console 2
+I (31643) sentry: [TELEMETRY] auto report every 30 s ('health off' to stop)
+
+> whoami
+whoami
+I (34863) sentry: user: <user>, access: user
+
+> relay status
+relay status
+I (37153) sentry: [VALVE] closed, auto off, cycles 74
+
+RESULT switches=1: before=74 after_switches=76 after_reboot=74 (expected 76)
+> relay off
+relay off
+W (39453) sentry: W601 relay already off
+
+> relay status
+relay status
+I (42003) sentry: [VALVE] closed, auto off, cycles 74
+
+> relay toggle
+relay toggle
+I (44283) sentry: [VALVE] OPEN (command)
+
+> relay toggle
+relay toggle
+I (45823) sentry: [VALVE] CLOSED (command)
+
+> relay status
+relay status
+I (47343) sentry: [VALVE] closed, auto off, cycles 78
+
+> reboot
+reboot
+I (49633) sentry: rebooting in 3...
+
+> reconnect
+reconnect
+I (11333) sentry: [LINK] raising buoy antenna, connecting to '<ssid>'...
+I (11783) wifi:new:<4,0>, old:<1,0>, ap:<255,255>, sta:<4,0>, prof:1, snd_ch_cfg:0x0
+I (11783) wifi:state: init -> auth (0xb0)
+I (11793) wifi:state: auth -> assoc (0x0)
+I (11793) wifi:state: assoc -> run (0x10)
+I (11813) wifi:connected with <ssid>, aid = 3, channel 4, BW20, bssid = <mac>
+I (11813) wifi:security: WPA2-PSK, phy: bgn, rssi: -41, cipher(pairwise:0x3, group:0x3), pmf:0
+I (11823) wifi:pm start, type: 1
+
+I (11823) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (11833) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+I (11843) wifi:AP's beacon interval = 102400 us, DTIM period = 1
+I (11853) wifi:<ba-add>idx:0 (ifx:0, <mac>), tid:5, ssn:2, winSize:64
+I (12863) esp_netif_handlers: sta ip: <ip>, mask: <ip>, gw: <ip>
+I (12863) sentry: [LINK] got ip <ip>
+I (12863) sentry: [LINK] connected to '<ssid>', rssi -56 dBm (good)
+I (12873) wifi:<ba-add>idx:1 (ifx:0, <mac>), tid:0, ssn:0, winSize:64
+I (13183) esp-x509-crt-bundle: Certificate validated
+I (13743) sentry: [LINK] fleet network reachable (internet OK)
+I (14143) sentry: [LINK] time: synced via NTP, 22:33:59
+I (20643) sentry: [NAV] depth 41.7 m, heading 274, speed 2.9 kn
+
+> whoami
+whoami
+I (29353) sentry: not logged in
+
+> login <user> <pw>
+login <user> <pw>
+I (31643) sentry: [AUTH] operator <user> on watch, console 2
+I (31843) sentry: [TELEMETRY] auto report every 30 s ('health off' to stop)
+
+> whoami
+whoami
+I (34743) sentry: user: <user>, access: user
+
+> relay status
+relay status
+I (37033) sentry: [VALVE] closed, auto off, cycles 78
+
+RESULT switches=2: before=74 after_switches=78 after_reboot=78 (expected 78)
+> relay off
+relay off
+W (39303) sentry: W601 relay already off
+

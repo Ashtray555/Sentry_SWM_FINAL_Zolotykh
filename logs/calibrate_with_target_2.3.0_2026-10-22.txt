@@ -1,0 +1,22 @@
+SENTRY SWM-2 fw v2.3.0 (ota_0, valid) - distance calibrate with ruler-placed target, 2026-10-22 ~00:40
+Target: flat object placed at 20 cm with a ruler by the tester, held still for the whole run (this repeats the invalid Oct 22 run where the target moved).
+
+> distance stats
+[SONAR] calibration +0.0 cm, filter median 5, alarm off
+> distance 5
+[SONAR] avg 22.3 cm (5/5 ok)      (5 identical readings of 22.3 cm)
+> distance calibrate 20
+[SONAR] calibrating: put object at 20.0 cm...
+[SONAR] calibrated: measured 22.3 cm, offset -2.3 cm
+> distance stats
+[SONAR] calibration -2.3 cm, filter median 5, alarm off
+> distance 5
+[SONAR] avg 20.0 cm (5/5 ok)      (5 identical readings of 20.0 cm)
+> distance reset
+[SONAR] calibration reset
+> distance stats
+[SONAR] calibration +0.0 cm, filter median 5, alarm off
+
+Result: calibration works on 2.3.0 (offset = reference - measured, readings corrected to 20.0 cm); undocumented `distance reset` clears it.
+`distance calibrate reset` (PRD syntax) is still rejected - see BUG-07.
+Credentials, account name and network details omitted.

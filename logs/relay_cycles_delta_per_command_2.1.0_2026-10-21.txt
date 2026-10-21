@@ -1,0 +1,101 @@
+Relay cycles counter delta per command on 2.1.0 (sanitized). PRD RL-2: each on or off = +1.
+> whoami
+whoami
+I (52873) sentry: user: <user>, access: user
+
+> relay off
+relay off
+W (55153) sentry: W601 relay already off
+
+> relay status
+relay status
+I (58023) sentry: [VALVE] closed, auto off, cycles 78
+
+> relay on
+relay on
+I (60313) sentry: [VALVE] OPEN (command)
+
+> relay status
+relay status
+I (62243) sentry: [VALVE] OPEN, auto off, cycles 80
+
+RESULT relay on         (78, 'closed') -> (80, 'OPEN') (delta 2)
+> relay status
+relay status
+I (65733) sentry: [VALVE] OPEN, auto off, cycles 80
+
+> relay off
+relay off
+I (68033) sentry: [VALVE] CLOSED (command)
+
+> relay status
+relay status
+I (69963) sentry: [VALVE] closed, auto off, cycles 82
+
+RESULT relay off        (80, 'OPEN') -> (82, 'closed') (delta 2)
+> relay status
+relay status
+I (73463) sentry: [VALVE] closed, auto off, cycles 82
+
+> relay toggle
+relay toggle
+I (75753) sentry: [VALVE] OPEN (command)
+
+> relay status
+relay status
+I (77683) sentry: [VALVE] OPEN, auto off, cycles 84
+
+RESULT relay toggle     (82, 'closed') -> (84, 'OPEN') (delta 2)
+> relay status
+relay status
+I (81173) sentry: [VALVE] OPEN, auto off, cycles 84
+
+> relay toggle
+relay toggle
+I (83473) sentry: [VALVE] CLOSED (command)
+
+> relay status
+relay status
+I (85413) sentry: [VALVE] closed, auto off, cycles 86
+
+RESULT relay toggle     (84, 'OPEN') -> (86, 'closed') (delta 2)
+> relay status
+relay status
+I (88903) sentry: [VALVE] closed, auto off, cycles 86
+
+> relay pulse 200
+relay pulse 200
+I (91183) sentry: [VALVE] OPEN (pulse)
+I (91413) sentry: [VALVE] CLOSED (pulse end)
+
+> relay status
+relay status
+I (93033) sentry: [VALVE] closed, auto off, cycles 90
+
+RESULT relay pulse 200  (86, 'closed') -> (90, 'closed') (delta 4)
+> relay status
+relay status
+I (96523) sentry: [VALVE] closed, auto off, cycles 90
+
+> relay on
+relay on
+I (98813) sentry: [VALVE] OPEN (command)
+
+> relay status
+relay status
+I (100743) sentry: [VALVE] OPEN, auto off, cycles 92
+
+RESULT relay on         (90, 'closed') -> (92, 'OPEN') (delta 2)
+> relay status
+relay status
+I (104233) sentry: [VALVE] OPEN, auto off, cycles 92
+
+> relay off
+relay off
+I (106523) sentry: [VALVE] CLOSED (command)
+
+> relay status
+relay status
+I (108443) sentry: [VALVE] closed, auto off, cycles 94
+
+RESULT relay off        (92, 'OPEN') -> (94, 'closed') (delta 2)

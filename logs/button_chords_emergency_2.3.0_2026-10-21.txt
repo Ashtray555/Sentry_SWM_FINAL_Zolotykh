@@ -1,0 +1,24 @@
+SENTRY 2.3.0 - K3+K4 / K4+K1 chords and EMERGENCY button blocking (2026-10-21 ~23:51-23:54, sanitized)
+Setup: ESP32-S3 COM6, logged in on the test account, NORMAL, relay closed. Tester pressed the buttons; console captured.
+
+A. K3+K4 held 2 s from NORMAL
+[BTN] K3+K4 held 2 s -> state 3
+[STATE] 1 NORMAL -> 3 VERBOSE (by buttons)  -> PASS (PRD section 12)
+
+B. First K4+K1 attempt (taps too short, plus K1/K2/K3 taps mixed in) - state stayed VERBOSE; no chord fired.
+In VERBOSE the K1/K2/K3 taps acted normally (sonar ping, lamp on, relay OPEN); device restored by relay off / lamp off.
+
+C. K4+K1 held 2 s from VERBOSE (second attempt, nothing else pressed)
+[BTN] K4+K1 held 2 s -> state 4
+[STATE] 3 VERBOSE -> 4 EMERGENCY (by buttons)
+[EMERGENCY] EMERGENCY SURFACING. Module locked. Allowed: help, status, whoami, version, health now, alert list, reboot. Exit: reboot only
+[CIC #5 CRITICAL] state: EMERGENCY mode entered (by buttons); NAV "EMERGENCY BLOW" depth falling; driver temp rising (29 -> 36 C)  -> PASS
+
+D. Button blocking in EMERGENCY
+K1, K2, K3, K4 pressed one by one: each logged "[BTN] Kn pressed" then "E005 buttons blocked in EMERGENCY"  -> PASS
+Commands: "lamp on" -> E005 blocked in EMERGENCY; "alert list" -> allowed (1 unacknowledged CRITICAL); "state 1" -> E304 EMERGENCY can be left only by reboot  -> PASS
+
+E. Restore
+reboot -> login and Wi-Fi reconnected; state NORMAL; alert ack all / clear; relay closed (cycles 144); guard disarmed.
+
+Not run: invalid K4+K1 attempt from NORMAL/DEBUG (ST-2 negative case).

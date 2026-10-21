@@ -1,0 +1,79 @@
+SENTRY SWM-2 pre-beta-OTA checks; 2.1.0; COM6; 115200 8N1
+All credentials excluded; hotspot/login redacted.
+
+> whoami
+whoami
+I (278407) sentry: user: [TEST_LOGIN_REDACTED], access: user
+
+
+> status
+status
+I (280617) sentry: === SWM-2 status ===
+I (280617) sentry:   fw:       v2.1.0 (ota_0)
+I (280617) sentry:   state:    1 NORMAL
+I (280617) sentry:   link:     buoy link '[HOTSPOT]', ip [IP redacted], rssi -20 dBm (excellent), ch 4
+I (280617) sentry:   internet: OK
+I (280627) sentry:   user:     [TEST_LOGIN_REDACTED] (user)
+I (280627) sentry:   time:     23:20:23, uptime 0h 04m 40s
+I (280637) sentry:   valve:    closed
+I (280637) sentry:   sonar:    no contact
+I (280637) sentry:   carrier:  depth 41.8 m, hull 5.2 bar, water 8.1 C, battery 24.19 V (sim)
+I (280647) sentry:   heap:     258 KB free
+
+
+> health now
+health now
+I (282877) sentry: [TELEMETRY #2] 23:20:25 up 00:04:42 heap 258KB rssi -22 temp 27.2C depth 41.8m hull 5.2bar batt 24.2V valve closed sonar - state NORMAL
+
+
+> health interval 60
+health interval 60
+I (286127) sentry: [TELEMETRY] interval 60 s
+
+
+> health
+health
+I (288337) sentry: [TELEMETRY] auto on, interval 60 s (now 60 s in NORMAL)
+
+
+> lamp color purple
+lamp color purple
+I (290547) sentry: [BEACON] color: purple (160,0,255)
+
+
+> lamp brightness 30
+lamp brightness 30
+I (292757) sentry: [BEACON] brightness: 30%
+
+
+> lamp mode breathe
+lamp mode breathe
+I (294967) sentry: [BEACON] mode: breathe
+
+
+> lamp status
+lamp status
+I (297197) sentry: [BEACON] off, color (160,0,255), brightness 30%, mode breathe, timer off
+
+
+> relay status
+relay status
+I (299417) sentry: [VALVE] closed, auto off, cycles 0
+
+
+> ota check
+ota check
+I (302037) esp-x509-crt-bundle: Certificate validated
+I (303317) esp-x509-crt-bundle: Certificate validated
+I (304427) sentry: [OTA] current: v2.1.0
+I (304427) sentry: [OTA] stable:  v2.1.0
+I (304427) sentry: [OTA] beta:    v2.3.0
+I (304427) sentry: [OTA] up to date (stable)
+W (304777) sentry: [ACU] own-ship noise: pump #2 cavitation suspected
+
+
+> ota status
+ota status
+I (313797) sentry: [OTA] running:  v2.1.0 in ota_0 (valid)
+I (313797) sentry: [OTA] previous: none (ota_1 is empty)
+

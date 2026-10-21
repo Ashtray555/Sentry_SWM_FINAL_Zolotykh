@@ -1,0 +1,17 @@
+SENTRY SWM-2 OTA install rejection checks; COM6; 115200 8N1
+Test date: 2026-10-20
+Running firmware: v2.3.0 beta, valid on ota_1.
+Network and account identifiers are omitted.
+
+> ota install not-a-version
+E414 bad version 'not-a-version'. Format: X.Y.Z
+
+> ota install 9.9.9
+E415 version v9.9.9 not found on server
+
+> ota status
+running: v2.3.0 in ota_1 (valid)
+previous: v2.1.0 in ota_0
+
+Both invalid/unavailable install requests were rejected without changing the
+running firmware or either known-good OTA image.

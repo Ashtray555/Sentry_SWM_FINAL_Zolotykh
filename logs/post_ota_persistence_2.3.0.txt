@@ -1,0 +1,64 @@
+SENTRY SWM-2 post-beta-OTA verification; v2.3.0; COM6; 115200 8N1
+Credentials excluded; hotspot/account redacted.
+
+> login
+login [TEST_LOGIN_REDACTED] [TEST_PASSWORD_REDACTED]
+E (152900) sentry: E002 Wi-Fi required. Use 'reconnect' or 'connect'
+I (156690) sentry: [PWR] battery bus 24.19 V, load 1.6 A
+
+
+> version
+version
+I (157060) sentry: SENTRY SWM-2 sonar watch module, fw v2.3.0 (build [REDACTED])
+I (157060) sentry:   partition: ota_1 @ 0x1a0000, state: valid
+
+
+> status
+status
+I (159290) sentry: === SWM-2 status ===
+I (159290) sentry:   fw:       v2.3.0 (ota_1)
+I (159290) sentry:   state:    1 NORMAL
+I (159290) sentry:   link:     buoy link down (known: [HOTSPOT])
+I (159290) sentry:   user:     not logged in
+I (159290) sentry:   time:     --:--:--, uptime 0h 02m 38s
+I (159300) sentry:   valve:    closed
+I (159300) sentry:   watch:    disarmed, CIC alerts unacked: 0
+I (159310) sentry:   sonar:    no contact
+I (159310) sentry:   carrier:  depth 42.7 m, hull 5.3 bar, water 8.0 C, battery 24.19 V (sim)
+I (159320) sentry:   heap:     254 KB free
+
+
+> whoami
+whoami
+I (162350) sentry: not logged in
+
+
+> lamp status
+lamp status
+E (164540) sentry: E002 Wi-Fi required. Use 'reconnect' or 'connect'
+
+
+> health
+health
+E (166750) sentry: E002 Wi-Fi required. Use 'reconnect' or 'connect'
+
+
+> relay status
+relay status
+E (168970) sentry: E002 Wi-Fi required. Use 'reconnect' or 'connect'
+
+
+> guard status
+guard status
+E (171170) sentry: E002 Wi-Fi required. Use 'reconnect' or 'connect'
+
+
+> alert list
+alert list
+E (174420) sentry: E002 Wi-Fi required. Use 'reconnect' or 'connect'
+
+
+> ota status
+ota status
+E (177670) sentry: E002 Wi-Fi required. Use 'reconnect' or 'connect'
+

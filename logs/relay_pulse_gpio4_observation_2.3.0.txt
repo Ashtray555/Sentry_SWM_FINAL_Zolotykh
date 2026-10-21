@@ -1,0 +1,16 @@
+SENTRY SWM-2 relay pulse and physical indicator observation; v2.3.0; COM6; 115200 8N1
+Tester reports relay VCC=3.3 V, GPIO8 directly connected to IN, and low-voltage indicator-only setup. No mains/high-current load.
+Tester watched this pulse and reports that the GPIO4 breadboard indicator, ESP32-S3 RGB LED, relay-module indicator, and other LEDs blinked briefly during it. Which wiring caused the RGB/other LEDs to blink is not established. Relay contact switching was not independently observed.
+
+> whoami
+[Authenticated test session confirmed; account identifier omitted]
+
+> relay status
+I (177660) sentry: [VALVE] closed, auto off, cycles 14
+
+> relay pulse 99
+I (178340) sentry: [VALVE] OPEN (pulse)
+I (178450) sentry: [VALVE] CLOSED (pulse end)
+
+> relay status
+I (179080) sentry: [VALVE] closed, auto off, cycles 16

@@ -1,0 +1,18 @@
+SENTRY SWM-2 fw v2.3.0 (ota_0, valid) - LED/relay video evidence session, 2026-10-22 ~00:46:31-00:47:39
+Video: evidence/video_2026-10-22_00-49-14.mp4 (phone recording by the tester, about 78 MB; kept outside the ZIP because of its size).
+Timeline of commands (device clock, uptime-based; each step spaced by fixed pauses so it can be matched to the video):
+
+lamp on                -> [BEACON] on (command) solid, 80%
+lamp color red         -> [BEACON] color: red (255,0,0)       (hold 4 s)
+lamp color green       -> [BEACON] color: green (0,255,0)     (hold 4 s)
+lamp color blue        -> [BEACON] color: blue (0,0,255)      (hold 4 s)
+lamp off               -> [BEACON] off (command)
+relay on               -> [VALVE] OPEN (command)              (hold 4 s, relay click expected)
+relay off              -> [VALVE] CLOSED (command)
+relay on + distance log 500 -> [SONAR] valve OPEN - proximity indicator: diode blinks faster when contact is closer
+                          ~35 pings (about 15 s) at 500 ms; echo ~56-57 cm (ambient echo; the 20 cm target was not in front of the sensor)
+distance stop, relay off -> pinging stopped, valve CLOSED
+lamp status / relay status -> lamp off, valve closed, cycles 166
+
+Note: the video shows the tester's physical observation; the proximity LED blink rate was not quantified and, with only the ~57 cm ambient echo, is expected to be slow.
+Credentials, account name and network details omitted.

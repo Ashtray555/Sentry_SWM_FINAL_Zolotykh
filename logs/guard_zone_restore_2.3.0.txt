@@ -1,0 +1,11 @@
+SENTRY SWM-2 Guard configuration restore after version comparison; v2.3.0; COM6; 115200 8N1
+Guard was disarmed. The zone had been raised to 200 cm during earlier boundary testing; restored to the original 50 cm default.
+
+> guard status
+I (118449) sentry: [WATCH] disarmed, zone 200 cm, last distance -1.0 cm
+
+> guard zone 50
+I (119149) sentry: [WATCH] zone < 50 cm
+
+> guard status
+I (119759) sentry: [WATCH] disarmed, zone 50 cm, last distance -1.0 cm

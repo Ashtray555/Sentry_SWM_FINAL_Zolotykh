@@ -1,0 +1,9 @@
+SENTRY SWM-2 read-only relay health check; v2.1.0; COM6; 115200 8N1
+No relay actuation commands were sent during this check.
+
+> relay health
+I (241446) sentry: [VALVE] seal: 24 / 100000 cycles, wear 0.02% (good)
+I (241446) sentry: [VALVE] solenoid: OK, contact resistance: 45 mOhm
+
+> relay status
+I (242076) sentry: [VALVE] closed, auto off, cycles 24

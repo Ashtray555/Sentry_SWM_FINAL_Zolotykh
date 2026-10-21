@@ -1,0 +1,40 @@
+SENTRY SWM-2 AU-1/AU-2 checks; v2.3.0; COM6; 115200 8N1
+Credential values redacted; test account identifier redacted.
+
+> duplicate register
+register [TEST_LOGIN_REDACTED] [REDACTED]
+E (338280) sentry: E202 profile '[TEST_LOGIN_REDACTED]' already exists (one per device)
+
+
+> wrong login 1
+login [TEST_LOGIN_REDACTED] [REDACTED]
+E (341290) sentry: E206 already logged in as '[TEST_LOGIN_REDACTED]'. Use 'logout' first
+I (341890) sentry: [TELEMETRY #2] 23:27:32 up 00:05:41 heap 251KB rssi -19 temp 27.2C depth 42.7m hull 5.3bar batt 24.2V valve closed sonar - watch disarmed alerts 0 state NORMAL
+
+
+> wrong login 2
+login [TEST_LOGIN_REDACTED] [REDACTED]
+E (343310) sentry: E206 already logged in as '[TEST_LOGIN_REDACTED]'. Use 'logout' first
+
+
+> wrong login 3
+login [TEST_LOGIN_REDACTED] [REDACTED]
+E (345530) sentry: E206 already logged in as '[TEST_LOGIN_REDACTED]'. Use 'logout' first
+
+
+> attempt while locked
+login [TEST_LOGIN_REDACTED] [REDACTED]
+E (347740) sentry: E206 already logged in as '[TEST_LOGIN_REDACTED]'. Use 'logout' first
+
+
+[waiting 31 seconds for the documented lockout to expire]
+
+> login [correct test credentials redacted]
+login [TEST_LOGIN_REDACTED] [REDACTED]
+E (381160) sentry: E206 already logged in as '[TEST_LOGIN_REDACTED]'. Use 'logout' first
+
+
+> whoami
+whoami
+I (385240) sentry: user: [TEST_LOGIN_REDACTED], access: user
+

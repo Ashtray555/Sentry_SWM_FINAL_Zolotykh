@@ -1,0 +1,42 @@
+SENTRY SWM-2 relay pulse boundary retest; v2.3.0; COM6; 115200 8N1
+User reports relay VCC=3.3 V, GPIO8 directly to IN, low-voltage indicator only; no 5 V on GPIO. Physical actuation not independently observed.
+At least 1.5 s between pulse attempts.
+
+> relay status
+relay status
+I (1021980) sentry: [VALVE] closed, auto off, cycles 4
+
+
+> relay pulse 99
+relay pulse 99
+I (1024200) sentry: [VALVE] OPEN (pulse)
+I (1024310) sentry: [VALVE] CLOSED (pulse end)
+
+
+> relay pulse 99 repeat 2
+relay pulse 99
+I (1027330) sentry: [VALVE] OPEN (pulse)
+I (1027440) sentry: [VALVE] CLOSED (pulse end)
+
+
+> relay pulse 99 repeat 3
+relay pulse 99
+I (1032050) sentry: [VALVE] OPEN (pulse)
+I (1032170) sentry: [VALVE] CLOSED (pulse end)
+
+
+> relay pulse 100
+relay pulse 100
+I (1036720) sentry: [VALVE] OPEN (pulse)
+I (1036840) sentry: [VALVE] CLOSED (pulse end)
+
+
+> relay pulse 10001
+relay pulse 10001
+E (1039860) sentry: E603 pulse must be 100-10000 ms
+
+
+> relay status
+relay status
+I (1042880) sentry: [VALVE] closed, auto off, cycles 12
+

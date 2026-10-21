@@ -1,0 +1,115 @@
+SENTRY SWM-2 fw_7 baseline capture
+Port: COM6
+UART: 115200 8N1
+No Wi-Fi credentials entered.
+
+> version
+um: 32
+I (479) wifi:Init static rx mgmt buffer num: 5
+I (489) wifi:Init management short buffer num: 32
+I (489) wifi:Init dynamic tx buffer num: 32
+I (499) wifi:Init static tx FG buffer num: 2
+I (499) wifi:Init static rx buffer size: 1600
+I (499) wifi:Init static rx buffer num: 10
+I (509) wifi:Init dynamic rx buffer num: 32
+I (509) wifi_init: rx ba win: 6
+I (509) wifi_init: accept mbox: 6
+I (519) wifi_init: tcpip mbox: 32
+I (519) wifi_init: udp mbox: 6
+I (519) wifi_init: tcp mbox: 6
+I (529) wifi_init: tcp tx win: 5760
+I (529) wifi_init: tcp rx win: 5760
+I (529) wifi_init: tcp mss: 1440
+I (539) wifi_init: WiFi IRAM OP enabled
+I (539) wifi_init: WiFi RX IRAM OP enabled
+I (539) phy_init: phy_version 711,97bcf0a2,Aug 25 2025,19:04:10
+I (579) wifi:mode : sta ([MAC redacted])
+I (589) wifi:enable tsf
+I (589) sentry: [LINK] no known network. Type 'connect'
+I (589) sentry: [AUTH] no profile. Use 'register <login> <password>'
+I (589) sentry: last reset: power on
+[REDACTED: firmware build tag may contain a secret]
+I (599) sentry: [HW] transducer array: 1 ch, 40 kHz, driver OK
+I (599) sentry: [HW] hull penetrator seal: OK, pressure sensor: OK
+W (609) sentry: [NAV] depth sensor offline (lab mode) - using simulator
+I (619) sentry: [NAV] carrier: SSK 'Skat', bow sonar bay #2, depth 41.8 m
+I (619) sentry: [OTA] running v2.1.0 from ota_0
+version
+I (629) sentry: ready. state 1 NORMAL (patrol). Type 'help'
+I (629) main_task: Returned from app_main()
+I (729) sentry: SENTRY SWM-2 sonar watch module, fw v2.1.0 (build [REDACTED])
+I (729) sentry:   partition: ota_0 @ 0x20000, state: valid
+
+
+> help
+help
+I (3719) sentry: Commands ([wifi] - needs Wi-Fi, [login] - needs Wi-Fi + login, [debug] - debug access):
+I (3719) sentry: System:
+I (3719) sentry:   help                         - this help
+I (3719) sentry:   status                       - full device status
+I (3729) sentry:   version                      - firmware version and partition
+I (3729) sentry:   sysinfo                      - chip, memory, uptime
+I (3739) sentry:   temp                         - chip temperature
+I (3749) sentry:   uptime                       - time since boot
+I (3749) sentry:   reboot                       - reboot device
+I (3759) sentry: Buoy link (Wi-Fi):
+I (3759) sentry:   connect                      - connect to Wi-Fi (scan, SSID, password)
+I (3769) sentry:   reconnect                    - connect to known network
+I (3779) sentry:   forget                       - forget known network
+I (3779) sentry:   disconnect                   - disconnect from Wi-Fi
+I (3789) sentry:   scan                         - list Wi-Fi networks
+I (3789) sentry:   net                          - IP, gateway, DNS, MAC [wifi]
+I (3799) sentry:   ping [host]                  - ping host (default [IP redacted]) [wifi]
+I (3809) sentry:   time                         - current time (NTP) [wifi]
+I (3819) sentry: Account:
+I (3819) sentry:   register <login> <pass>      - create profile (one per device) [wifi]
+I (3829) sentry:   login <login> <pass>         - start session [wifi]
+I (3829) sentry:   logout                       - end session
+I (3839) sentry:   whoami                       - current user and access
+I (3839) sentry:   passwd <old> <new>           - change password [login]
+I (3849) sentry:   sudo <password>              - elevate current user to debug [login]
+I (3859) sentry: States:
+I (3859) sentry:   state [1-4|name]             - show / change system state [login]
+I (3869) sentry: OTA:
+I (3869) sentry:   ota [status]                 - running / previous firmware [login]
+I (3879) sentry:   ota check                    - check stable and beta channels [login]
+I (3879) sentry:   ota update [beta]            - update to stable (or beta) [login]
+I (3889) sentry:   ota install <X.Y.Z> [force]  - install exact version (force - allow downgrade) [login]
+I (3899) sentry:   ota broken                   - install broken build (rollback test) [login]
+I (3909) sentry:   ota rollback                 - boot previous firmware [login]
+I (3919) sentry:   ota url <url> [force]        - install image from any http(s) link [login]
+I (3929) sentry:   ota server [<url>|default]   - show / set update server (default - GitHub) [login]
+I (3929) sentry: Beacon light (alias: beacon):
+I (3939) sentry:   lamp on|off|toggle           - Smart Lamp power [login]
+I (3949) sentry:   lamp status                  - lamp settings [login]
+I (3949) sentry:   lamp color <name|R G B>      - white red green blue yellow purple cyan orange [login]
+I (3959) sentry:   lamp brightness <0-100>      - brightness, % [login]
+I (3969) sentry:   lamp mode <mode>             - solid | blink | breathe | rainbow [login]
+I (3979) sentry:   lamp timer <sec>             - auto-off 1-3600 s (0 - cancel) [login]
+I (3979) sentry:   lamp scene save|load <1-3>   - save / load lamp preset [login]
+I (3989) sentry: Trim valve (alias: valve, open|close):
+I (3989) sentry:   relay on|off|toggle          - relay + indicator diode [login]
+I (3999) sentry:   relay status                 - state, auto mode, switch counter [login]
+I (4009) sentry:   relay pulse <ms>             - turn on for 100-10000 ms [login]
+I (4019) sentry:   relay schedule <on> <off>    - cycle on/off in seconds ('off' - stop) [login]
+I (4029) sentry:   relay auto on|off            - turn relay on by distance alarm [login]
+I (4029) sentry:   relay health                 - contact wear and coil check [login]
+I (4039) sentry: Active sonar (alias: sonar):
+I (4049) sentry:   distance [N]                 - measure once or N times (1-20) [login]
+I (4049) sentry:   distance log [ms] | stop     - continuous measuring 100-5000 ms [login]
+I (4059) sentry:   distance calibrate <cm>      - calibrate by reference object ('reset') [login]
+I (4069) sentry:   distance alarm <cm>|off      - alarm threshold 5-300 cm [login]
+I (4079) sentry:   distance filter on|off       - median filter of 5 samples [login]
+I (4079) sentry:   distance stats|history       - statistics / last 10 measurements [login]
+I (4089) sentry: Telemetry (alias: telemetry):
+I (4099) sentry:   health now                   - health report now [login]
+I (4099) sentry:   health on|off                - auto report (after login, 30 s) [login]
+I (4109) sentry:   health interval <sec>        - auto interval 10-300 s (VERBOSE 10 s) [login]
+I (4119) sentry: Perimeter watch, CIC alerts: planned in v2.3.0
+I (4129) sentry: Buttons [login]:
+I (4129) sentry:   K1 press / hold 1.5 s        - beacon on/off / next color
+I (4139) sentry:   K2 press / hold 1.5 s        - valve open/close / 1 s pulse
+I (4139) sentry:   K3 press                     - active sonar for 30 s (press again - stop)
+I (4149) sentry:   K4                           - perimeter watch (planned in v2.3.0)
+I (4159) sentry:   hold 2 s: K1+K2 - 1 NORMAL, K2+K3 - 2 DEBUG, K3+K4 - 3 VERBOSE, K4+K1 - 4 EMERGENCY (only from 3)
+

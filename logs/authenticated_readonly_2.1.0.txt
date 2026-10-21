@@ -1,0 +1,35 @@
+SENTRY SWM-2 authenticated read-only checks; v2.1.0; COM6; 115200 8N1
+Hotspot/account credentials excluded; SSID redacted.
+
+> whoami
+whoami
+I (1271989) sentry: user: [TEST_LOGIN_REDACTED], access: user
+
+
+> health now
+health now
+I (1274179) sentry: [TELEMETRY #3] 23:11:40 up 00:21:13 heap 257KB rssi -32 temp 27.2C depth 42.4m hull 5.2bar batt 24.2V valve closed sonar - state NORMAL
+
+
+> ota status
+ota status
+I (1278229) sentry: [OTA] running:  v2.1.0 in ota_0 (valid)
+I (1278229) sentry: [OTA] previous: none (ota_1 is empty)
+
+
+> ota check
+ota check
+I (1282219) esp-x509-crt-bundle: Certificate validated
+I (1283699) esp-x509-crt-bundle: Certificate validated
+I (1284819) sentry: [OTA] current: v2.1.0
+I (1284819) sentry: [OTA] stable:  v2.1.0
+I (1284819) sentry: [OTA] beta:    v2.3.0
+I (1284819) sentry: [OTA] up to date (stable)
+I (1287699) sentry: [PWR] battery bus 24.17 V, load 1.8 A
+I (1289969) sentry: [TELEMETRY #4] 23:11:55 up 00:21:29 heap 257KB rssi -22 temp 27.2C depth 42.7m hull 5.3bar batt 24.2V valve closed sonar - state NORMAL
+
+
+> time
+time
+I (1296639) sentry: [LINK] time: 2026-10-19 23:12:02 (Kyiv)
+

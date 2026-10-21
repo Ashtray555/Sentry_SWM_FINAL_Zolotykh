@@ -1,0 +1,24 @@
+SENTRY SWM-2 OTA downgrade-protection and already-current checks; v2.3.0; COM6; 115200 8N1
+Network identifiers and firmware build metadata omitted.
+
+> ota check
+I (335289) sentry: [OTA] current: v2.3.0
+I (335289) sentry: [OTA] stable:  v2.1.0
+I (335289) sentry: [OTA] beta:    v2.3.0
+I (335289) sentry: [OTA] running newer than stable
+
+> ota install 2.1.0 (without force)
+I (353299) sentry: [OTA] current v2.3.0 (ota_1) -> target partition ota_0
+E (354429) sentry: E408 downgrade blocked: v2.3.0 -> v2.1.0. Use 'ota install 2.1.0 force'
+
+> ota update beta
+I (374069) sentry: [OTA] beta channel: v2.3.0, current: v2.3.0
+I (374069) sentry: [OTA] already up to date
+
+> version
+I (383279) sentry: SENTRY SWM-2 sonar watch module, fw v2.3.0
+I (383279) sentry:   partition: ota_1 @ 0x1a0000, state: valid
+
+> ota status
+I (386289) sentry: [OTA] running: v2.3.0 in ota_1 (valid)
+I (386289) sentry: [OTA] previous: v2.1.0 in ota_0

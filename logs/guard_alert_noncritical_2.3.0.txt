@@ -1,0 +1,99 @@
+SENTRY SWM-2 2.3.0 Guard configuration and Alert Center checks
+Date: 2026-10-19; COM6; 115200 8N1
+No hotspot/account passwords included. Guard was not armed; no panic/critical test performed.
+
+> guard status
+guard status
+I (271350) sentry: [WATCH] disarmed, zone 50 cm, last distance -1.0 cm
+
+
+> guard zone 10
+guard zone 10
+I (274360) sentry: [WATCH] zone < 10 cm
+
+
+> guard status
+guard status
+I (276590) sentry: [WATCH] disarmed, zone 10 cm, last distance -1.0 cm
+
+
+> guard zone 200
+guard zone 200
+I (278810) sentry: [WATCH] zone < 200 cm
+
+
+> guard zone 9
+guard zone 9
+E (280990) sentry: E808 zone must be 10-200 cm
+I (281890) sentry: [TELEMETRY #1] 23:26:32 up 00:04:41 heap 251KB rssi -21 temp 26.2C depth 42.6m hull 5.3bar batt 24.2V valve closed sonar - watch disarmed alerts 0 state NORMAL
+
+
+> guard zone 201
+guard zone 201
+E (283060) sentry: E808 zone must be 10-200 cm
+
+
+> guard status
+guard status
+I (285270) sentry: [WATCH] disarmed, zone 200 cm, last distance -1.0 cm
+
+
+> alert test info
+alert test info
+I (287480) sentry: [CIC #1 INFO] test: test alert
+
+
+> alert list
+alert list
+I (289700) sentry: [CIC] 1 alerts, 1 unacknowledged:
+I (289700) sentry:   #1   23:26:37 INFO     * test    test alert
+
+
+> alert ack
+alert ack
+I (292710) sentry: [CIC] #1 acknowledged (command). Unacked: 0
+
+
+> alert list
+alert list
+I (294910) sentry: [CIC] 1 alerts, 0 unacknowledged:
+I (294910) sentry:   #1   23:26:37 INFO       test    test alert
+
+
+> alert ack all
+alert ack all
+W (297140) sentry: W853 no unacknowledged alerts
+
+
+> alert test warning
+alert test warning
+W (299350) sentry: [CIC #2 WARNING] test: test alert
+
+
+> alert list
+alert list
+I (301570) sentry: [CIC] 2 alerts, 1 unacknowledged:
+I (301570) sentry:   #1   23:26:37 INFO       test    test alert
+I (301570) sentry:   #2   23:26:49 WARNING  * test    test alert
+W (302730) sentry: [HW] transducer #1 impedance drift +2.1% (compensated)
+
+
+> alert ack 999999
+alert ack 999999
+E (303630) sentry: E851 no alert #999999
+
+
+> alert ack all
+alert ack all
+I (305830) sentry: [CIC] 1 alerts acknowledged
+
+
+> alert clear
+alert clear
+I (308060) sentry: [CIC] cleared
+
+
+> alert list
+alert list
+I (311320) sentry: [CIC] no alerts
+

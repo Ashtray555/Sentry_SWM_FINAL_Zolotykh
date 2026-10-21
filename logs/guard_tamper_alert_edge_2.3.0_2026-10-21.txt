@@ -1,0 +1,23 @@
+SENTRY 2.3.0 - Guard tamper, logout-does-not-disarm, alert edge cases, K4+K1 negative (2026-10-21 23:57-00:08, sanitized)
+
+A. Alert Center edge cases
+alert test warning, alert test info; alert clear -> E855 2 alerts not acknowledged. Use 'alert ack all' first   (AL-4 PASS)
+alert ack 99999 -> E851 no alert #99999
+Exact-ID acknowledge: "alert ack 28" -> [CIC] #28 acknowledged; repeated -> W852 alert #28 already acknowledged (x2)   (AL-3 PASS)
+Retention: 24 further test alerts added; list showed "20 alerts" with oldest #7..#8 evicted, newest #26+; "alert ack 7" -> E851 (evicted)   (AL-1/2 retention 20 PASS)
+Observation (not classified): the "N unacknowledged" counter dropped without any command (2 -> 1) and an earlier alert was found already acknowledged
+at first use; alert IDs continue to increase across logout/login. Possible implicit acknowledgement (e.g. by K4 or telemetry); not reproduced deliberately.
+
+B. Logout does not disarm (GD-5)
+guard zone 10; guard arm -> armed; logout -> "[WATCH] stays ARMED after logout"; after login guard status -> ARMED   (PASS)
+
+C. Tamper (GD-3, 3 measures with no echo)
+Guard ARMED; tester covered the US-100 with soft material ~25 s:
+[WATCH] ALARM: sensor tamper (no echo); [CIC #33 CRITICAL] GENERAL ALARM: sensor tamper (no echo); relay OPEN; state VERBOSE;
+telemetry WARN "sensor error" + "watch alarm"; "ALARM active" reminder every ~10 s; guard log: "ALARM: sensor tamper (no echo)"   (PASS)
+guard disarm <PIN> -> disarmed (was ALARM), relay CLOSED.
+
+D. K4+K1 negative case from NORMAL (ST-2)
+[BTN] K4+K1 held 2 s -> state 4 ; E302 EMERGENCY can be entered only from 3 VERBOSE (now 1 NORMAL); state stayed NORMAL   (PASS)
+
+Restored: alerts acked and cleared, zone 50, state NORMAL, relay closed, guard disarmed.

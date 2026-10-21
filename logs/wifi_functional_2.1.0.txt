@@ -1,0 +1,241 @@
+SENTRY SWM-2 Wi-Fi functional checks
+Date: 2026-10-19
+Port: COM6; UART: 115200 8N1
+Hotspot credentials are not recorded. SSID [SSID redacted] in this evidence.
+
+> status
+status
+
+I (611669) sentry: === SWM-2 status ===
+
+I (611669) sentry:   fw:       v2.1.0 (ota_0)
+
+I (611669) sentry:   state:    1 NORMAL
+
+I (611669) sentry:   link:     buoy link '[SSID redacted]', ip [IP redacted], rssi [redacted], channel [redacted]
+
+I (611669) sentry:   internet: OK
+
+I (611679) sentry:   user:     not logged in
+
+I (611679) sentry:   time:     23:00:37, uptime 0h 10m 11s
+
+I (611689) sentry:   valve:    closed
+
+I (611689) sentry:   sonar:    no contact
+
+I (611689) sentry:   carrier:  depth 41.8 m, hull 5.2 bar, water 8.2 C, battery 24.18 V (sim)
+
+I (611699) sentry:   heap:     258 KB free
+
+
+
+> scan
+scan
+
+I (613679) sentry: [LINK] scanning...
+
+I (616579) sentry:   [ 1] [SSID redacted] -26 dBm  ch  4  secured
+
+I (616579) sentry:   [ 2] [SSID redacted] -42 dBm  ch 13  secured
+
+I (616579) sentry:   [ 3] [SSID redacted] -45 dBm  ch  4  secured
+
+I (616589) sentry:   [ 4] [SSID redacted] -60 dBm  ch  2  secured
+
+I (616589) sentry:   [ 5] [SSID redacted] -68 dBm  ch 13  secured
+
+I (616599) sentry:   [ 6] [SSID redacted] -71 dBm  ch  2  secured
+
+I (616609) sentry:   [ 7] [SSID redacted] -72 dBm  ch  1  secured
+
+I (616619) sentry:   [ 8] [SSID redacted] -72 dBm  ch 11  secured
+
+I (616619) sentry:   [ 9] [SSID redacted] -74 dBm  ch 11  secured
+
+I (616629) sentry:   [10] [SSID redacted] -79 dBm  ch 10  secured
+
+I (616639) sentry:   [11] [SSID redacted] -84 dBm  ch  3  secured
+
+I (616649) sentry:   [12] [SSID redacted] -85 dBm  ch  9  secured
+
+I (616649) sentry:   [13] [SSID redacted] -92 dBm  ch  1  secured
+
+
+
+> net
+net
+
+I (620709) sentry:   ip:      [IP redacted]
+
+I (620709) sentry:   mask:    [IP redacted]
+
+I (620709) sentry:   gateway: [IP redacted]
+
+I (620709) sentry:   dns:     [IP redacted]
+
+I (620709) sentry:   mac:     [MAC redacted]
+
+
+
+> ping
+ping
+
+I (622919) sentry: ping [IP redacted] ([IP redacted])...
+
+I (622949) sentry:   reply: time 36 ms
+
+I (623949) sentry:   reply: time 31 ms
+
+I (624949) sentry:   reply: time 32 ms
+
+I (625949) sentry:   reply: time 33 ms
+
+I (626919) sentry: ping: 4/4 ok, avg 33 ms
+
+
+
+> time
+time
+
+I (630989) sentry: [LINK] time: 2026-10-19 23:00:56 (Kyiv)
+
+
+
+> disconnect
+disconnect
+
+I (633219) wifi:state: run -> init (0x0)
+
+I (633219) wifi:pm stop, total sleep time: 58134746 us / 63654170 us
+
+
+
+I (633219) wifi:<ba-del>idx:0, tid:0
+
+I (633219) wifi:new:<4,0>, old:<4,0>, ap:<255,255>, sta:<4,0>, prof:1, snd_ch_cfg:0x0
+
+I (633229) sentry: [LINK] disconnected
+
+
+
+> status
+status
+
+I (636219) sentry: === SWM-2 status ===
+
+I (636219) sentry:   fw:       v2.1.0 (ota_0)
+
+I (636219) sentry:   state:    1 NORMAL
+
+I (636219) sentry:   link:     buoy link down (known network: [SSID redacted])
+
+I (636219) sentry:   user:     not logged in
+
+I (636229) sentry:   time:     23:01:02, uptime 0h 10m 35s
+
+I (636229) sentry:   valve:    closed
+
+I (636229) sentry:   sonar:    no contact
+
+I (636239) sentry:   carrier:  depth 41.8 m, hull 5.2 bar, water 8.2 C, battery 24.18 V (sim)
+
+I (636249) sentry:   heap:     258 KB free
+
+
+
+> reconnect
+reconnect
+
+I (638579) sentry: [LINK] raising buoy antenna, connecting to '[SSID redacted]'
+
+I (638579) wifi:new:<4,0>, old:<4,0>, ap:<255,255>, sta:<4,0>, prof:1, snd_ch_cfg:0x0
+
+I (638579) wifi:state: init -> auth (0xb0)
+
+I (638589) wifi:state: auth -> assoc (0x0)
+
+I (638599) wifi:state: assoc -> run (0x10)
+
+I (638629) wifi:connected with [SSID redacted], BSSID [redacted]
+
+I (638629) wifi:security: WPA2-PSK, phy: bgn, rssi: -24, cipher(pairwise:0x3, group:0x3), pmf:0
+
+I (638629) wifi:pm start, type: 1
+
+
+
+I (638639) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+
+I (638649) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+
+I (638649) wifi:dp: 2, bi: 102400, li: 4, scale listen interval from 307200 us to 409600 us
+
+I (638659) wifi:AP's beacon interval = 102400 us, DTIM period = 2
+
+I (639699) esp_netif_handlers: sta ip: [IP redacted], mask: [IP redacted], gw: [IP redacted]
+
+I (639699) sentry: [LINK] got ip [IP redacted]
+
+I (639699) sentry: [LINK] connected to '[SSID redacted]', rssi [redacted]
+
+I (640029) esp-x509-crt-bundle: Certificate validated
+
+I (640599) sentry: [LINK] fleet network reachable (internet OK)
+
+I (640629) wifi:<ba-add>idx:0 (ifx:0, [MAC redacted]), tid:0, ssn:17, winSize:64
+
+W (646599) sentry: W106 [LINK] time: NTP sync failed, timestamps disabled
+
+
+
+> status
+status
+
+I (656719) sentry: === SWM-2 status ===
+
+I (656719) sentry:   fw:       v2.1.0 (ota_0)
+
+I (656719) sentry:   state:    1 NORMAL
+
+I (656719) sentry:   link:     buoy link '[SSID redacted]', ip [IP redacted], rssi [redacted], channel [redacted]
+
+I (656719) sentry:   internet: OK
+
+I (656729) sentry:   user:     not logged in
+
+I (656729) sentry:   time:     23:01:22, uptime 0h 10m 56s
+
+I (656739) sentry:   valve:    closed
+
+I (656739) sentry:   sonar:    no contact
+
+I (656739) sentry:   carrier:  depth 41.8 m, hull 5.2 bar, water 8.2 C, battery 24.18 V (sim)
+
+I (656749) sentry:   heap:     258 KB free
+
+
+
+> net
+net
+
+I (658979) sentry:   ip:      [IP redacted]
+
+I (658979) sentry:   mask:    [IP redacted]
+
+I (658979) sentry:   gateway: [IP redacted]
+
+I (658979) sentry:   dns:     [IP redacted]
+
+I (658979) sentry:   mac:     [MAC redacted]
+
+
+
+> time
+time
+
+I (661189) sentry: [LINK] time: 2026-10-19 23:01:27 (Kyiv)
+
+I (661759) sentry: [PWR] battery bus 24.18 V, load 1.8 A
+
+

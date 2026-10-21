@@ -1,0 +1,41 @@
+SENTRY SWM-2 fw_7 pre-Wi-Fi access checks
+Port: COM6
+UART: 115200 8N1
+No Wi-Fi credentials or account secrets entered.
+
+--- boot after opening serial with DTR/RTS low ---
+[no boot output; port open did not trigger reset]
+
+> status
+status
+I (38029) sentry: === SWM-2 status ===
+I (38029) sentry:   fw:       v2.1.0 (ota_0)
+I (38029) sentry:   state:    1 NORMAL
+I (38029) sentry:   link:     buoy link down (known: none)
+I (38029) sentry:   user:     not logged in
+I (38029) sentry:   time:     --:--:--, uptime 0h 00m 37s
+I (38039) sentry:   valve:    closed
+I (38039) sentry:   sonar:    no contact
+I (38049) sentry:   carrier:  depth 42.0 m, hull 5.2 bar, water 8.0 C, battery 24.20 V (sim)
+I (38049) sentry:   heap:     261 KB free
+
+
+> whoami
+whoami
+I (39619) sentry: not logged in
+
+
+> net
+net
+E (41159) sentry: E002 Wi-Fi required. Use 'reconnect' or 'connect'
+
+
+> lamp on
+lamp on
+E (42689) sentry: E002 Wi-Fi required. Use 'reconnect' or 'connect'
+
+
+> notacommand
+notacommand
+E (44219) sentry: E001 unknown command 'notacommand'. Type 'help'
+

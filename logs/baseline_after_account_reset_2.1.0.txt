@@ -1,0 +1,27 @@
+SENTRY SWM-2 reinitialized baseline after authorized flash/NVS reset
+Date: 2026-10-19
+Port: COM6; UART: 115200 8N1
+No Wi-Fi credentials or account credentials entered.
+
+--- boot ---
+
+
+> version
+version
+I (44377) sentry: SENTRY SWM-2 sonar watch module, fw v2.1.0 (build [REDACTED])
+I (44377) sentry:   partition: ota_0 @ 0x20000, state: valid
+
+
+> status
+status
+I (46587) sentry: === SWM-2 status ===
+I (46587) sentry:   fw:       v2.1.0 (ota_0)
+I (46587) sentry:   state:    1 NORMAL
+I (46587) sentry:   link:     buoy link down (known: none)
+I (46587) sentry:   user:     not logged in
+I (46587) sentry:   time:     --:--:--, uptime 0h 00m 46s
+I (46597) sentry:   valve:    closed
+I (46597) sentry:   sonar:    no contact
+I (46607) sentry:   carrier:  depth 41.5 m, hull 5.2 bar, water 8.1 C, battery 24.20 V (sim)
+I (46607) sentry:   heap:     261 KB free
+

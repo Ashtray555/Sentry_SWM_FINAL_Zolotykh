@@ -1,0 +1,140 @@
+OTA server unavailable / invalid channel / persistence on 2.3.0 (sanitized)
+> whoami
+whoami
+I (759961) sentry: user: <user>, access: user
+
+
+=== server unavailable (nothing listening on port 8001) ===
+> ota server http://<ip>:8001/fw7/
+ota server http://<ip>:8001/fw7/
+I (762251) sentry: [OTA] server: http://<ip>:8001/fw7/ (custom)
+
+> ota server
+ota server
+I (765471) sentry: [OTA] server: http://<ip>:8001/fw7/ (custom)
+
+> ota check
+ota check
+E (777761) esp-tls: [sock=54] select() timeout
+E (777761) transport_base: Failed to open a new connection: 32774
+E (777761) HTTP_CLIENT: Connection failed, sock < 0
+E (777761) sentry: E402 cannot reach OTA server (stable.txt)
+I (787731) sentry: [PWR] battery bus 24.18 V, load 1.4 A
+I (787891) sentry: [TELEMETRY #2] 21:48:44 up 00:13:07 heap 251KB rssi -43 temp 28.2C depth 41.5m hull 5.1bar batt 24.2V valve closed sonar - watch disarmed alerts 0 state NORMAL
+
+> ota update
+ota update
+E (798331) esp-tls: [sock=54] select() timeout
+E (798331) transport_base: Failed to open a new connection: 32774
+E (798331) HTTP_CLIENT: Connection failed, sock < 0
+E (798331) sentry: E402 cannot reach OTA server (stable.txt)
+
+
+=== invalid channel contents ===
+> ota server http://<ip>:8000/fw7/
+ota server http://<ip>:8000/fw7/
+I (810441) sentry: [OTA] server: http://<ip>:8000/fw7/ (custom)
+
+> ota check
+ota check
+E (813741) sentry: E404 stable channel has invalid version 'abc'
+I (817891) sentry: [TELEMETRY #3] 21:49:14 up 00:13:37 heap 251KB rssi -45 temp 28.2C depth 41.5m hull 5.1bar batt 24.2V valve closed sonar - watch disarmed alerts 0 state NORMAL
+
+> ota update
+ota update
+E (828921) sentry: E404 stable channel has invalid version 'abc'
+I (848091) sentry: [TELEMETRY #4] 21:49:44 up 00:14:07 heap 251KB rssi -47 temp 28.2C depth 41.5m hull 5.1bar batt 24.2V valve closed sonar - watch disarmed alerts 0 state NORMAL
+
+> ota update beta
+ota update beta
+I (849151) sentry: [OTA] beta channel: v9.9.9, current: v2.3.0
+E (849211) sentry: E415 version v9.9.9 not found on server
+W (866731) sentry: [ACU] biologics detected (snapping shrimp), passive filter on
+
+
+=== custom server persistence across reboot ===
+> ota server http://<ip>:8000/fw7/
+ota server http://<ip>:8000/fw7/
+I (872341) sentry: [OTA] server: http://<ip>:8000/fw7/ (custom)
+
+> ota check
+ota check
+I (875591) sentry: [OTA] current: v2.3.0
+I (875591) sentry: [OTA] stable:  v2.1.0
+I (875591) sentry: [OTA] beta:    v2.3.0
+I (875591) sentry: [OTA] running newer than stable
+I (878291) sentry: [TELEMETRY #5] 21:50:14 up 00:14:37 heap 251KB rssi -41 temp 29.2C depth 41.1m hull 5.1bar batt 24.2V valve closed sonar - watch disarmed alerts 0 state NORMAL
+
+> reboot
+reboot
+I (890841) sentry: rebooting in 3...
+I (891841) sentry: rebooting in 2...
+
+> reconnect
+reconnect
+I (12355) sentry: [LINK] raising buoy antenna, connecting to '<ssid>'...
+I (12805) wifi:new:<4,0>, old:<1,0>, ap:<255,255>, sta:<4,0>, prof:1, snd_ch_cfg:0x0
+I (12805) wifi:state: init -> auth (0xb0)
+I (12815) wifi:state: auth -> assoc (0x0)
+I (12815) wifi:state: assoc -> run (0x10)
+I (12835) wifi:connected with <ssid>, aid = 3, channel 4, BW20, bssid = <mac>
+I (12835) wifi:security: WPA2-PSK, phy: bgn, rssi: -41, cipher(pairwise:0x3, group:0x3), pmf:0
+I (12845) wifi:pm start, type: 1
+
+I (12845) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (12855) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+I (12865) wifi:<ba-add>idx:0 (ifx:0, <mac>), tid:5, ssn:2, winSize:64
+I (12895) wifi:AP's beacon interval = 102400 us, DTIM period = 1
+I (13875) esp_netif_handlers: sta ip: <ip>, mask: <ip>, gw: <ip>
+I (13875) sentry: [LINK] got ip <ip>
+I (13875) sentry: [LINK] connected to '<ssid>', rssi -43 dBm (excellent)
+I (13885) wifi:<ba-add>idx:1 (ifx:0, <mac>), tid:0, ssn:0, winSize:64
+I (14195) esp-x509-crt-bundle: Certificate validated
+I (14735) sentry: [LINK] fleet network reachable (internet OK)
+I (19265) sentry: [LINK] time: synced via NTP, 21:50:49
+I (20665) sentry: [NAV] depth 41.7 m, heading 272, speed 3.3 kn
+
+> whoami
+whoami
+I (30265) sentry: not logged in
+
+> login <user> <pw>
+login <user> <pw>
+I (32545) sentry: [AUTH] operator <user> on watch, console 2
+I (32665) sentry: [TELEMETRY] auto report every 30 s ('health off' to stop)
+
+> whoami
+whoami
+I (35585) sentry: user: <user>, access: user
+
+> ota server
+ota server
+I (37865) sentry: [OTA] server: http://<ip>:8000/fw7/ (custom)
+
+> ota check
+ota check
+I (41145) sentry: [OTA] current: v2.3.0
+I (41145) sentry: [OTA] stable:  v2.1.0
+I (41145) sentry: [OTA] beta:    v2.3.0
+I (41145) sentry: [OTA] running newer than stable
+
+
+=== restore default ===
+> ota server default
+ota server default
+I (57235) sentry: [OTA] server: https://raw.githubusercontent.com/BohdanHorbanych/esp32-ota-files/main/fw7/ (default)
+
+> ota server
+ota server
+I (60465) sentry: [OTA] server: https://raw.githubusercontent.com/BohdanHorbanych/esp32-ota-files/main/fw7/ (default)
+I (62665) sentry: [TELEMETRY #1] 21:51:32 up 00:01:02 heap 251KB rssi -51 temp 28.2C depth 41.7m hull 5.2bar batt 24.2V valve closed sonar - watch disarmed alerts 0 state NORMAL
+
+> ota check
+ota check
+I (64025) esp-x509-crt-bundle: Certificate validated
+I (65135) esp-x509-crt-bundle: Certificate validated
+I (65945) sentry: [OTA] current: v2.3.0
+I (65945) sentry: [OTA] stable:  v2.1.0
+I (65945) sentry: [OTA] beta:    v2.3.0
+I (65945) sentry: [OTA] running newer than stable
+

@@ -1,0 +1,29 @@
+SENTRY SWM-2 health interval boundary check; v2.3.0; COM6; 115200 8N1
+Baseline interval was 60 s. No relay actuation commands were sent.
+
+> health
+I (679360) sentry: [TELEMETRY] auto on, interval 60 s (now 60 s in NORMAL)
+
+> health interval 9
+E (679980) sentry: E902 interval must be 10-300 s
+
+> health interval 10
+I (680560) sentry: [TELEMETRY] interval 10 s
+
+> health interval 11
+I (681120) sentry: [TELEMETRY] interval 11 s
+
+> health interval 299
+I (681690) sentry: [TELEMETRY] interval 299 s
+
+> health interval 300
+I (682320) sentry: [TELEMETRY] interval 300 s
+
+> health interval 301
+E (682870) sentry: E902 interval must be 10-300 s
+
+> health interval 60 (restore)
+I (683440) sentry: [TELEMETRY] interval 60 s
+
+> health
+I (683990) sentry: [TELEMETRY] auto on, interval 60 s (now 60 s in NORMAL)

@@ -1,0 +1,184 @@
+OTA local fault matrix on 2.3.0 (sanitized). Preceding step (output not captured in this file): "ota install 2.3.0" without force on running 2.3.0 printed W409 same version - reinstalling, completed and switched running slot ota_1 -> ota_0 (both slots 2.3.0).
+> whoami
+whoami
+I (99608) sentry: user: <user>, access: user
+
+
+=== 2.3.0 fault: garbage ===
+> ota url http://<ip>:8000/test/garbage.bin
+ota url http://<ip>:8000/test/garbage.bin
+I (103888) sentry: [OTA] current v2.3.0 (ota_0) -> target partition ota_1
+I (103888) sentry: [OTA] downloading http://<ip>:8000/test/garbage.bin
+I (103928) esp_https_ota: Starting OTA...
+I (103928) esp_https_ota: Writing to <ota_1> partition at offset 0x1a0000
+E (103928) esp_https_ota: Incorrect app descriptor magic
+E (103928) sentry: E406 invalid image header - not a firmware file
+I (114908) sentry: [TELEMETRY #2] 21:54:16 up 00:01:54 heap 251KB rssi -46 temp 29.2C depth 41.6m hull 5.2bar batt 24.2V valve closed sonar - watch disarmed alerts 0 state NORMAL
+
+> version
+version
+I (135028) sentry: SENTRY SWM-2 sonar watch module, fw v2.3.0 (build Oct  6 2026 02:15:26)
+I (135028) sentry:   partition: ota_0 @ 0x20000, state: valid
+
+> ota status
+ota status
+I (138248) sentry: [OTA] running:  v2.3.0 in ota_0 (valid)
+I (138248) sentry: [OTA] previous: v2.3.0 in ota_1
+
+> relay status
+relay status
+I (141478) sentry: [VALVE] closed, auto off, cycles 0
+
+> distance
+distance
+E (143948) sentry: E702 sonar: out of range (2-400 cm) - open water?
+W (144908) sentry: [TELEMETRY #3] 21:54:46 up 00:02:24 heap 251KB rssi -48 temp 28.2C depth 41.6m hull 5.2bar batt 24.2V valve closed sonar - watch disarmed alerts 0 state NORMAL WARN sensor error
+W (144908) sentry: [CIC #1 WARNING] telemetry: WARN sensor error
+
+
+=== 2.3.0 fault: truncated ===
+> ota url http://<ip>:8000/test/truncated.bin
+ota url http://<ip>:8000/test/truncated.bin
+I (148928) sentry: [OTA] current v2.3.0 (ota_0) -> target partition ota_1
+I (148928) sentry: [OTA] downloading http://<ip>:8000/test/truncated.bin
+I (148948) esp_https_ota: Starting OTA...
+I (148948) esp_https_ota: Writing to <ota_1> partition at offset 0x1a0000
+I (148948) sentry: [OTA] image: sentry_fw7 v2.3.0 (build Oct  6 2026 02:15:26)
+W (148958) sentry: W409 same version v2.3.0 - reinstalling
+I (149428) sentry: [OTA]  10%
+I (149858) sentry: [OTA]  20%
+I (150278) sentry: [OTA]  30%
+I (150668) sentry: [OTA]  40%
+I (151048) sentry: [OTA]  50%
+I (151468) sentry: [OTA]  60%
+I (151878) sentry: [OTA]  70%
+I (152258) sentry: [OTA]  80%
+I (152658) sentry: [OTA]  90%
+I (152768) sentry: [ACU] ambient noise 68 dB re 1uPa, sea state 2, water 8.1 C
+I (153038) sentry: [OTA] 100%
+I (153038) esp_image: segment 0: paddr=001a0020 vaddr=3c0a0020 size=38158h (229720) map
+I (153068) esp_image: segment 1: paddr=001d8180 vaddr=3fc97200 size=05198h ( 20888) 
+I (153078) esp_image: segment 2: paddr=001dd320 vaddr=40374000 size=02cf8h ( 11512) 
+I (153078) esp_image: segment 3: paddr=001e0020 vaddr=42000020 size=9c08ch (639116) map
+I (153168) esp_image: segment 4: paddr=0027c0b4 vaddr=40376cf8 size=10418h ( 66584) 
+I (153178) esp_image: segment 5: paddr=0028c4d4 vaddr=50000000 size=00024h (    36) 
+E (153178) esp_image: Checksum failed. Calculated 0xd9 read 0x84
+E (153178) esp_ota_ops: New image failed verification
+E (153188) sentry: E412 image validation failed (corrupted image)
+I (174988) sentry: [TELEMETRY #4] 21:55:16 up 00:02:54 heap 251KB rssi -49 temp 28.2C depth 41.7m hull 5.2bar batt 24.2V valve closed sonar - watch disarmed alerts 1 state NORMAL
+
+> version
+version
+I (195118) sentry: SENTRY SWM-2 sonar watch module, fw v2.3.0 (build Oct  6 2026 02:15:26)
+I (195118) sentry:   partition: ota_0 @ 0x20000, state: valid
+
+> ota status
+ota status
+I (198348) sentry: [OTA] running:  v2.3.0 in ota_0 (valid)
+I (198348) sentry: [OTA] previous: v2.3.0 in ota_1
+
+> relay status
+relay status
+I (201578) sentry: [VALVE] closed, auto off, cycles 0
+
+> distance
+distance
+E (204058) sentry: E702 sonar: out of range (2-400 cm) - open water?
+W (205018) sentry: [TELEMETRY #5] 21:55:46 up 00:03:24 heap 251KB rssi -49 temp 28.2C depth 41.7m hull 5.2bar batt 24.2V valve closed sonar - watch disarmed alerts 1 state NORMAL WARN sensor error
+W (205018) sentry: [CIC #2 WARNING] telemetry: WARN sensor error
+
+
+=== 2.3.0 fault: corrupted ===
+> ota url http://<ip>:8000/test/corrupted.bin
+ota url http://<ip>:8000/test/corrupted.bin
+I (209028) sentry: [OTA] current v2.3.0 (ota_0) -> target partition ota_1
+I (209028) sentry: [OTA] downloading http://<ip>:8000/test/corrupted.bin
+I (209048) esp_https_ota: Starting OTA...
+I (209048) esp_https_ota: Writing to <ota_1> partition at offset 0x1a0000
+I (209048) sentry: [OTA] image: sentry_fw7 v2.3.0 (build Oct  6 2026 02:15:26)
+W (209048) sentry: W409 same version v2.3.0 - reinstalling
+I (209878) sentry: [OTA]  10%
+I (210728) sentry: [OTA]  20%
+I (211488) sentry: [OTA]  30%
+I (212318) sentry: [OTA]  40%
+I (213148) sentry: [OTA]  50%
+I (213968) sentry: [OTA]  60%
+I (214798) sentry: [OTA]  70%
+I (215568) sentry: [OTA]  80%
+I (216578) sentry: [OTA]  90%
+I (216858) sentry: [PWR] battery bus 24.19 V, load 1.6 A
+I (217338) sentry: [OTA] 100%
+I (217338) esp_image: segment 0: paddr=001a0020 vaddr=3c0a0020 size=38158h (229720) map
+I (217378) esp_image: segment 1: paddr=001d8180 vaddr=3fc97200 size=05198h ( 20888) 
+I (217378) esp_image: segment 2: paddr=001dd320 vaddr=40374000 size=02cf8h ( 11512) 
+I (217378) esp_image: segment 3: paddr=001e0020 vaddr=42000020 size=9c08ch (639116) map
+I (217468) esp_image: segment 4: paddr=0027c0b4 vaddr=40376cf8 size=10418h ( 66584) 
+I (217478) esp_image: segment 5: paddr=0028c4d4 vaddr=50000000 size=00024h (    36) 
+E (217478) esp_image: Image hash failed - image is corrupt
+E (217478) esp_ota_ops: New image failed verification
+E (217488) sentry: E412 image validation failed (corrupted image)
+I (235098) sentry: [TELEMETRY #6] 21:56:16 up 00:03:54 heap 251KB rssi -51 temp 29.2C depth 41.5m hull 5.2bar batt 24.2V valve closed sonar - watch disarmed alerts 2 state NORMAL
+
+> version
+version
+I (255158) sentry: SENTRY SWM-2 sonar watch module, fw v2.3.0 (build Oct  6 2026 02:15:26)
+I (255158) sentry:   partition: ota_0 @ 0x20000, state: valid
+
+> ota status
+ota status
+I (258378) sentry: [OTA] running:  v2.3.0 in ota_0 (valid)
+I (258378) sentry: [OTA] previous: v2.3.0 in ota_1
+
+> relay status
+relay status
+I (261598) sentry: [VALVE] closed, auto off, cycles 0
+
+> distance
+distance
+E (264078) sentry: E702 sonar: out of range (2-400 cm) - open water?
+W (265118) sentry: [TELEMETRY #7] 21:56:46 up 00:04:24 heap 251KB rssi -51 temp 29.2C depth 41.5m hull 5.2bar batt 24.2V valve closed sonar - watch disarmed alerts 2 state NORMAL WARN sensor error
+W (265118) sentry: [CIC #3 WARNING] telemetry: WARN sensor error
+
+
+=== 2.3.0 fault: drop50 ===
+> ota url http://<ip>:8000/fw7/v2.3.0/sentry_fw7.bin
+ota url http://<ip>:8000/fw7/v2.3.0/sentry_fw7.bin
+I (269108) sentry: [OTA] current v2.3.0 (ota_0) -> target partition ota_1
+I (269108) sentry: [OTA] downloading http://<ip>:8000/fw7/v2.3.0/sentry_fw7.bin
+I (269128) esp_https_ota: Starting OTA...
+I (269128) esp_https_ota: Writing to <ota_1> partition at offset 0x1a0000
+I (269128) sentry: [OTA] image: sentry_fw7 v2.3.0 (build Oct  6 2026 02:15:26)
+W (269138) sentry: W409 same version v2.3.0 - reinstalling
+I (269978) sentry: [OTA]  10%
+I (270818) sentry: [OTA]  20%
+I (271588) sentry: [OTA]  30%
+I (272428) sentry: [OTA]  40%
+W (273168) HTTP_CLIENT: esp_transport_read returned:-1 and errno:128 
+E (273178) transport_base: tcp_read error, errno=Socket is not connected
+W (273178) HTTP_CLIENT: esp_transport_read returned:-2 and errno:128 
+E (273178) HTTP_CLIENT: transport_read: error - 57347 | ERROR
+E (273188) esp_https_ota: data read -1, errno 128
+E (273188) sentry: E410 download interrupted (ESP_FAIL)
+I (292888) sentry: [NAV] depth 41.4 m, heading 278, speed 3.1 kn
+I (295128) sentry: [TELEMETRY #8] 21:57:16 up 00:04:54 heap 251KB rssi -50 temp 29.2C depth 41.4m hull 5.1bar batt 24.2V valve closed sonar - watch disarmed alerts 3 state NORMAL
+
+> version
+version
+I (315248) sentry: SENTRY SWM-2 sonar watch module, fw v2.3.0 (build Oct  6 2026 02:15:26)
+I (315248) sentry:   partition: ota_0 @ 0x20000, state: valid
+
+> ota status
+ota status
+I (318488) sentry: [OTA] running:  v2.3.0 in ota_0 (valid)
+I (318488) sentry: [OTA] previous: v2.3.0 in ota_1
+
+> relay status
+relay status
+I (321708) sentry: [VALVE] closed, auto off, cycles 0
+
+> distance
+distance
+E (324188) sentry: E702 sonar: out of range (2-400 cm) - open water?
+W (325148) sentry: [TELEMETRY #9] 21:57:46 up 00:05:24 heap 251KB rssi -43 temp 29.2C depth 41.4m hull 5.1bar batt 24.2V valve closed sonar - watch disarmed alerts 3 state NORMAL WARN sensor error
+W (325148) sentry: [CIC #4 WARNING] telemetry: WARN sensor error
+

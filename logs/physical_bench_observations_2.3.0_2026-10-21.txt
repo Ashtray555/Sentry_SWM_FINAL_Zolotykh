@@ -1,0 +1,39 @@
+Physical bench observations on 2.3.0 (sanitized). UART excerpts + tester's visual/audible observations.
+Setup: ESP32-S3, COM6 115200 8N1. Relay: 5V low-level module powered from 3.3 V (low voltage only, no mains/load). GPIO4 breadboard LED = valve diode. US-100 sonar.
+Credentials, SSID and IP omitted.
+
+=== A. Lamp (RGB LED) ===
+> lamp mode solid / lamp brightness 80 / lamp color red / lamp on
+[BEACON] color: red (255,0,0); on (command) solid, 80%
+> lamp color green -> [BEACON] color: green (0,255,0)
+> lamp color blue  -> [BEACON] color: blue (0,0,255)
+> lamp off         -> [BEACON] off (command)
+TESTER (second 6 s/colour run): red, green, blue matched the commands.
+TESTER: with lamp off a dim green remains lit. PRD LM-8: when the lamp is off the LED shows system state (NORMAL) -> conforming.
+(First 4 s/colour run: tester asked to repeat; no result recorded from it.)
+
+=== B. Relay ===
+> relay on  (hold 6 s) -> [VALVE] OPEN (command)
+> relay off (hold 4 s) -> [VALVE] CLOSED (command)
+> relay pulse 500      -> [VALVE] OPEN (pulse) / CLOSED (pulse end)   (~0.52 s)
+> relay                -> closed, auto off, cycles 118 -> (start of run was 114; this run +4 = on, off, pulse x2: correct on 2.3.0)
+TESTER: relay clicked on and off matching the commands; GPIO4 LED lit only while the relay was ON.
+Not measured: contact continuity/load (module on 3.3 V, no load connected).
+
+=== C. Sonar vs measured targets (tester-measured distances, hand/flat object) ===
+true 10 cm -> distance 5: 13.3 cm (5/5 ok, stable)  [COLLISION warning raised, < 20 cm per PRD]
+true 20 cm -> distance 5: 16.3 cm avg (5/5 ok)
+true 30 cm -> distance 5: 30.3 cm avg (5/5 ok)
+true 50 cm -> distance 5: 42.5 cm avg (5/5 ok)
+No object: E702 out of range (2-400 cm).
+Assessment: error not monotonic (+3.3, -3.7, +0.3, -7.5 cm). Target placement, US-100 vs HC-SR04 mode and 3.3 V supply are uncontrolled -> INCONCLUSIVE, not filed as a bug.
+Chip temperature during test: 29.2 C.
+
+=== D. Buttons ===
+K1: press -> [BTN] K1 pressed, [BEACON] on (K1); press -> off (K1); hold ~2 s -> [BTN] K1 long press, color: yellow (255,180,0) by K1 (note: lamp also turned on at the start of the hold).
+K2: press -> [VALVE] OPEN (K2); press -> CLOSED (K2); hold ~2 s -> [BTN] K2 long press, OPEN (K2 pulse), CLOSED (pulse end) after ~1.02 s (PRD: 1 s). Cycles 118 -> 122 (+1 per edge).
+K3: press -> [SONAR] active pinging for 30 s, every 500 ms (K3); pings ~600 ms apart; press -> pinging stopped (K3).
+K4 (short press only): [CIC] #4 acknowledged (K4). Unacked: 3.
+Chords: K2+K3 held 2 s -> [STATE] 1 NORMAL -> 2 DEBUG (by buttons); K1+K2 held 2 s -> [STATE] 2 DEBUG -> 1 NORMAL (by buttons).
+Not exercised (safety/relay): K4 hold (PANIC -> relay ON), K3+K4 (VERBOSE), K4+K1 (EMERGENCY).
+Console echo prints some lines twice; these are echoes, not duplicate events (BTN counters advance once).

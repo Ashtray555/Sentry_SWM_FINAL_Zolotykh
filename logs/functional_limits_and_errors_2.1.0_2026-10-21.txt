@@ -1,0 +1,955 @@
+Lamp/relay/sonar/health/state limits and error codes on 2.1.0 (sanitized)
+> whoami
+whoami
+I (97629) sentry: user: <user>, access: user
+
+
+=== LAMP ===
+> lamp off
+lamp off
+W (99919) sentry: W510 lamp already off
+
+   [expect /BEACON|W510/ -> PASS]
+> lamp off
+lamp off
+W (102209) sentry: W510 lamp already off
+
+   [expect /W510/ -> PASS]
+> lamp on
+lamp on
+I (104499) sentry: [BEACON] on (command) rainbow, 100%, color (255,255,255)
+
+   [expect /BEACON/ -> PASS]
+> lamp on
+lamp on
+W (106789) sentry: W510 lamp already on
+
+   [expect /W510/ -> PASS]
+> lamp toggle
+lamp toggle
+I (109089) sentry: [BEACON] off (command)
+
+   [expect /BEACON/ -> PASS]
+> lamp color red
+lamp color red
+I (111389) sentry: [BEACON] color: red (255,0,0)
+I (111499) sentry: [TELEMETRY #1] 22:17:58 up 00:01:51 heap 257KB rssi -41 temp 28.2C depth 42.2m hull 5.2bar batt 24.2V valve closed sonar - state NORMAL
+
+   [expect /red/ -> PASS]
+> lamp color 0 0 0
+lamp color 0 0 0
+I (113809) sentry: [BEACON] color: (0,0,0)
+
+   [expect /\(0,0,0\)|color/ -> PASS]
+> lamp color 255 255 255
+lamp color 255 255 255
+I (116119) sentry: [BEACON] color: (255,255,255)
+
+   [expect /255/ -> PASS]
+> lamp color 256 0 0
+lamp color 256 0 0
+E (118409) sentry: E502 rgb values must be 0-255
+
+   [expect /E502/ -> PASS]
+> lamp color 0 0 -1
+lamp color 0 0 -1
+E (120699) sentry: E502 rgb values must be 0-255
+
+   [expect /E502/ -> PASS]
+> lamp color pink
+lamp color pink
+E (122999) sentry: E503 unknown color 'pink'. Colors: white red green blue yellow purple cyan orange, or 'color R G B'
+
+   [expect /E503/ -> PASS]
+> lamp brightness 0
+lamp brightness 0
+I (125309) sentry: [BEACON] brightness: 0%
+
+   [expect /brightness: 0/ -> PASS]
+> lamp brightness 100
+lamp brightness 100
+I (127619) sentry: [BEACON] brightness: 100%
+
+   [expect /brightness: 100/ -> PASS]
+> lamp brightness 101
+lamp brightness 101
+E (129909) sentry: E504 brightness must be 0-100
+
+   [expect /E504/ -> PASS]
+> lamp brightness -1
+lamp brightness -1
+E (132209) sentry: E504 brightness must be 0-100
+
+   [expect /E504/ -> PASS]
+> lamp brightness abc
+lamp brightness abc
+E (134499) sentry: E504 brightness must be 0-100
+
+   [expect /E504|E5|usage/ -> PASS]
+> lamp mode solid
+lamp mode solid
+I (136799) sentry: [BEACON] mode: solid
+
+   [expect /mode: solid/ -> PASS]
+> lamp mode blink
+lamp mode blink
+I (139099) sentry: [BEACON] mode: blink
+
+   [expect /mode: blink/ -> PASS]
+> lamp mode breathe
+lamp mode breathe
+I (141389) sentry: [BEACON] mode: breathe
+I (141699) sentry: [TELEMETRY #2] 22:18:28 up 00:02:21 heap 257KB rssi -41 temp 28.2C depth 42.2m hull 5.2bar batt 24.2V valve closed sonar - state NORMAL
+
+   [expect /mode: breathe/ -> PASS]
+> lamp mode rainbow
+lamp mode rainbow
+I (143699) sentry: [BEACON] mode: rainbow
+
+   [expect /mode: rainbow/ -> PASS]
+> lamp mode strobe
+lamp mode strobe
+E (145979) sentry: E505 unknown mode 'strobe'. Modes: solid blink breathe rainbow
+
+   [expect /E505/ -> PASS]
+> lamp timer 5
+lamp timer 5
+E (148249) sentry: E507 lamp is off. Use 'lamp on' first
+
+   [expect /auto-off in 5 s/ -> FAIL]
+> lamp timer 3600
+lamp timer 3600
+E (150509) sentry: E507 lamp is off. Use 'lamp on' first
+
+   [expect /3600/ -> PASS]
+> lamp timer 3601
+lamp timer 3601
+E (152769) sentry: E506 timer must be 1-3600 s (0 - cancel)
+
+   [expect /E506/ -> PASS]
+> lamp timer -1
+lamp timer -1
+E (155069) sentry: E506 timer must be 1-3600 s (0 - cancel)
+
+   [expect /E506|usage/ -> PASS]
+> lamp timer 0
+lamp timer 0
+I (157349) sentry: [BEACON] timer cancelled
+
+   [expect /BEACON|timer/ -> PASS]
+> lamp off
+lamp off
+W (159639) sentry: W510 lamp already off
+I (161709) sentry: [ACU] ambient noise 74 dB re 1uPa, sea state 2, water 8.0 C
+
+   [expect /BEACON/ -> FAIL]
+> lamp timer 10
+lamp timer 10
+E (162129) sentry: E507 lamp is off. Use 'lamp on' first
+
+   [expect /E507/ -> PASS]
+> lamp scene save 0
+lamp scene save 0
+E (164389) sentry: E508 scene must be 1-3
+
+   [expect /E508/ -> PASS]
+> lamp scene save 4
+lamp scene save 4
+E (166669) sentry: E508 scene must be 1-3
+
+   [expect /E508/ -> PASS]
+> lamp scene load 0
+lamp scene load 0
+E (168959) sentry: E508 scene must be 1-3
+
+   [expect /E508/ -> PASS]
+> lamp scene load 3
+lamp scene load 3
+E (171249) sentry: E509 scene 3 is empty. Use 'lamp scene save 3'
+I (171699) sentry: [TELEMETRY #3] 22:18:58 up 00:02:51 heap 257KB rssi -43 temp 28.2C depth 42.1m hull 5.2bar batt 24.2V valve closed sonar - state NORMAL
+
+   [expect /E509|scene 3/ -> PASS]
+> lamp scene save 2
+lamp scene save 2
+I (173689) sentry: [BEACON] scene 2 saved
+
+   [expect /saved/ -> PASS]
+> lamp scene load 2
+lamp scene load 2
+I (175969) sentry: [BEACON] scene 2 loaded: (255,255,255) 100% rainbow
+
+   [expect /loaded|scene 2/ -> PASS]
+> lamp status
+lamp status
+I (178249) sentry: [BEACON] off, color (255,255,255), brightness 100%, mode rainbow, timer off
+
+   [expect /brightness/ -> PASS]
+> lamp on
+lamp on
+I (180519) sentry: [BEACON] on (command) rainbow, 100%, color (255,255,255)
+
+   [expect /BEACON/ -> PASS]
+> lamp timer 3
+lamp timer 3
+I (182819) sentry: [BEACON] auto-off in 3 ms
+
+   [expect /auto-off in 3 s/ -> FAIL]
+> lamp status
+lamp status
+I (189099) sentry: [BEACON] off, color (255,255,255), brightness 100%, mode rainbow, timer off
+
+   [expect /off/ -> PASS]
+
+=== RELAY ===
+> relay off
+relay off
+W (191389) sentry: W601 relay already off
+
+   [expect /valve|W601|RELAY/ -> PASS]
+> relay off
+relay off
+W (193679) sentry: W601 relay already off
+
+   [expect /W601/ -> PASS]
+> relay status
+relay status
+I (195949) sentry: [VALVE] closed, auto off, cycles 30
+
+   [expect /cycles/ -> PASS]
+> relay on
+relay on
+I (199419) sentry: [VALVE] OPEN (command)
+
+   [expect /valve|RELAY|open/ -> FAIL]
+> relay on
+relay on
+W (201699) sentry: W601 relay already on
+I (201699) sentry: [TELEMETRY #4] 22:19:28 up 00:03:21 heap 257KB rssi -43 temp 28.2C depth 42.1m hull 5.2bar batt 24.2V valve open sonar - state NORMAL
+
+   [expect /W601/ -> PASS]
+> relay off
+relay off
+I (205219) sentry: [VALVE] CLOSED (command)
+
+   [expect /valve|RELAY|clos/ -> FAIL]
+> relay status
+relay status
+I (207499) sentry: [VALVE] closed, auto off, cycles 34
+
+   [expect /cycles/ -> PASS]
+   cycles before: sentry: [VALVE] closed, auto off, cycles 30
+=== rapid toggles x3 ===
+relay on
+I (209689) sentry: [VALVE] OPEN (command)
+relay off
+I (209699) sentry: [VALVE] CLOSED (command)
+relay on
+E (209799) sentry: E602 relay switching too fast (max 2 per second)
+
+> relay off
+relay off
+W (214289) sentry: W601 relay already off
+
+   [expect /valve|W601|RELAY/ -> PASS]
+> relay pulse 99
+relay pulse 99
+I (217779) sentry: [VALVE] OPEN (pulse)
+I (217909) sentry: [VALVE] CLOSED (pulse end)
+
+   [expect /E603/ -> FAIL]
+> relay pulse 0
+relay pulse 0
+E (220199) sentry: E603 pulse must be 100-10000 ms
+
+   [expect /E603/ -> PASS]
+> relay pulse -5
+relay pulse -5
+E (222499) sentry: E603 pulse must be 100-10000 ms
+
+   [expect /E603|usage/ -> PASS]
+> relay pulse 10001
+relay pulse 10001
+E (224789) sentry: E603 pulse must be 100-10000 ms
+
+   [expect /E603/ -> PASS]
+> relay pulse abc
+relay pulse abc
+E (227069) sentry: E603 pulse must be 100-10000 ms
+I (228709) sentry: [PWR] battery bus 24.19 V, load 1.8 A
+
+   [expect /E603|usage|E6/ -> PASS]
+> relay pulse 100
+relay pulse 100
+I (229449) sentry: [VALVE] OPEN (pulse)
+I (229579) sentry: [VALVE] CLOSED (pulse end)
+
+   [expect /pulse|RELAY|valve/ -> PASS]
+> relay pulse 10000
+relay pulse 10000
+I (232749) sentry: [VALVE] OPEN (pulse)
+
+   [expect /pulse|RELAY|valve/ -> PASS]
+> relay pulse 500
+relay pulse 500
+E (234419) sentry: E604 relay is already on - pulse not possible
+
+   [expect /E604/ -> PASS]
+> relay schedule 1 5
+relay schedule 1 5
+E (246079) sentry: E606 usage: relay schedule <on 2-3600 s> <off 2-3600 s> | off
+
+   [expect /E606/ -> PASS]
+> relay schedule 5 1
+relay schedule 5 1
+E (248369) sentry: E606 usage: relay schedule <on 2-3600 s> <off 2-3600 s> | off
+
+   [expect /E606/ -> PASS]
+> relay schedule 3601 5
+relay schedule 3601 5
+E (250659) sentry: E606 usage: relay schedule <on 2-3600 s> <off 2-3600 s> | off
+
+   [expect /E606/ -> PASS]
+> relay schedule off
+relay schedule off
+W (252939) sentry: W605 schedule is not running
+
+   [expect /W605/ -> PASS]
+> relay schedule 2 2
+relay schedule 2 2
+I (255229) sentry: [VALVE] schedule: 2 s on / 2 s off
+I (255229) sentry: [VALVE] OPEN (schedule)
+I (257259) sentry: [VALVE] CLOSED (schedule)
+
+   [expect /schedule|RELAY/ -> PASS]
+> relay status
+relay status
+I (262689) sentry: [VALVE] closed, auto off, cycles 58, schedule 2 s on / 2 s off
+I (263279) sentry: [VALVE] OPEN (schedule)
+
+   [expect /cycles/ -> PASS]
+> relay schedule off
+relay schedule off
+I (264939) sentry: [VALVE] schedule stopped
+
+   [expect /schedule|RELAY|stop/ -> PASS]
+> relay auto on
+relay auto on
+I (267229) sentry: [VALVE] auto on - valve opens on sonar proximity alarm
+
+   [expect /auto/ -> PASS]
+> relay auto off
+relay auto off
+I (269529) sentry: [VALVE] auto off - valve ignores on sonar proximity alarm
+
+   [expect /auto/ -> PASS]
+> relay health
+relay health
+I (271829) sentry: [VALVE] seal: 60 / 100000 cycles, wear 0.06% (good)
+I (271829) sentry: [VALVE] solenoid: OK, contact resistance: 45 mOhm
+
+   [expect /wear|coil|health|contact/ -> PASS]
+> relay foo
+relay foo
+E (274109) sentry: E600 usage: relay on|off|toggle|status|pulse <ms>|schedule <on> <off>|off|auto on|off|health
+
+   [expect /usage|E0|E6|unknown/ -> PASS]
+
+=== DISTANCE ===
+> distance
+distance
+E (276589) sentry: E702 sonar: out of range (2-400 cm) - open water?
+
+   [expect /SONAR|E70/ -> PASS]
+> distance 0
+distance 0
+E (280419) sentry: E704 count must be 1-20
+
+   [expect /E704/ -> PASS]
+> distance 21
+distance 21
+E (282709) sentry: E704 count must be 1-20
+
+   [expect /E704/ -> PASS]
+> distance -1
+distance -1
+E (284999) sentry: E704 count must be 1-20
+
+   [expect /E704|usage/ -> PASS]
+> distance abc
+distance abc
+E (287289) sentry: E703 usage: distance [N]|log [ms]|stop|calibrate <cm>|reset|alarm <cm>|off|filter on|off|stats|history
+
+   [expect /E704|usage|E7/ -> PASS]
+> distance 1
+distance 1
+E (289769) sentry: E702 sonar: out of range (2-400 cm) - open water?
+I (292129) sentry: [TELEMETRY #7] 22:20:59 up 00:04:51 heap 257KB rssi -41 temp 28.2C depth 41.7m hull 5.2bar batt 24.2V valve open sonar - state NORMAL
+
+   [expect /SONAR|E70/ -> PASS]
+> distance 20
+distance 20
+E (293809) sentry: E704 count must be 1-20
+W (307729) sentry: [ACU] biologics detected (snapping shrimp), passive filter on
+
+   [expect /SONAR|E70|average|avg/ -> PASS]
+> distance log 99
+distance log 99
+E (319049) sentry: E705 interval must be 100-5000 ms
+
+   [expect /E705/ -> PASS]
+> distance log 5001
+distance log 5001
+E (321329) sentry: E705 interval must be 100-5000 ms
+I (322129) sentry: [TELEMETRY #8] 22:21:29 up 00:05:21 heap 257KB rssi -40 temp 28.2C depth 41.8m hull 5.2bar batt 24.2V valve open sonar - state NORMAL
+
+   [expect /E705/ -> PASS]
+> distance log 100
+distance log 100
+I (323809) sentry: [SONAR] continuous pinging every 100 ms (command). 'distance stop' to stop
+I (323809) sentry: [SONAR] valve OPEN - proximity indicator: diode blinks faster when contact is closer
+I (323899) sentry: [SONAR] ping: echo 22.5 cm
+I (324049) sentry: [SONAR] ping: echo 22.5 cm
+I (324199) sentry: [SONAR] ping: echo 22.5 cm
+I (324349) sentry: [SONAR] ping: echo 22.5 cm
+I (324499) sentry: [SONAR] ping: echo 22.5 cm
+I (324649) sentry: [SONAR] ping: echo 22.5 cm
+I (324799) sentry: [SONAR] ping: echo 22.5 cm
+I (324949) sentry: [SONAR] ping: echo 22.5 cm
+I (325099) sentry: [SONAR] ping: echo 22.5 cm
+I (325249) sentry: [SONAR] ping: echo 22.5 cm
+I (325399) sentry: [SONAR] ping: echo 22.5 cm
+I (325549) sentry: [SONAR] ping: echo 22.5 cm
+I (325699) sentry: [SONAR] ping: echo 22.5 cm
+I (325849) sentry: [SONAR] ping: echo 22.5 cm
+I (325999) sentry: [SONAR] ping: echo 22.5 cm
+I (326149) sentry: [SONAR] ping: echo 22.5 cm
+E (326419) sentry: E701 sonar: no echo (check transducer wiring TRIG 5 / ECHO 18)
+I (326569) sentry: [SONAR] ping: echo 22.5 cm
+I (326719) sentry: [SONAR] ping: echo 22.5 cm
+I (326869) sentry: [SONAR] ping: echo 22.5 cm
+I (327019) sentry: [SONAR] ping: echo 22.5 cm
+I (327169) sentry: [SONAR] ping: echo 22.5 cm
+I (327319) sentry: [SONAR] ping: echo 22.5 cm
+I (327469) sentry: [SONAR] ping: echo 22.5 cm
+I (327619) sentry: [SONAR] ping: echo 22.5 cm
+I (327769) sentry: [SONAR] ping: echo 22.5 cm
+I (327919) sentry: [SONAR] ping: echo 22.5 cm
+I (328069) sentry: [SONAR] ping: echo 22.5 cm
+I (328219) sentry: [SONAR] ping: echo 22.5 cm
+I (328369) sentry: [SONAR] ping: echo 22.5 cm
+I (328519) sentry: [SONAR] ping: echo 22.5 cm
+I (328669) sentry: [SONAR] ping: echo 22.5 cm
+I (328819) sentry: [SONAR] ping: echo 22.5 cm
+I (328969) sentry: [SONAR] ping: echo 22.5 cm
+I (329119) sentry: [SONAR] ping: echo 22.5 cm
+E (329389) sentry: E701 sonar: no echo (check transducer wiring TRIG 5 / ECHO 18)
+I (329539) sentry: [SONAR] ping: echo 22.5 cm
+I (329689) sentry: [SONAR] ping: echo 22.5 cm
+I (329839) sentry: [SONAR] ping: echo 22.5 cm
+I (329989) sentry: [SONAR] ping: echo 22.5 cm
+I (330139) sentry: [SONAR] ping: echo 22.5 cm
+I (330289) sentry: [SONAR] ping: echo 22.5 cm
+I (330439) sentry: [SONAR] ping: echo 22.5 cm
+I (330589) sentry: [SONAR] ping: echo 22.5 cm
+I (330739) sentry: [SONAR] ping: echo 22.5 cm
+I (330889) sentry: [SONAR] ping: echo 22.5 cm
+I (331039) sentry: [SONAR] ping: echo 22.5 cm
+I (331189) sentry: [SONAR] ping: echo 22.5 cm
+I (331339) sentry: [SONAR] ping: echo 22.5 cm
+I (331489) sentry: [SONAR] ping: echo 22.5 cm
+I (331639) sentry: [SONAR] ping: echo 22.5 cm
+I (331789) sentry: [SONAR] ping: echo 22.5 cm
+I (331939) sentry: [SONAR] ping: echo 22.5 cm
+I (332089) sentry: [SONAR] ping: echo 22.5 cm
+E (332359) sentry: E701 sonar: no echo (check transducer wiring TRIG 5 / ECHO 18)
+I (332509) sentry: [SONAR] ping: echo 22.5 cm
+I (332659) sentry: [SONAR] ping: echo 22.5 cm
+I (332809) sentry: [SONAR] ping: echo 22.5 cm
+I (332959) sentry: [SONAR] ping: echo 22.5 cm
+I (333109) sentry: [SONAR] ping: echo 22.5 cm
+I (333259) sentry: [SONAR] ping: echo 22.5 cm
+I (333409) sentry: [SONAR] ping: echo 22.5 cm
+I (333569) sentry: [SONAR] ping: echo 22.5 cm
+I (333719) sentry: [SONAR] ping: echo 22.5 cm
+I (333869) sentry: [SONAR] ping: echo 22.5 cm
+I (334019) sentry: [SONAR] ping: echo 22.5 cm
+I (334169) sentry: [SONAR] ping: echo 22.5 cm
+I (334319) sentry: [SONAR] ping: echo 22.5 cm
+I (334469) sentry: [SONAR] ping: echo 22.5 cm
+I (334619) sentry: [SONAR] ping: echo 22.5 cm
+I (334769) sentry: [SONAR] ping: echo 22.5 cm
+I (334919) sentry: [SONAR] ping: echo 22.5 cm
+I (335069) sentry: [SONAR] ping: echo 22.5 cm
+I (335219) sentry: [SONAR] ping: echo 22.5 cm
+I (335369) sentry: [SONAR] ping: echo 22.5 cm
+I (335519) sentry: [SONAR] ping: echo 22.5 cm
+I (335669) sentry: [SONAR] ping: echo 22.5 cm
+I (335819) sentry: [SONAR] ping: echo 22.5 cm
+I (33596
+   [expect /SONAR|log|E70/ -> PASS]
+> distance 2
+distance 2
+E (336079) sentry: E711 measuring is running. Use 'distance stop'
+E (336209) sentry: E701 sonar: no echo (check transducer wiring TRIG 5 / ECHO 18)
+I (336359) sentry: [SONAR] ping: echo 22.5 cm
+I (336539) sentry: [SONAR] ping: echo 22.5 cm
+I (336749) sentry: [SONAR] ping: echo 22.5 cm
+I (336899) sentry: [SONAR] ping: echo 22.5 cm
+I (337049) sentry: [SONAR] ping: echo 22.5 cm
+I (337199) sentry: [SONAR] ping: echo 22.5 cm
+E (337439) sentry: E701 sonar: no echo (check transducer wiring TRIG 5 / ECHO 18)
+I (337589) sentry: [SONAR] ping: echo 22.5 cm
+I (337769) sentry: [SONAR] ping: echo 22.5 cm
+I (337979) sentry: [SONAR] ping: echo 22.5 cm
+I (338129) sentry: [SONAR] ping: echo 22.5 cm
+I (338279) sentry: [SONAR] ping: echo 22.5 cm
+I (338429) sentry: [SONAR] ping: echo 22.5 cm
+E (338669) sentry: E701 sonar: no echo (check transducer wiring TRIG 5 / ECHO 18)
+I (338819) sentry: [SONAR] ping: echo 22.5 cm
+I (338969) sentry: [SONAR] ping: echo 22.5 cm
+I (339119) sentry: [SONAR] ping: echo 22.5 cm
+I (339269) sentry: [SONAR] ping: echo 22.5 cm
+I (339419) sentry: [SONAR] ping: echo 22.5 cm
+I (339569) sentry: [SONAR] ping: echo 22.5 cm
+I (339719) sentry: [SONAR] ping: echo 22.5 cm
+I (339869) sentry: [SONAR] ping: echo 22.5 cm
+I (340019) sentry: [SONAR] ping: echo 22.5 cm
+I (340169) sentry: [SONAR] ping: echo 22.5 cm
+I (340319) sentry: [SONAR] ping: echo 22.5 cm
+I (340469) sentry: [SONAR] ping: echo 22.5 cm
+I (340619) sentry: [SONAR] ping: echo 22.5 cm
+I (340769) sentry: [SONAR] ping: echo 22.5 cm
+I (340919) sentry: [SONAR] ping: echo 22.5 cm
+I (341069) sentry: [SONAR] ping: echo 22.5 cm
+I (341219) sentry: [SONAR] ping: echo 22.5 cm
+I (341369) sentry: [SONAR] ping: echo 22.5 cm
+I (341519) sentry: [SONAR] ping: echo 22.5 cm
+E (341809) sentry: E702 sonar: out of range (2-400 cm) - open water?
+E (342049) sentry: E701 sonar: no echo (check transducer wiring TRIG 5 / ECHO 18)
+I (342199) sentry: [SONAR] ping: echo 22.5 cm
+I (342349) sentry: [SONAR] ping: echo 22.5 cm
+I (342499) sentry: [SONAR] ping: echo 22.5 cm
+I (342649) sentry: [SONAR] ping: echo 22.5 cm
+E (342939) sentry: E702 sonar: out of range (2-400 cm) - open water?
+I (343089) sentry: [SONAR] ping: echo 22.5 cm
+I (343239) sentry: [SONAR] ping: echo 22.5 cm
+I (343389) sentry: [SONAR] ping: echo 22.5 cm
+I (343539) sentry: [SONAR] ping: echo 22.5 cm
+I (343689) sentry: [SONAR] ping: echo 22.5 cm
+I (343839) sentry: [SONAR] ping: echo 22.5 cm
+I (343989) sentry: [SONAR] ping: echo 22.5 cm
+I (344139) sentry: [SONAR] ping: echo 22.5 cm
+I (344289) sentry: [SONAR] ping: echo 22.5 cm
+I (344439) sentry: [SONAR] ping: echo 22.5 cm
+I (344589) sentry: [SONAR] ping: echo 22.5 cm
+I (344739) sentry: [SONAR] ping: echo 22.5 cm
+I (344889) sentry: [SONAR] ping: echo 22.5 cm
+I (345049) sentry: [SONAR] ping: echo 22.5 cm
+I (345199) sentry: [SONAR] ping: echo 22.5 cm
+I (345349) sentry: [SONAR] ping: echo 22.5 cm
+I (345499) sentry: [SONAR] ping: echo 22.5 cm
+I (345649) sentry: [SONAR] ping: echo 22.5 cm
+I (345799) sentry: [SONAR] ping: echo 22.5 cm
+I (345949) sentry: [SONAR] ping: echo 22.5 cm
+I (346099) sentry: [SONAR] ping: echo 22.5 cm
+I (346309) sentry: [SONAR] ping: echo 22.5 cm
+I (346489) sentry: [SONAR] ping: echo 22.5 cm
+I (346639) sentry: [SONAR] ping: echo 22.5 cm
+E (346929) sentry: E702 sonar: out of range (2-400 cm) - open water?
+I (347089) sentry: [SONAR] ping: echo 22.5 cm
+I (347239) sentry: [SONAR] ping: echo 22.5 cm
+I (347389) sentry: [SONAR] ping: echo 22.5 cm
+I (347539) sentry: [SONAR] ping: echo 22.5 cm
+I (347689) sentry: [SONAR] ping: echo 22.5 cm
+I (347839) sentry: [SONAR] ping: echo 22.5 cm
+I (348049) sentry: [SONAR] ping: echo 22.5 cm
+I (348229) sentry: [SONAR] ping: echo 22.5 cm
+I (348379) sentry: [SONAR] ping: echo 22.5 cm
+I (348529) sentry: [SONAR] ping: echo 22.5 cm
+I (348679) sentry: [SONAR] ping: echo 22.5 cm
+E (348949) sentry: E701 sonar: no echo (check transducer wiring TRIG 5 / ECHO 18)
+I (349
+   [expect /E711/ -> PASS]
+> distance stop
+distance stop
+I (349209) sentry: [SONAR] pinging stopped (command)
+E (349389) sentry: E702 sonar: out of range (2-400 cm) - open water?
+
+   [expect /stop|SONAR|W710/ -> PASS]
+> distance stop
+distance stop
+W (351979) sentry: W710 measuring is not running
+I (352309) sentry: [TELEMETRY #9] 22:21:59 up 00:05:51 heap 257KB rssi -58 temp 28.2C depth 41.8m hull 5.2bar batt 24.2V valve open sonar 22.5cm state NORMAL
+
+   [expect /W710/ -> PASS]
+> distance log 5000
+distance log 5000
+I (354309) sentry: [SONAR] continuous pinging every 5000 ms (command). 'distance stop' to stop
+I (354309) sentry: [SONAR] valve OPEN - proximity indicator: diode blinks faster when contact is closer
+I (354389) sentry: [SONAR] ping: echo 22.5 cm
+
+   [expect /SONAR|log/ -> PASS]
+> distance stop
+distance stop
+I (356049) sentry: [SONAR] pinging stopped (command)
+
+   [expect /stop|SONAR/ -> PASS]
+> distance calibrate 4
+distance calibrate 4
+E (359579) sentry: E706 usage: distance calibrate <ref 5-300 cm>
+
+   [expect /E706|E707/ -> PASS]
+> distance calibrate 301
+distance calibrate 301
+E (361869) sentry: E706 usage: distance calibrate <ref 5-300 cm>
+
+   [expect /E706|E707/ -> PASS]
+> distance calibrate reset
+distance calibrate reset
+E (364149) sentry: E706 usage: distance calibrate <ref 5-300 cm>
+
+   [expect /reset|calib|SONAR/ -> PASS]
+> distance alarm 4
+distance alarm 4
+E (366429) sentry: E708 alarm must be 5-300 cm or 'off'
+
+   [expect /E708/ -> PASS]
+> distance alarm 301
+distance alarm 301
+E (368719) sentry: E708 alarm must be 5-300 cm or 'off'
+
+   [expect /E708/ -> PASS]
+> distance alarm 5
+distance alarm 5
+I (371019) sentry: [SONAR] alarm at 5 cm
+
+   [expect /alarm|SONAR/ -> PASS]
+> distance alarm 300
+distance alarm 300
+I (373319) sentry: [SONAR] alarm at 300 cm
+
+   [expect /alarm|SONAR/ -> PASS]
+> distance alarm off
+distance alarm off
+I (375629) sentry: [SONAR] alarm off
+
+   [expect /off|SONAR/ -> PASS]
+> distance filter off
+distance filter off
+I (377919) sentry: [SONAR] filter off
+
+   [expect /filter/ -> PASS]
+> distance filter on
+distance filter on
+I (380209) sentry: [SONAR] filter on (median of 5)
+
+   [expect /filter/ -> PASS]
+> distance stats
+distance stats
+I (382489) sentry: [SONAR] measurements 148, errors 14, min 22.5, max 22.5, avg 22.5 cm
+I (382489) sentry: [SONAR] calibration +0.0 cm, filter median 5, alarm off
+I (382509) sentry: [TELEMETRY #10] 22:22:29 up 00:06:22 heap 257KB rssi -56 temp 28.2C depth 41.8m hull 5.2bar batt 24.2V valve open sonar 22.5cm state NORMAL
+
+   [expect /SONAR/ -> PASS]
+> distance history
+distance history
+I (384799) sentry: [SONAR] last 10 measurements:
+I (384799) sentry:    1. 22:21:54  22.5 cm
+I (384799) sentry:    2. 22:21:54  22.5 cm
+I (384799) sentry:    3. 22:21:54  22.5 cm
+I (384799) sentry:    4. 22:21:55  22.5 cm
+I (384799) sentry:    5. 22:21:55  22.5 cm
+I (384809) sentry:    6. 22:21:55  22.5 cm
+I (384809) sentry:    7. 22:21:55  22.5 cm
+I (384819) sentry:    8. 22:21:55  22.5 cm
+I (384819) sentry:    9. 22:21:56  22.5 cm
+I (384819) sentry:   10. 22:22:01  22.5 cm
+
+   [expect /SONAR|history/ -> PASS]
+
+=== HEALTH ===
+> health interval 9
+health interval 9
+E (387119) sentry: E902 interval must be 10-300 s
+
+   [expect /E902/ -> PASS]
+> health interval 301
+health interval 301
+E (389399) sentry: E902 interval must be 10-300 s
+
+   [expect /E902/ -> PASS]
+> health interval 10
+health interval 10
+I (391699) sentry: [TELEMETRY] interval 10 s
+
+   [expect /10/ -> PASS]
+> health interval 300
+health interval 300
+E (393989) sentry: E902 interval must be 10-300 s
+
+   [expect /300/ -> PASS]
+> health interval abc
+health interval abc
+E (396269) sentry: E902 interval must be 10-300 s
+I (396829) sentry: [NAV] depth 42.0 m, heading 272, speed 2.9 kn
+
+   [expect /E902|usage/ -> PASS]
+> health off
+health off
+I (398499) sentry: [TELEMETRY] auto report off
+
+   [expect /off|TELEMETRY/ -> PASS]
+> health off
+health off
+W (400779) sentry: W901 health check already off
+
+   [expect /W901/ -> PASS]
+> health on
+health on
+I (403069) sentry: [TELEMETRY] auto report on
+
+   [expect /on|TELEMETRY/ -> PASS]
+> health on
+health on
+W (405359) sentry: W901 health check already on
+
+   [expect /W901/ -> PASS]
+> health now
+health now
+I (407639) sentry: [TELEMETRY #11] 22:22:54 up 00:06:47 heap 257KB rssi -40 temp 28.2C depth 42.0m hull 5.2bar batt 24.2V valve open sonar 22.5cm state NORMAL
+
+   [expect /TELEMETRY/ -> PASS]
+> health interval 30
+health interval 30
+I (410869) sentry: [TELEMETRY] interval 30 s
+
+   [expect /30/ -> PASS]
+> health
+health
+I (413159) sentry: [TELEMETRY] auto on, interval 30 s (now 30 s in NORMAL)
+
+   [expect /interval|auto/ -> PASS]
+
+=== MALFORMED INPUT ===
+> foobar
+foobar
+E (415439) sentry: E001 unknown command 'foobar'. Type 'help'
+
+   [expect /E001|unknown/ -> PASS]
+> LAMP ON
+LAMP ON
+E (417719) sentry: E501 usage: lamp on|off|toggle|status|color <name|R G B>|brightness <0-100>|mode <m>|timer <s>|scene save|load <1-3>
+
+   [expect /BEACON|W510|E001/ -> FAIL]
+> 
+
+
+   [expect /.*/ -> PASS]
+> lamp
+lamp
+I (422509) sentry: [BEACON] off, color (255,255,255), brightness 100%, mode rainbow, timer off
+
+   [expect /usage|E5|status|BEACON|E0/ -> PASS]
+> relay
+relay
+I (424799) sentry: [VALVE] OPEN, auto off, cycles 60
+
+   [expect /usage|E6|status|E0/ -> FAIL]
+> xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+E (427109) sentry: E001 unknown command 'xxxxxxxxxxxxxxxxxxxxxxx'. Type 'help'
+
+   [expect /E001|unknown|E0/ -> PASS]
+> lamp color aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+lamp color aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+E (429419) sentry: E503 unknown color 'aaaaaaaaaaaaaaa'. Colors: white red green blue yellow purple cyan orange, or 'color R G B'
+
+   [expect /E503|E5|E0/ -> PASS]
+> lamp on; relay on
+lamp on; relay on
+E (431719) sentry: E501 usage: lamp on|off|toggle|status|color <name|R G B>|brightness <0-100>|mode <m>|timer <s>|scene save|load <1-3>
+
+   [expect /E0|E5|BEACON|W510|usage/ -> PASS]
+> version
+version
+I (434009) sentry: SENTRY SWM-2 sonar watch module, fw v2.1.0 (build Oct  6 2026 02:14:57)
+I (434009) sentry:   partition: ota_1 @ 0x1a0000, state: valid
+
+   [expect /v2\.[13]\.0/ -> PASS]
+> lamp off
+lamp off
+W (436299) sentry: W510 lamp already off
+
+   [expect /BEACON|W510/ -> PASS]
+> relay off
+relay off
+I (438599) sentry: [VALVE] CLOSED (command)
+
+   [expect /valve|W601|RELAY/ -> FAIL]
+
+=== STATES ===
+> state
+state
+I (440889) sentry: state: 1 NORMAL
+I (440889) sentry:   1 normal (patrol) | 2 debug (maintenance) | 3 verbose (tactical) | 4 emergency (surfacing, only from 3)
+I (440909) sentry: [TELEMETRY #12] 22:23:28 up 00:07:20 heap 257KB rssi -40 temp 28.2C depth 42.0m hull 5.2bar batt 24.2V valve closed sonar - state NORMAL
+
+   [expect /NORMAL/ -> PASS]
+> state 4
+state 4
+E (443209) sentry: E302 EMERGENCY can be entered only from 3 VERBOSE (now 1 NORMAL)
+
+   [expect /E302/ -> PASS]
+> state 1
+state 1
+W (445499) sentry: W303 already in 1 NORMAL
+
+   [expect /W303/ -> PASS]
+> state 3
+state 3
+W (447789) sentry: [STATE] 1 NORMAL -> 3 VERBOSE (by command)
+I (447789) sentry: [STATE] VERBOSE (tactical): extended logs, telemetry every 10 s, LED heartbeat
+I (447789) sentry: [V] 'state' done in 3 ms
+I (447829) sentry: [ACU] ambient noise 64 dB re 1uPa, sea state 2, water 8.1 C
+
+   [expect /VERBOSE/ -> PASS]
+> state 3
+state 3
+W (450129) sentry: W303 already in 3 VERBOSE
+I (450129) sentry: [V] 'state' done in 0 ms
+
+   [expect /W303/ -> PASS]
+> state 9
+state 9
+E (452409) sentry: E301 unknown state '9'. Use 1-4 or normal/debug/verbose/emergency
+I (452409) sentry: [V] 'state' done in 0 ms
+
+   [expect /E30|usage/ -> PASS]
+> state foo
+state foo
+E (454699) sentry: E301 unknown state 'foo'. Use 1-4 or normal/debug/verbose/emergency
+I (454699) sentry: [V] 'state' done in 0 ms
+
+   [expect /E30|usage/ -> PASS]
+> state 2
+state 2
+W (456989) sentry: [STATE] 3 VERBOSE -> 2 DEBUG (by command)
+I (456989) sentry: [STATE] DEBUG (maintenance): raw transducer data, LED blink codes, parser diagnostics
+I (456989) sentry: [V] 'state' done in 3 ms
+I (457829) sentry: [PWR] battery bus 24.18 V, load 1.5 A
+I (458109) sentry: [TELEMETRY #13] 22:23:45 up 00:07:37 heap 257KB rssi -55 temp 28.2C depth 42.0m hull 5.2bar batt 24.2V valve closed sonar - state DEBUG
+
+   [expect /DEBUG/ -> PASS]
+> logout
+logout
+I (459469) sentry: [DBG] cmd 'logout' args '' need 0
+I (459469) sentry: [AUTH] operator <user> relieved from watch
+W (459469) sentry: [STATE] 2 DEBUG -> 1 NORMAL (by logout)
+I (459829) sentry: [NAV] depth 41.9 m, heading 272, speed 2.6 kn
+
+   [expect /relieved/ -> PASS]
+> login <user> <pw>
+login <user> <pw>
+I (461809) sentry: [AUTH] operator <user> on watch, console 2
+I (461909) sentry: [TELEMETRY] auto report every 30 s ('health off' to stop)
+
+   [expect /on watch/ -> PASS]
+> state
+state
+I (464829) sentry: state: 1 NORMAL
+I (464829) sentry:   1 normal (patrol) | 2 debug (maintenance) | 3 verbose (tactical) | 4 emergency (surfacing, only from 3)
+
+   [expect /NORMAL/ -> PASS]
+> state 3
+state 3
+W (467139) sentry: [STATE] 1 NORMAL -> 3 VERBOSE (by command)
+I (467139) sentry: [STATE] VERBOSE (tactical): extended logs, telemetry every 10 s, LED heartbeat
+I (467139) sentry: [V] 'state' done in 3 ms
+I (467829) sentry: [ACU] ambient noise 64 dB re 1uPa, sea state 2, water 8.1 C
+
+   [expect /VERBOSE/ -> PASS]
+> state 4
+state 4
+W (469489) sentry: [STATE] 3 VERBOSE -> 4 EMERGENCY (by command)
+E (469489) sentry: [EMERGENCY] EMERGENCY SURFACING. Module locked. Allowed: help, status, whoami, version, health now, reboot. Exit: reboot only
+W (469829) sentry: [NAV] EMERGENCY BLOW: depth 41.8 m, ascending
+
+   [expect /EMERGENCY/ -> PASS]
+> lamp on
+lamp on
+E (471489) sentry: E005 'lamp on' blocked in EMERGENCY
+E (471489) sentry: [EMERGENCY] transducer driver temp rising: 28.2 C -> 37.6 C (invalid: 1)
+
+   [expect /E005|E001|EMERGENCY/ -> PASS]
+> relay on
+relay on
+E (473779) sentry: E005 'relay on' blocked in EMERGENCY
+E (473779) sentry: [EMERGENCY] transducer driver temp rising: 37.6 C -> 45.2 C (invalid: 2)
+W (474709) sentry: [TELEMETRY #14] 22:24:01 up 00:07:54 heap 257KB rssi -54 temp 45.2C depth 41.1m hull 5.1bar batt 24.2V valve closed sonar - state EMERGENCY
+W (475829) sentry: [NAV] EMERGENCY BLOW: depth 40.8 m, ascending
+
+   [expect /E005|E001|EMERGENCY/ -> PASS]
+> state 1
+state 1
+E (476239) sentry: E304 EMERGENCY can be left only by reboot
+
+   [expect /E304/ -> PASS]
+> health now
+health now
+W (478539) sentry: [TELEMETRY #15] 22:24:05 up 00:07:58 heap 257KB rssi -41 temp 45.2C depth 40.6m hull 5.1bar batt 24.2V valve closed sonar - state EMERGENCY
+W (479709) sentry: [TELEMETRY #16] 22:24:06 up 00:07:59 heap 257KB rssi -55 temp 45.2C depth 40.4m hull 5.0bar batt 24.2V valve closed sonar - state EMERGENCY
+W (480829) sentry: [NAV] EMERGENCY BLOW: depth 40.1 m, ascending
+
+   [expect /TELEMETRY/ -> PASS]
+> reboot
+reboot
+I (481549) sentry: rebooting in 3...
+
+   [expect /reboot/ -> PASS]
+> reconnect
+reconnect
+I (11373) sentry: [LINK] raising buoy antenna, connecting to '<ssid>'...
+I (11823) wifi:new:<4,0>, old:<1,0>, ap:<255,255>, sta:<4,0>, prof:1, snd_ch_cfg:0x0
+I (11823) wifi:state: init -> auth (0xb0)
+I (11833) wifi:state: auth -> assoc (0x0)
+I (11833) wifi:state: assoc -> run (0x10)
+I (11853) wifi:connected with <ssid>, aid = 3, channel 4, BW20, bssid = <mac>
+I (11853) wifi:security: WPA2-PSK, phy: bgn, rssi: -40, cipher(pairwise:0x3, group:0x3), pmf:0
+I (11863) wifi:pm start, type: 1
+
+I (11863) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (11873) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+I (11883) wifi:AP's beacon interval = 102400 us, DTIM period = 1
+I (11893) wifi:<ba-add>idx:0 (ifx:0, <mac>), tid:5, ssn:2, winSize:64
+I (12903) esp_netif_handlers: sta ip: <ip>, mask: <ip>, gw: <ip>
+I (12903) sentry: [LINK] got ip <ip>
+I (12903) sentry: [LINK] connected to '<ssid>', rssi -39 dBm (excellent)
+I (12913) wifi:<ba-add>idx:1 (ifx:0, <mac>), tid:0, ssn:0, winSize:64
+I (13233) esp-x509-crt-bundle: Certificate validated
+I (13783) sentry: [LINK] fleet network reachable (internet OK)
+I (16933) sentry: [LINK] time: synced via NTP, 22:24:28
+I (20643) sentry: [NAV] depth 41.8 m, heading 272, speed 3.1 kn
+
+   [expect /connected/ -> PASS]
+> whoami
+whoami
+I (29343) sentry: not logged in
+
+> login <user> <pw>
+login <user> <pw>
+I (31623) sentry: [AUTH] operator <user> on watch, console 2
+I (31643) sentry: [TELEMETRY] auto report every 30 s ('health off' to stop)
+
+> whoami
+whoami
+I (34863) sentry: user: <user>, access: user
+
+> state
+state
+I (37153) sentry: state: 1 NORMAL
+I (37153) sentry:   1 normal (patrol) | 2 debug (maintenance) | 3 verbose (tactical) | 4 emergency (surfacing, only from 3)
+
+   [expect /NORMAL/ -> PASS]
+
+SUMMARY: 127/136 expectations matched
+FAILED: LM `lamp timer 5` expected /auto-off in 5 s/; LM `lamp off` expected /BEACON/; LM `lamp timer 3` expected /auto-off in 3 s/; RL `relay on` expected /valve|RELAY|open/; RL `relay off` expected /valve|RELAY|clos/; RL `relay pulse 99` expected /E603/; IN `LAMP ON` expected /BEACON|W510|E001/; IN `relay` expected /usage|E6|status|E0/; IN `relay off` expected /valve|W601|RELAY/

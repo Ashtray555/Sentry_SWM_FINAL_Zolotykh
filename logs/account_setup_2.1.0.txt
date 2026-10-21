@@ -1,0 +1,33 @@
+SENTRY SWM-2 account setup; 2.1.0; COM6; 115200 8N1
+Disposable QA account; password held in Windows-protected temporary storage and excluded from evidence.
+
+> register [TEST_LOGIN_REDACTED] [TEST_PASSWORD_REDACTED]
+register [TEST_LOGIN_REDACTED] [TEST_PASSWORD_REDACTED]
+I (244797) sentry: [AUTH] profile '[TEST_LOGIN_REDACTED]' registered. Now 'login [TEST_LOGIN_REDACTED] <password>'
+
+
+> login [TEST_LOGIN_REDACTED] [TEST_PASSWORD_REDACTED]
+login [TEST_LOGIN_REDACTED] [TEST_PASSWORD_REDACTED]
+I (247817) sentry: [AUTH] operator [TEST_LOGIN_REDACTED] on watch, console 2
+I (247847) sentry: [TELEMETRY] auto report every 30 s ('health off' to stop)
+
+
+> whoami
+whoami
+I (250857) sentry: user: [TEST_LOGIN_REDACTED], access: user
+
+
+> status
+status
+I (254107) sentry: === SWM-2 status ===
+I (254107) sentry:   fw:       v2.1.0 (ota_0)
+I (254107) sentry:   state:    1 NORMAL
+I (254107) sentry:   link:     buoy link '[HOTSPOT]', ip [IP redacted], rssi -21 dBm (excellent), ch 4
+I (254107) sentry:   internet: OK
+I (254117) sentry:   user:     [TEST_LOGIN_REDACTED] (user)
+I (254117) sentry:   time:     23:19:57, uptime 0h 04m 13s
+I (254127) sentry:   valve:    closed
+I (254127) sentry:   sonar:    no contact
+I (254127) sentry:   carrier:  depth 41.8 m, hull 5.2 bar, water 8.1 C, battery 24.19 V (sim)
+I (254137) sentry:   heap:     258 KB free
+

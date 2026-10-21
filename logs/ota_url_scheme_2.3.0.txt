@@ -1,0 +1,15 @@
+SENTRY SWM-2 OTA URL validation; COM6; 115200 8N1
+Test date: 2026-10-20
+Running firmware: v2.3.0 beta, valid on ota_1.
+
+> ota url ftp://invalid.invalid/test.bin
+E418 url must start with http:// or https://
+
+> ota check
+current: v2.3.0
+stable: v2.1.0
+beta: v2.3.0
+running newer than stable
+
+The unsupported scheme was rejected. OTA channel check still reached the
+configured default channels; no firmware or OTA slot was changed.

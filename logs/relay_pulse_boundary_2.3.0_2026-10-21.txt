@@ -1,0 +1,55 @@
+relay pulse lower boundary on 2.3.0: PRD RL-3 requires E603 for values < 100 (sanitized)
+> whoami
+whoami
+I (62755) sentry: user: <user>, access: user
+
+
+=== relay pulse lower bound characterisation (2.3.0) ===
+> relay off
+relay off
+W (65035) sentry: W601 relay already off
+
+> relay pulse 101
+relay pulse 101
+I (67895) sentry: [VALVE] OPEN (pulse)
+I (68015) sentry: [VALVE] CLOSED (pulse end)
+
+> relay pulse 100
+relay pulse 100
+I (71185) sentry: [VALVE] OPEN (pulse)
+I (71305) sentry: [VALVE] CLOSED (pulse end)
+
+> relay pulse 99
+relay pulse 99
+I (74495) sentry: [VALVE] OPEN (pulse)
+I (74615) sentry: [VALVE] CLOSED (pulse end)
+
+> relay pulse 98
+relay pulse 98
+I (77795) sentry: [VALVE] OPEN (pulse)
+I (77905) sentry: [VALVE] CLOSED (pulse end)
+
+> relay pulse 90
+relay pulse 90
+I (81085) sentry: [VALVE] OPEN (pulse)
+I (81195) sentry: [VALVE] CLOSED (pulse end)
+
+> relay pulse 50
+relay pulse 50
+I (84365) sentry: [VALVE] OPEN (pulse)
+I (84445) sentry: [VALVE] CLOSED (pulse end)
+
+> relay pulse 10
+relay pulse 10
+I (87605) sentry: [VALVE] OPEN (pulse)
+I (87635) sentry: [VALVE] CLOSED (pulse end)
+
+> relay pulse 1
+relay pulse 1
+E (91105) sentry: E603 pulse must be 100-10000 ms
+I (92245) sentry: [TELEMETRY #2] 22:15:46 up 00:01:31 heap 251KB rssi -43 temp 28.2C depth 41.6m hull 5.2bar batt 24.2V valve closed sonar - watch disarmed alerts 0 state NORMAL
+
+> relay status
+relay status
+I (94485) sentry: [VALVE] closed, auto off, cycles 30
+

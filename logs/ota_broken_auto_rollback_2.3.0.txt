@@ -1,0 +1,27 @@
+SENTRY SWM-2 OTA broken-image automatic rollback; COM6; 115200 8N1
+Precondition: v2.3.0 valid on ota_1 and v2.1.0 available on ota_0. Firmware build metadata omitted.
+
+> ota broken
+W (728799) sentry: [OTA] installing intentionally broken build (rollback test)
+I (728799) sentry: [OTA] current v2.3.0 (ota_1) -> target partition ota_0
+I (730549) sentry: [OTA] image: sentry_fw7 v2.9.0-broken (build [BUILD_DATE_REDACTED])
+I (731879) sentry: [OTA] 10%
+I (733079) sentry: [OTA] 20%
+I (734119) sentry: [OTA] 30%
+I (735309) sentry: [OTA] 40%
+I (736459) sentry: [OTA] 50%
+I (737659) sentry: [OTA] 60%
+I (738859) sentry: [OTA] 70%
+I (739999) sentry: [OTA] 80%
+I (741169) sentry: [OTA] 90%
+I (742239) sentry: [OTA] 100%
+I (742519) sentry: [OTA] success: v2.3.0 -> v2.9.0-broken in 11 s. Rebooting...
+I (330) app_init: App version: 2.9.0-broken
+I (458) sentry: SENTRY SWM-2 sonar watch module fw v2.9.0-broken
+I (648) sentry: [OTA] running v2.9.0-broken from ota_0
+W (658) sentry: [OTA] new firmware, PENDING_VERIFY - self-check...
+E (658) sentry: [OTA] self-check FAILED: core module init error. Rolling back...
+I (1328) esp_ota_ops: Rollback to previously worked partition.
+I (445) sentry: SENTRY SWM-2 sonar watch module fw v2.3.0
+I (645) sentry: [OTA] running v2.3.0 from ota_1
+I (645) sentry: ready. state 1 NORMAL (patrol). Type 'help'

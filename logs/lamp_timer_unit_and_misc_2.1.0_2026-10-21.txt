@@ -1,0 +1,143 @@
+lamp timer unit check and misc on 2.1.0 (sanitized)
+> whoami
+whoami
+I (66113) sentry: user: <user>, access: user
+
+
+=== lamp timer unit / behaviour on 2.1.0 ===
+> lamp on
+lamp on
+I (68393) sentry: [BEACON] on (command) rainbow, 100%, color (255,255,255)
+
+> lamp timer 10
+lamp timer 10
+I (70673) sentry: [BEACON] auto-off in 10 ms
+
+> lamp status
+lamp status
+I (72963) sentry: [BEACON] ON, color (255,255,255), brightness 100%, mode rainbow, timer 7 s left
+
+> lamp status
+lamp status
+I (77313) sentry: [BEACON] ON, color (255,255,255), brightness 100%, mode rainbow, timer 3 s left
+
+> lamp status
+lamp status
+I (87973) sentry: [BEACON] off, color (255,255,255), brightness 100%, mode rainbow, timer off
+
+> lamp on
+lamp on
+I (89633) sentry: [BEACON] on (command) rainbow, 100%, color (255,255,255)
+
+> lamp timer 60
+lamp timer 60
+I (91843) sentry: [TELEMETRY #2] 22:25:43 up 00:01:31 heap 257KB rssi -40 temp 28.2C depth 41.8m hull 5.2bar batt 24.2V valve closed sonar - state NORMAL
+I (91923) sentry: [BEACON] auto-off in 60 ms
+
+> lamp status
+lamp status
+I (94213) sentry: [BEACON] ON, color (255,255,255), brightness 100%, mode rainbow, timer 57 s left
+
+> lamp timer 0
+lamp timer 0
+I (95883) sentry: [BEACON] timer cancelled
+
+> lamp status
+lamp status
+I (98143) sentry: [BEACON] ON, color (255,255,255), brightness 100%, mode rainbow, timer off
+
+> lamp off
+lamp off
+I (99803) sentry: [BEACON] off (command)
+
+
+=== non-latin / help / 2.3.0-only commands absent ===
+> ??????
+??????
+E (102063) sentry: E001 unknown command '??????'. Type 'help'
+
+> lamp ??????
+lamp ??????
+E (104363) sentry: E501 usage: lamp on|off|toggle|status|color <name|R G B>|brightness <0-100>|mode <m>|timer <s>|scene save|load <1-3>
+
+> guard status
+guard status
+E (106663) sentry: E099 perimeter watch (guard) is planned in v2.3.0
+
+> alert list
+alert list
+E (108933) sentry: E099 CIC alert center is planned in v2.3.0
+I (110643) sentry: [ACU] ambient noise 58 dB re 1uPa, sea state 2, water 8.1 C
+
+> help
+help
+I (111373) sentry: Commands ([wifi] - needs Wi-Fi, [login] - needs Wi-Fi + login, [debug] - debug access):
+I (111373) sentry: System:
+I (111373) sentry:   help                         - this help
+I (111373) sentry:   status                       - full device status
+I (111383) sentry:   version                      - firmware version and partition
+I (111383) sentry:   sysinfo                      - chip, memory, uptime
+I (111393) sentry:   temp                         - chip temperature
+I (111403) sentry:   uptime                       - time since boot
+I (111403) sentry:   reboot                       - reboot device
+I (111413) sentry: Buoy link (Wi-Fi):
+I (111413) sentry:   connect                      - connect to Wi-Fi (scan, SSID, password)
+I (111423) sentry:   reconnect                    - connect to known network
+I (111433) sentry:   forget                       - forget known network
+I (111433) sentry:   disconnect                   - disconnect from Wi-Fi
+I (111443) sentry:   scan                         - list Wi-Fi networks
+I (111453) sentry:   net                          - IP, gateway, DNS, MAC [wifi]
+I (111453) sentry:   ping [host]                  - ping host (default <ip>) [wifi]
+I (111463) sentry:   time                         - current time (NTP) [wifi]
+I (111473) sentry: Account:
+I (111473) sentry:   register <login> <pass>      - create profile (one per device) [wifi]
+I (111483) sentry:   login <login> <pass>         - start session [wifi]
+I (111493) sentry:   logout                       - end session
+I (111493) sentry:   whoami                       - current user and access
+I (111503) sentry:   passwd <old> <new>           - change password [login]
+I (111503) sentry:   sudo <password>              - elevate current user to debug [login]
+I (111513) sentry: States:
+I (111513) sentry:   state [1-4|name]             - show / change system state [login]
+I (111523) sentry: OTA:
+I (111523) sentry:   ota [status]                 - running / previous firmware [login]
+I (111533) sentry:   ota check                    - check stable and beta channels [login]
+I (111543) sentry:   ota update [beta]            - update to stable (or beta) [login]
+I (111553) sentry:   ota install <X.Y.Z> [force]  - install exact version (force - allow downgrade) [login]
+I (111563) sentry:   ota broken                   - install broken build (rollback test) [login]
+I (111573) sentry:   ota rollback                 - boot previous firmware [login]
+I (111573) sentry:   ota url <url> [force]        - install image from any http(s) link [login]
+I (111583) sentry:   ota server [<url>|default]   - show / set update server (default - GitHub) [login]
+I (111593) sentry: Beacon light (alias: beacon):
+I (111593) sentry:   lamp on|off|toggle           - Smart Lamp power [login]
+I (111603) sentry:   lamp status                  - lamp settings [login]
+I (111613) sentry:   lamp color <name|R G B>      - white red green blue yellow purple cyan orange [login]
+I (111623) sentry:   lamp brightness <0-100>      - brightness, % [login]
+I (111623) sentry:   lamp mode <mode>             - solid | blink | breathe | rainbow [login]
+I (111633) sentry:   lamp timer <sec>             - auto-off 1-3600 s (0 - cancel) [login]
+I (111643) sentry:   lamp scene save|load <1-3>   - save / load lamp preset [login]
+I (111653) sentry: Trim valve (alias: valve, open|close):
+I (111653) sentry:   relay on|off|toggle          - relay + indicator diode [login]
+I (111663) sentry:   relay status                 - state, auto mode, switch counter [login]
+I (111673) sentry:   relay pulse <ms>             - turn on for 100-10000 ms [login]
+I (111683) sentry:   relay schedule <on> <off>    - cycle on/off in seconds ('off' - stop) [login]
+I (111683) sentry:   relay auto on|off            - turn relay on by distance alarm [login]
+I (111693) sentry:   relay health                 - contact wear and coil check [login]
+I (111703) sentry: Active sonar (alias: sonar):
+I (111703) sentry:   distance [N]                 - measure once or N times (1-20) [login]
+I (111713) sentry:   distance log [ms] | stop     - continuous measuring 100-5000 ms [login]
+I (111723) sentry:   distance calibrate <cm>      - calibrate by reference object ('reset') [login]
+I (111733) sentry:   distance alarm <cm>|off      - alarm threshold 5-300 cm [login]
+I (111743) sentry:   distance filter on|off       - median filter of 5 samples [login]
+I (111743) sentry:   distance stats|history       - statistics / last 10 measurements [login]
+I (111753) sentry: Telemetry (alias: telemetry):
+I (111763) sentry:   health now                   - health report now [login]
+I (111763) sentry:   health on|off                - auto report (after login, 30 s) [login]
+I (111773) sentry:   health interval <sec>        - auto interval 10-300 s (VERBOSE 10 s) [login]
+I (111783) sentry: Perimeter watch, CIC alerts: planned in v2.3.0
+I (111793) sentry: Buttons [login]:
+I (111793) sentry:   K1 press / hold 1.5 s        - beacon on/off / next color
+I (111803) sentry:   K2 press / hold 1.5 s        - valve open/close / 1 s pulse
+I (111803) sentry:   K3 press                     - active sonar for 30 s (press again - stop)
+I (111813) sentry:   K4                           - perimeter watch (planned in v2.3.0)
+I (111823) sentry:   hold 2 s: K1+K2 - 1 NORMAL, K2+K3 - 2 DEBUG, K3+K4 - 3 VERBOSE, K4+K1 - 4 EMERGENCY (only from 3)
+

@@ -1,0 +1,91 @@
+SENTRY SWM-2 post-beta-OTA persistence verification; v2.3.0; COM6; 115200 8N1
+Reconnect after boot per PRD; credentials excluded/redacted.
+
+> reconnect
+reconnect
+I (201380) sentry: [LINK] raising buoy antenna, connecting to '[HOTSPOT]'...
+I (201830) wifi:new:<4,0>, old:<1,0>, ap:<255,255>, sta:<4,0>, prof:1, snd_ch_cfg:0x0
+I (201830) wifi:state: init -> auth (0xb0)
+I (201840) wifi:state: auth -> assoc (0x0)
+I (201850) wifi:state: assoc -> run (0x10)
+I (201870) wifi:connected with [HOTSPOT], aid = 2, channel 4, BW20, bssid = [MAC redacted]
+I (201870) wifi:security: WPA2-PSK, phy: bgn, rssi: -20, cipher(pairwise:0x3, group:0x3), pmf:0
+I (201880) wifi:pm start, type: 1
+
+I (201880) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (201890) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+I (201930) wifi:dp: 2, bi: 102400, li: 4, scale listen interval from 307200 us to 409600 us
+I (201930) wifi:AP's beacon interval = 102400 us, DTIM period = 2
+I (202930) esp_netif_handlers: sta ip: [IP redacted], mask: [IP redacted], gw: [IP redacted]
+I (202930) sentry: [LINK] got ip [IP redacted]
+I (202930) sentry: [LINK] connected to '[HOTSPOT]', rssi -19 dBm (excellent)
+I (203260) esp-x509-crt-bundle: Certificate validated
+I (203840) sentry: [LINK] fleet network reachable (internet OK)
+I (203870) wifi:<ba-add>idx:0 (ifx:0, [MAC redacted]), tid:0, ssn:18, winSize:64
+I (206120) sentry: [LINK] time: synced via NTP, 23:25:16
+
+
+> login
+login [TEST_LOGIN_REDACTED] [TEST_PASSWORD_REDACTED]
+I (221510) sentry: [AUTH] operator [TEST_LOGIN_REDACTED] on watch, console 2
+I (221690) sentry: [TELEMETRY] auto report every 60 s ('health off' to stop)
+
+
+> version
+version
+I (226770) sentry: SENTRY SWM-2 sonar watch module, fw v2.3.0 (build [REDACTED])
+I (226770) sentry:   partition: ota_1 @ 0x1a0000, state: valid
+
+
+> status
+status
+I (228990) sentry: === SWM-2 status ===
+I (228990) sentry:   fw:       v2.3.0 (ota_1)
+I (228990) sentry:   state:    1 NORMAL
+I (228990) sentry:   link:     buoy link '[HOTSPOT]', ip [IP redacted], rssi -18 dBm (excellent), ch 4
+I (228990) sentry:   internet: OK
+I (229000) sentry:   user:     [TEST_LOGIN_REDACTED] (user)
+I (229000) sentry:   time:     23:25:39, uptime 0h 03m 48s
+I (229010) sentry:   valve:    closed
+I (229010) sentry:   watch:    disarmed, CIC alerts unacked: 0
+I (229020) sentry:   sonar:    no contact
+I (229020) sentry:   carrier:  depth 42.7 m, hull 5.3 bar, water 8.0 C, battery 24.19 V (sim)
+I (229030) sentry:   heap:     251 KB free
+
+
+> whoami
+whoami
+I (232030) sentry: user: [TEST_LOGIN_REDACTED], access: user
+
+
+> lamp status
+lamp status
+I (234240) sentry: [BEACON] off, color (160,0,255), brightness 30%, mode breathe, timer off
+
+
+> health
+health
+I (236460) sentry: [TELEMETRY] auto on, interval 60 s (now 60 s in NORMAL)
+
+
+> relay status
+relay status
+I (238670) sentry: [VALVE] closed, auto off, cycles 0
+I
+
+> guard status
+
+guard status
+I (240840) sentry: [WATCH] disarmed, zone 50 cm, last distance -1.0 cm
+
+
+> alert list
+alert list
+I (244110) sentry: [CIC] no alerts
+
+
+> ota status
+ota status
+I (247130) sentry: [OTA] running:  v2.3.0 in ota_1 (valid)
+I (247130) sentry: [OTA] previous: v2.1.0 in ota_0
+

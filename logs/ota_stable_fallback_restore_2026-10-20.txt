@@ -1,0 +1,39 @@
+SENTRY SWM-2 OTA fallback restoration; COM6; 115200 8N1
+Date: 2026-10-20
+Network identifiers, addresses, account identifier and credentials are omitted.
+
+Precondition
+  Firmware v2.3.0 was running valid on ota_1.
+  `ota status` reported v2.9.0-broken on ota_0 (invalid - rolled back).
+  `ota check` reported stable v2.1.0 and beta v2.3.0.
+
+Restore stable image
+  Command: `ota install 2.1.0 force`
+  OTA selected target partition ota_0.
+  Download progress reached 100%; OTA reported success and rebooted.
+  Device booted v2.1.0 from ota_0; self-check passed and image was marked VALID.
+
+Verify restored image and return to beta
+  After reconnect, network internet check passed and NTP synced.
+  `version`: v2.1.0 on ota_0, valid.
+  `ota status`: running v2.1.0 on ota_0 (valid); previous v2.3.0 on ota_1.
+  `ota check`: stable v2.1.0, beta v2.3.0; stable up to date.
+  Command: `ota rollback`.
+  Device returned to v2.3.0 on ota_1; self-check passed and image was marked VALID.
+
+Final state
+  Saved-network reconnect succeeded; internet check passed and NTP synced.
+  `version`: v2.3.0 on ota_1, valid.
+  `ota status`: running v2.3.0 on ota_1 (valid); previous v2.1.0 on ota_0.
+  `whoami`: authenticated at user access (identifier omitted).
+  Health reporting: auto on, 60 s.
+  Relay: closed, auto off, cycles 24.
+  Guard: disarmed, zone 50 cm.
+
+Both versions passed OTA self-checks after this restoration cycle. The 2.1.0
+fallback partition is no longer the invalid broken image.
+
+Test-session cleanup
+  `logout` was issued after the final read-only checks.
+  `whoami` returned `not logged in`.
+  No Wi-Fi credentials or saved device settings were removed.

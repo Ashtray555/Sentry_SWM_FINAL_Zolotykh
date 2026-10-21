@@ -1,0 +1,66 @@
+Guard / Alert Center / critical-alert tests on 2.3.0 (sanitized, Oct 21 night). Low voltage only: relay module on 3.3 V, no load. Credentials/IP omitted.
+Tester observations are marked TESTER. A fixed object sat at ~50 cm in front of the sonar (reads 49.8-52.4 cm) so "zone 50 cm" was borderline; later runs had an object at 8.4 cm.
+
+=== A. Arm / intrusion / wrong PIN / disarm (GD-1, GD-2, GD-4) ===
+> guard            -> [WATCH] disarmed, zone 50 cm, last distance -1.0 cm
+> guard arm        -> [WATCH] arming: clear the zone (< 50 cm) within 10 s ; arming in 10 s...
+(+12 s) > guard status -> [WATCH] INTRUSION, zone 50 cm, last distance 49.8 cm ; 11 s left ; disarm in 10 s or ALARM
+> guard disarm 0000 -> E803 wrong PIN. Attempts: 1/3
+> guard disarm 9999 -> E803 wrong PIN. Attempts: 2/3
+> guard disarm 1234 -> [WATCH] disarmed (was INTRUSION)
+> guard log -> 10 events: arming, armed, intrusion at 49.8 cm, wrong pin 1/3, 2/3, disarmed, arming, armed, ALARM: PANIC command, disarmed
+
+=== B. PANIC (GD-3, AL-5) ===
+> guard arm ... > guard panic
+[WATCH] !!! GENERAL ALARM: PANIC command !!! ; [CIC #8 CRITICAL] watch: GENERAL ALARM: PANIC command ; [VALVE] OPEN (critical alert) ; [STATE] VERBOSE
+> relay -> [VALVE] OPEN, auto off ; > alert -> #8 CRITICAL, #9 WARNING telemetry "WARN watch alarm"
+> guard disarm 1234 -> disarmed (was ALARM); [VALVE] CLOSED (guard disarm). State stays VERBOSE after the alarm (PRD AL-5 does not require restoring it).
+TESTER (this run): built-in RGB LED red/blue/white changing and blinking; relay click not observed (missed); GPIO4 LED looked on afterwards while the firmware reported valve CLOSED in VERBOSE.
+Follow-up: after `state 1` GPIO4 was still on; after `relay on` / `relay off` GPIO4 followed the relay correctly -> anomaly not reproduced, treated as inconclusive (likely VERBOSE/alarm LED activity or visual confusion).
+
+=== C. Intrusion timeout -> ALARM (GD-2, GD-3) ===
+> guard arm (object at 8.4 cm -> [CIC #10 WARNING] sonar: collision risk)
+(+14 s) INTRUSION, 11 s left ; (+30 s) > guard status -> ALARM, last distance 8.4 cm ; > relay -> [VALVE] OPEN ; ALARM active. 'guard disarm <pin>'
+> guard disarm 1234 -> disarmed (was ALARM) ; [VALVE] CLOSED (guard disarm)
+TESTER: relay clicked on at alarm and off at disarm; GPIO4 LED on during the alarm and off after disarm.
+
+=== D. PIN rules and zone (GD-4, GD-5, GD-2) ===
+> guard pin 1234 12   -> E804 PIN must be 4 digits
+> guard pin 1234 abcd -> E804 PIN must be 4 digits
+> guard pin 0000 5678 (disarmed, wrong old PIN) -> E803 wrong PIN
+> guard arm ; > guard pin 1234 5678 -> E807 disarm first
+> guard zone 9 / 201 -> E808 zone must be 10-200 cm ; > guard zone 50 -> ok
+> guard pin 1234 4321 -> PIN changed ; > guard disarm 1234 -> W802 guard is not armed ; > guard pin 4321 1234 -> PIN changed (restored default)
+
+=== E. 3 wrong PINs -> ALARM, and attempt-counter reset (GD-3, GD-4)  ** BUG-06 **
+First run in this session after `guard arm` (+ one wrong `guard pin`): the first wrong `guard disarm 0000` printed "Attempts: 3/3" and raised ALARM (relay OPEN, VERBOSE, CRITICAL #15). Further wrong PINs printed 4/3 and 5/3 while in ALARM.
+Isolation, each case: correct PIN disarm first, then guard arm, then ONE wrong `guard disarm 0000`:
+  case1 (after a wrong `guard pin`) -> E803 Attempts: 6/3 -> ALARM
+  case2 (no prior pin command)      -> E803 Attempts: 7/3 -> ALARM
+  case3 (after E807 while armed)    -> E803 Attempts: 8/3 -> ALARM
+PRD GD-4: counter starts from zero at every `guard arm` and resets after a correct PIN. Observed: counter is cumulative (never reset by guard arm or by the correct PIN in between), so after the first 3 lifetime wrong PINs every single wrong PIN raises ALARM.
+
+=== F. Alert Center (AL-3, AL-4, AL-5) ===
+> alert test bogus -> E854 usage: alert test info|warning|critical
+> alert test critical -> [CIC #17 CRITICAL] test: test alert ; [VALVE] OPEN (critical alert) ; [STATE] 1 NORMAL -> 3 VERBOSE (by critical alert)
+> status -> state 3 VERBOSE, valve OPEN, 16 unacked
+> alert ack all -> 16 alerts acknowledged ; > relay off -> CLOSED ; > state 1 -> NORMAL
+> alert ack all -> W853 no unacknowledged alerts ; > alert ack 9999 -> E851 no alert #9999
+> alert clear -> cleared ; > alert -> no alerts
+Final state restored: NORMAL, relay closed, guard disarmed, zone 50 cm, PIN 1234, alerts cleared, lamp off.
+Not run: tamper (3 no-echo measures), 10 s ALARM reminders, K4 hold PANIC, EMERGENCY 95 C.
+
+G. BUG-06 reboot check (2026-10-21 ~23:42, sanitized)
+> guard arm ; > guard disarm 0000 -> E803 wrong PIN. Attempts: 9/3 + GENERAL ALARM (CRITICAL #28, relay OPEN, VERBOSE)
+> guard disarm 1234 -> disarmed (was ALARM), relay CLOSED
+> state 1 ; > reboot  (login and Wi-Fi lost, reconnect + login repeated)
+> guard arm ; > guard disarm 0000 -> E803 wrong PIN. Attempts: 1/3, no alarm, "disarm in 10 s or ALARM"
+> guard disarm 1234 -> disarmed (was INTRUSION)
+Conclusion: the counter is held in RAM and cleared only by a reboot; it is not NVS-persisted. Device left NORMAL, relay closed, disarmed.
+
+H. K4 hold PANIC (2026-10-21 ~23:45, sanitized)
+> (tester held K4 ~3 s) -> [BTN] K4 long press; [WATCH] PANIC button (K4); GENERAL ALARM: PANIC button; CRITICAL alert; [VALVE] OPEN (critical alert); state NORMAL -> VERBOSE
+While in ALARM: "ALARM active. 'guard disarm <pin>'" repeated about every 10 s (reminder confirmed); WARNING "watch alarm" in telemetry.
+> relay status -> OPEN (cycles 141); > guard disarm <PIN> -> disarmed (was ALARM), relay CLOSED (cycles 142)
+Tester-observed: relay clicked on K4 hold (yes); built-in RGB red/blue pattern (yes); GPIO4 LED OFF while the relay was OPEN (differs from the earlier relay on/off and timeout-ALARM runs, where it followed the relay). Firmware reports the valve driver as GPIO8, so the GPIO4 LED mapping/wiring is unverified; treated as inconclusive, not a firmware defect.
+Restored: alerts acked and cleared, NORMAL, relay closed, guard disarmed.

@@ -1,0 +1,20 @@
+SENTRY SWM-2 health command checks; v2.3.0; COM6; 115200 8N1
+RSSI and account identifiers omitted. Health reporting was restored to auto-on at 60 seconds.
+
+> health now
+I (602529) sentry: [TELEMETRY #11] 00:12:56 up 00:10:02 heap 251KB rssi [redacted] temp 27.2C depth 42.5m hull 5.3bar batt 24.2V valve closed sonar - watch disarmed alerts 0 state NORMAL
+
+> health (baseline)
+I (643919) sentry: [TELEMETRY] auto on, interval 60 s (now 60 s in NORMAL)
+
+> health off
+I (644669) sentry: [TELEMETRY] auto report off
+
+> health
+I (645289) sentry: [TELEMETRY] auto off, interval 60 s (now 60 s in NORMAL)
+
+> health on
+I (645949) sentry: [TELEMETRY] auto report on
+
+> health (restored)
+I (646579) sentry: [TELEMETRY] auto on, interval 60 s (now 60 s in NORMAL)

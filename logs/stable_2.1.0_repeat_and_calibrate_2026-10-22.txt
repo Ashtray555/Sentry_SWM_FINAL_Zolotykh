@@ -1,0 +1,37 @@
+SENTRY 2.1.0 repeat run + distance calibrate (2026-10-22 ~00:25-00:40, sanitized)
+Method: forced switch to stable by "ota rollback" (no download; ota_0 2.3.0 -> ota_1 2.1.0), tests, then "ota rollback" back to 2.3.0. Both switches verified with version + ota status.
+
+A. Slot checks
+Start: v2.3.0 in ota_0 (valid), previous v2.1.0 in ota_1.
+After rollback: fw v2.1.0 in ota_1 (valid), previous v2.3.0 in ota_0.
+After second rollback: fw v2.3.0 in ota_0 (valid), previous v2.1.0 in ota_1.   (final state)
+
+B. 2.3.0-only features on 2.1.0 (planned, absence is not a defect)
+guard status / guard arm / guard panic -> E099 perimeter watch (guard) is planned in v2.3.0
+alert / alert test info                -> E099 CIC alert center is planned in v2.3.0
+K4 press -> "[BTN] K4 pressed" + E099 K4: perimeter watch is planned in v2.3.0            (PASS)
+
+C. Buttons on 2.1.0 (tester pressed, console captured)
+K1/K2/K3 short presses logged; K2 short press opened the relay ([VALVE] OPEN (K2)); K1/K2/K3 long presses logged;
+K2+K3 held 2 s -> NORMAL -> DEBUG (by buttons); K1+K2 held 2 s -> DEBUG -> NORMAL (by buttons)   (PASS)
+
+D. Lamp and relay physical on 2.1.0
+lamp red / green / blue (4 s each), lamp off; relay on 4 s, relay off. Tester: colours correct in order, relay clicked on and off.   (PASS)
+(First attempt was ambiguous because K1 had already toggled the lamp on - W510 - and the tester asked to repeat; the repeat is the evidence.)
+
+E. distance calibrate (DS-3), target placed by tester at 20 cm on 2.1.0
+distance 5 -> avg 22.5 cm
+distance calibrate 20 -> "calibrated: measured 22.0 cm, offset -2.0 cm"
+distance 5 -> avg 20.7 cm (offset applied)
+distance calibrate 4 / 301 / abc -> E706 usage: distance calibrate <ref 5-300 cm>      (bounds PASS)
+distance calibrate 20 with no target -> E707 calibration failed: only 4/10 echoes       (PASS)
+distance calibrate reset -> E706 usage (REJECTED; PRD DS-3 documents "distance calibrate reset")   <-- BUG-07
+distance calibrate clear / off / 0 -> E706
+distance reset -> "[SONAR] calibration reset"; distance stats -> calibration +0.0 cm   (works, but undocumented syntax)
+Help text on 2.1.0 reads: "distance calibrate <cm> - calibrate by reference object ('reset')".
+
+F. Same on 2.3.0 (after restore)
+distance calibrate reset -> E706 usage (same as 2.1.0, 1/1); distance reset works.
+The 2.3.0 calibrate-with-target run is DISCARDED: the target had moved (readings 26.6, then 3.9, 4.4 cm; "measured 24.4 cm"), so the offset -4.4 cm is not meaningful; it was cleared with "distance reset" (calibration +0.0 cm).
+
+Final state: 2.3.0 on ota_0 (valid), NORMAL, relay closed, lamp off, calibration +0.0 cm, guard disarmed, alerts cleared.

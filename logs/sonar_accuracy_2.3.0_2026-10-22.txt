@@ -1,0 +1,14 @@
+SENTRY 2.3.0 - controlled sonar accuracy run (2026-10-22 ~00:12-00:20, sanitized)
+Method: US-100 on the bench, flat hard target (book/box) held perpendicular, distance measured by the tester with a ruler from the sensor face. Command: "distance 5" (5 readings + average). No offset calibration applied (offset +0.0).
+
+True cm | Firmware avg | Error  | Notes
+10      | 13.0         | +3.0   | readings 12.3-13.9; also raised "[COLLISION] contact too close" (< 20 cm) and CRITICAL-free WARNING alert #36 - expected for < 20 cm
+20      | 21.4         | +1.4   | 5/5 identical readings
+30      | 30.9         | +0.9   | 5/5 identical readings
+50      | 48.6         | -1.6   | readings 48.5-48.9
+
+Invalid attempt (discarded): one capture for "20 cm" returned 47.7 cm because it was taken before the target was moved (my capture ran before tester confirmation); repeated correctly afterwards (21.4).
+Earlier uncontrolled run (physical_bench_observations): 13.3 / 16.3 / 30.3 / 42.5 cm for 10/20/30/50 cm; those 20 and 50 cm points were placement errors, not sensor errors.
+
+Assessment: the PRD gives no accuracy tolerance (only offset calibration, DS-3). With controlled placement the readings are stable and within about +-1.6 cm from 20 to 50 cm and +3 cm at 10 cm (near the minimum range). Offset calibration (distance calibrate) was not exercised on this run. Ambient echo at ~50-57 cm remains in the lab.
+Device state unchanged (NORMAL, relay closed, guard disarmed, zone 50 cm).

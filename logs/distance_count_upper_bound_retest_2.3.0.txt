@@ -1,0 +1,43 @@
+SENTRY SWM-2 DS-1 upper-bound retest; 2.3.0; COM6; 115200 8N1
+US-100 wiring/mode/echo level reported verified; credentials redacted.
+
+> distance 19
+distance 19
+I (777860) sentry: [SONAR] 1/19: 64.7 cm
+I (778060) sentry: [SONAR] 2/19: 65.2 cm
+E (778340) sentry: E701 sonar: no echo (check transducer wiring TRIG 5 / ECHO 18)
+I (778540) sentry: [SONAR] 4/19: 65.2 cm
+I (778740) sentry: [SONAR] 5/19: 65.2 cm
+I (778940) sentry: [SONAR] 6/19: 65.2 cm
+I (779180) sentry: [SONAR] 7/19: 65.7 cm
+I (779390) sentry: [SONAR] 8/19: 65.7 cm
+E (779670) sentry: E701 sonar: no echo (check transducer wiring TRIG 5 / ECHO 18)
+I (779870) sentry: [SONAR] 10/19: 65.2 cm
+I (780070) sentry: [SONAR] 11/19: 66.1 cm
+I (780270) sentry: [SONAR] 12/19: 65.2 cm
+I (780470) sentry: [SONAR] 13/19: 65.7 cm
+E (780730) sentry: E701 sonar: no echo (check transducer wiring TRIG 5 / ECHO 18)
+I (780920) sentry: [SONAR] 15/19: 65.2 cm
+E (781210) sentry: E702 sonar: out of range (2-400 cm) - open water?
+I (781410) sentry: [SONAR] 17/19: 65.2 cm
+E (781690) sentry: E701 sonar: no echo (check transducer wiring TRIG 5 / ECHO 18)
+I (781890) sentry: [SONAR] 19/19: 65.2 cm
+I (781990) sentry: [SONAR] avg 65.4 cm (14/19 ok)
+
+
+> distance stats
+distance stats
+I (789970) sentry: [SONAR] measurements 36, errors 5, min 64.7, max 66.9, avg 65.7 cm
+I (789970) sentry: [SONAR] calibration +0.0 cm, filter median 5, alarm off
+
+
+> distance 20
+distance 20
+E (792990) sentry: E704 count must be 1-20
+
+
+> distance stats
+distance stats
+I (801000) sentry: [SONAR] measurements 36, errors 5, min 64.7, max 66.9, avg 65.7 cm
+I (801000) sentry: [SONAR] calibration +0.0 cm, filter median 5, alarm off
+

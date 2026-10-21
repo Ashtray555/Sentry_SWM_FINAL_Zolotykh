@@ -1,0 +1,20 @@
+SENTRY SWM-2 relay pulse boundary comparison; v2.1.0; COM6; 115200 8N1
+Tester reports relay VCC=3.3 V, GPIO8 directly wired to IN, low-voltage indicator-only load. Physical relay contact response was not observed.
+
+> relay status (pre-check)
+I (147956) sentry: [VALVE] closed, auto off, cycles 16
+
+> relay pulse 99
+I (148666) sentry: [VALVE] OPEN (pulse)
+I (148776) sentry: [VALVE] CLOSED (pulse end)
+
+> relay status
+I (149476) sentry: [VALVE] closed, auto off, cycles 20
+
+> relay pulse 10000
+I (150156) sentry: [VALVE] OPEN (pulse)
+
+An initial status check during the timed pulse reported approximately 9310 ms remaining. No additional output command was sent. After waiting for the pulse to finish:
+
+> relay status (after wait)
+I (165816) sentry: [VALVE] closed, auto off, cycles 24

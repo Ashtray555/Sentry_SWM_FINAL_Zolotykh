@@ -1,0 +1,31 @@
+SENTRY SWM-2 home-network Wi-Fi retest; COM6; 115200 8N1
+Test date: 2026-10-20
+Firmware: 2.3.0 beta, previously verified valid on ota_1.
+Saved-network credentials and all SSID/IP/MAC details are intentionally omitted.
+
+Network checks
+  net: network details returned; identifiers and addresses not retained here.
+  ping (default host): 4/4 replies; average 25 ms.
+  time: returned a timestamp in the device's configured Kyiv timezone.
+
+Reconnect and disconnect checks
+  reconnect while already connected: W114 (already connected).
+  disconnect while connected: disconnected successfully.
+  disconnect while already disconnected: W115 (already disconnected).
+  reconnect while disconnected with saved network: IP acquired; internet check passed.
+  Repeat saved-network reconnect: IP acquired; internet check passed.
+
+NTP observation
+  W106 (NTP sync failed) appeared after both saved-network reconnect trials (2/2),
+  even though IP acquisition and the firmware internet check succeeded.
+  After the latest reconnect, `time` returned 2026-10-20 00:19:34 (Kyiv).
+  The matching warning had previously occurred in 2/2 reconnect trials on the
+  separate test hotspot while running 2.1.0. This is not classified as a
+  firmware defect yet; NTP server reachability, rate limiting and reconnect
+  retry behavior remain to be isolated.
+
+Scope notes
+  `forget` and reconnect with no saved network were not tested.
+  OTA commands were not run; the device was logged out and `ota status`
+  returned E003 (login required). No firmware state was changed during this retest.
+  No network credentials, SSID, IP address or MAC address are recorded.

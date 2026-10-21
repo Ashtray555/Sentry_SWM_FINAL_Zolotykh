@@ -1,0 +1,171 @@
+Account/auth tests on 2.3.0 (sanitized; passwords redacted)
+> whoami
+whoami
+I (111638) sentry: user: <user>, access: user
+
+
+=== session rules ===
+> login <user> <pw>
+login <user> <pw>
+E (113918) sentry: E206 already logged in as '<user>'. Use 'logout' first
+
+> logout
+logout
+I (116518) sentry: [AUTH] operator <user> relieved from watch
+
+> logout
+logout
+W (119108) sentry: W211 not logged in
+
+> whoami
+whoami
+I (121718) sentry: not logged in
+
+> relay status
+relay status
+E (124318) sentry: E003 login required. Use 'login <login> <pass>' or 'register'
+
+> lamp status
+lamp status
+E (126928) sentry: E003 login required. Use 'login <login> <pass>' or 'register'
+
+> ota status
+ota status
+E (129528) sentry: E003 login required. Use 'login <login> <pass>' or 'register'
+
+
+=== register validation / duplicate ===
+> register abc 123456
+register abc 123456
+E (132128) sentry: E202 profile '<user>' already exists (one per device)
+
+> register ab 123456
+register ab 123456
+E (134728) sentry: E202 profile '<user>' already exists (one per device)
+
+> register bad-name! 123456
+register bad-name! 123456
+E (137328) sentry: E202 profile '<user>' already exists (one per device)
+
+> register debug 123456
+register debug 123456
+E (139918) sentry: E202 profile '<user>' already exists (one per device)
+
+> register validname 123
+register validname 123
+E (142488) sentry: E202 profile '<user>' already exists (one per device)
+
+
+=== lockout ===
+> login <user> wrongpass1
+login <user> wrongpass1
+E (145088) sentry: E209 wrong login or password. Attempts: 1/3
+I (147678) sentry: [PWR] battery bus 24.19 V, load 1.4 A
+
+> login <user> wrongpass2
+login <user> wrongpass2
+E (148088) sentry: E209 wrong login or password. Attempts: 2/3
+
+> login nosuchuser wrongpass3
+login nosuchuser wrongpass3
+E (151298) sentry: E209 wrong login or password. Attempts: 3/3
+E (151298) sentry: E210 too many attempts, account locked for 30 s
+
+> login <user> <pw>
+login <user> <pw>
+E (154518) sentry: E207 account locked. Try again in 27 s
+
+> login <user> <pw>
+login <user> <pw>
+I (188738) sentry: [AUTH] operator <user> on watch, console 2
+I (188878) sentry: [TELEMETRY] auto report every 45 s ('health off' to stop)
+
+> whoami
+whoami
+I (191788) sentry: user: <user>, access: user
+
+
+=== passwd ===
+> passwd wrongold <pw>x
+passwd wrongold <pw>x
+E (194378) sentry: E215 old password is wrong
+
+> passwd <pw> short
+passwd <pw> short
+E (196968) sentry: E205 password must be 6-32 chars
+
+> passwd <pw> <pw>x
+passwd <pw> <pw>x
+I (199578) sentry: [AUTH] password changed
+
+> logout
+logout
+I (202808) sentry: [AUTH] operator <user> relieved from watch
+
+> login <user> <pw>
+login <user> <pw>
+E (206028) sentry: E209 wrong login or password. Attempts: 1/3
+
+> login <user> <pw>x
+login <user> <pw>x
+I (209248) sentry: [AUTH] operator <user> on watch, console 2
+I (209278) sentry: [TELEMETRY] auto report every 45 s ('health off' to stop)
+
+> whoami
+whoami
+I (212488) sentry: user: <user>, access: user
+
+> reboot
+reboot
+I (215068) sentry: rebooting in 3...
+
+> reconnect
+reconnect
+I (11335) sentry: [LINK] raising buoy antenna, connecting to '<ssid>'...
+I (11785) wifi:new:<4,0>, old:<1,0>, ap:<255,255>, sta:<4,0>, prof:1, snd_ch_cfg:0x0
+I (11785) wifi:state: init -> auth (0xb0)
+I (11795) wifi:state: auth -> assoc (0x0)
+I (11795) wifi:state: assoc -> run (0x10)
+I (11815) wifi:connected with <ssid>, aid = 3, channel 4, BW20, bssid = <mac>
+I (11815) wifi:security: WPA2-PSK, phy: bgn, rssi: -42, cipher(pairwise:0x3, group:0x3), pmf:0
+I (11825) wifi:pm start, type: 1
+
+I (11825) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (11835) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+I (11845) wifi:AP's beacon interval = 102400 us, DTIM period = 1
+I (11855) wifi:<ba-add>idx:0 (ifx:0, <mac>), tid:5, ssn:2, winSize:64
+I (12865) esp_netif_handlers: sta ip: <ip>, mask: <ip>, gw: <ip>
+I (12865) sentry: [LINK] got ip <ip>
+I (12865) sentry: [LINK] connected to '<ssid>', rssi -42 dBm (excellent)
+I (12875) wifi:<ba-add>idx:1 (ifx:0, <mac>), tid:0, ssn:0, winSize:64
+I (13215) esp-x509-crt-bundle: Certificate validated
+I (13765) sentry: [LINK] fleet network reachable (internet OK)
+I (18315) sentry: [LINK] time: synced via NTP, 22:05:58
+I (20645) sentry: [NAV] depth 42.1 m, heading 273, speed 3.3 kn
+
+> login <user> <pw>x
+login <user> <pw>x
+I (29345) sentry: [AUTH] operator <user> on watch, console 2
+I (29445) sentry: [TELEMETRY] auto report every 45 s ('health off' to stop)
+
+> whoami
+whoami
+I (32365) sentry: user: <user>, access: user
+
+> passwd <pw>x <pw>
+passwd <pw>x <pw>
+I (34975) sentry: [AUTH] password changed
+
+> logout
+logout
+I (38185) sentry: [AUTH] operator <user> relieved from watch
+
+> login <user> <pw>
+login <user> <pw>
+I (41395) sentry: [AUTH] operator <user> on watch, console 2
+I (41445) sentry: [TELEMETRY] auto report every 45 s ('health off' to stop)
+
+> whoami
+whoami
+I (44675) sentry: user: <user>, access: user
+

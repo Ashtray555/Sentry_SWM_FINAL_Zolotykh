@@ -1,0 +1,65 @@
+SENTRY SWM-2 post-outage recovery check; v2.1.0; COM6; 115200 8N1
+Hotspot credentials excluded; SSID redacted.
+
+> status
+status
+I (1085459) sentry: === SWM-2 status ===
+I (1085459) sentry:   fw:       v2.1.0 (ota_0)
+I (1085459) sentry:   state:    1 NORMAL
+I (1085459) sentry:   link:     buoy link down (known: [HOTSPOT])
+I (1085459) sentry:   user:     not logged in
+I (1085469) sentry:   time:     23:08:31, uptime 0h 18m 05s
+I (1085469) sentry:   valve:    closed
+I (1085469) sentry:   sonar:    no contact
+I (1085479) sentry:   carrier:  depth 43.0 m, hull 5.3 bar, water 8.1 C, battery 24.17 V (sim)
+I (1085489) sentry:   heap:     258 KB free
+
+
+> reconnect
+reconnect
+I (1088599) sentry: [LINK] raising buoy antenna, connecting to '[HOTSPOT]'...
+I (1088599) wifi:new:<4,0>, old:<4,0>, ap:<255,255>, sta:<4,0>, prof:1, snd_ch_cfg:0x0
+I (1088599) wifi:state: init -> auth (0xb0)
+I (1088609) wifi:state: auth -> assoc (0x0)
+I (1088619) wifi:state: assoc -> run (0x10)
+I (1088639) wifi:connected with [HOTSPOT], aid = 2, channel 4, BW20, bssid = [MAC redacted]
+I (1088639) wifi:security: WPA2-PSK, phy: bgn, rssi: -25, cipher(pairwise:0x3, group:0x3), pmf:0
+I (1088649) wifi:pm start, type: 1
+
+I (1088649) wifi:dp: 1, bi: 102400, li: 3, scale listen interval from 307200 us to 307200 us
+I (1088659) wifi:set rx beacon pti, rx_bcn_pti: 0, bcn_timeout: 25000, mt_pti: 0, mt_time: 10000
+I (1088709) wifi:dp: 2, bi: 102400, li: 4, scale listen interval from 307200 us to 409600 us
+I (1088709) wifi:AP's beacon interval = 102400 us, DTIM period = 2
+I (1089689) esp_netif_handlers: sta ip: [IP redacted], mask: [IP redacted], gw: [IP redacted]
+I (1089689) sentry: [LINK] got ip [IP redacted]
+I (1089689) sentry: [LINK] connected to '[HOTSPOT]', rssi -25 dBm (excellent)
+I (1090009) esp-x509-crt-bundle: Certificate validated
+I (1090869) sentry: [LINK] fleet network reachable (internet OK)
+I (1090889) wifi:<ba-add>idx:0 (ifx:0, [MAC redacted]), tid:0, ssn:17, winSize:64
+W (1096869) sentry: W106 [LINK] time: NTP sync failed, timestamps disabled
+
+
+> status
+status
+I (1110699) sentry: === SWM-2 status ===
+I (1110699) sentry:   fw:       v2.1.0 (ota_0)
+I (1110699) sentry:   state:    1 NORMAL
+I (1110699) sentry:   link:     buoy link '[HOTSPOT]', ip [IP redacted], rssi -25 dBm (excellent), ch 4
+I (1110709) sentry:   internet: OK
+I (1110709) sentry:   user:     not logged in
+I (1110709) sentry:   time:     23:08:56, uptime 0h 18m 30s
+I (1110719) sentry:   valve:    closed
+I (1110719) sentry:   sonar:    no contact
+I (1110719) sentry:   carrier:  depth 43.0 m, hull 5.3 bar, water 8.1 C, battery 24.17 V (sim)
+I (1110729) sentry:   heap:     258 KB free
+
+
+> ping
+ping
+I (1113749) sentry: ping [IP redacted] ([IP redacted])...
+I (1113779) sentry:   reply: time 28 ms
+I (1114769) sentry:   reply: time 26 ms
+I (1115769) sentry:   reply: time 26 ms
+I (1116769) sentry:   reply: time 27 ms
+I (1117749) sentry: ping: 4/4 ok, avg 26 ms
+

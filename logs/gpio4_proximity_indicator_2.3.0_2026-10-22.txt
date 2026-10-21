@@ -1,0 +1,13 @@
+SENTRY 2.3.0 - GPIO4 LED (valve diode / DS-7 proximity indicator) resolution (2026-10-22 ~00:15-00:19, sanitized)
+
+Wiring confirmed by tester: relay IN on GPIO8, LED on GPIO4 (matches PRD section 2 / 7: relay GPIO8 + diode GPIO4).
+PRD DS-7: with the valve open (relay on) and measurements running, the diode blinks faster the closer the object; < 10 cm = steady on.
+
+1. relay on (no measurements): tester: relay clicked on; GPIO4 LED off (consistent with DS-7: indicator is driven only while measuring).
+2. relay off: relay clicked off.
+3. relay on + "distance log 500" (target ~20 cm): firmware printed "[SONAR] valve OPEN - proximity indicator: diode blinks faster when contact is closer"; tester observed the GPIO4 LED blinking (PASS DS-7, blink rate not quantified).
+   Echoes 57.6 / 10.9 / 13.9 / 57.2 cm with COLLISION warning at 10.9 cm.
+4. distance stop, relay off, alerts acked and cleared; NORMAL, relay closed, guard disarmed.
+
+Conclusion: the earlier "GPIO4 stayed on / stayed off" observations during Guard ALARM and K4-hold are explained by DS-7 (LED depends on measuring activity), not by a relay or firmware fault. Earlier statements that the "GPIO4 LED followed the relay" were true only while measurements were running (e.g. during pulse tests with sonar activity) and should be read as proximity-indicator behavior.
+Not measured: blink-rate vs distance, steady-on below 10 cm.

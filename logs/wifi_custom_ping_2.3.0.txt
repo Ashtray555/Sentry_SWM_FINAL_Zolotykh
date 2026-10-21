@@ -1,0 +1,13 @@
+SENTRY SWM-2 custom-host ping; COM6; 115200 8N1
+Test date: 2026-10-20
+Running firmware: v2.3.0 beta, valid on ota_1.
+The device remained connected to its saved Wi-Fi network.
+
+> ping 1.1.1.1
+reply: time 12 ms
+reply: time 11 ms
+reply: time 11 ms
+reply: time 11 ms
+ping: 4/4 ok, average 11 ms
+
+No credentials or private network identifiers were recorded.

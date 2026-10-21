@@ -1,0 +1,103 @@
+Relay cycles counter delta per command on 2.3.0 (sanitized). PRD RL-2: each on or off = +1.
+> whoami
+whoami
+I (73005) sentry: user: <user>, access: user
+
+> relay off
+relay off
+W (75255) sentry: W601 relay already off
+
+> relay status
+relay status
+I (78115) sentry: [VALVE] closed, auto off, cycles 94
+
+> relay on
+relay on
+I (80395) sentry: [VALVE] OPEN (command)
+
+> relay status
+relay status
+I (82325) sentry: [VALVE] OPEN, auto off, cycles 95
+
+RESULT relay on         (94, 'closed') -> (95, 'OPEN') (delta 1)
+> relay status
+relay status
+I (85805) sentry: [VALVE] OPEN, auto off, cycles 95
+
+> relay off
+relay off
+I (88105) sentry: [VALVE] CLOSED (command)
+
+> relay status
+relay status
+I (90045) sentry: [VALVE] closed, auto off, cycles 96
+I (91645) sentry: [ACU] ambient noise 60 dB re 1uPa, sea state 2, water 8.1 C
+
+RESULT relay off        (95, 'OPEN') -> (96, 'closed') (delta 1)
+> relay status
+relay status
+I (93265) sentry: [VALVE] closed, auto off, cycles 96
+
+> relay toggle
+relay toggle
+I (95555) sentry: [VALVE] OPEN (command)
+
+> relay status
+relay status
+I (97485) sentry: [VALVE] OPEN, auto off, cycles 97
+
+RESULT relay toggle     (96, 'closed') -> (97, 'OPEN') (delta 1)
+> relay status
+relay status
+I (100975) sentry: [VALVE] OPEN, auto off, cycles 97
+
+> relay toggle
+relay toggle
+I (103275) sentry: [VALVE] CLOSED (command)
+
+> relay status
+relay status
+I (105215) sentry: [VALVE] closed, auto off, cycles 98
+
+RESULT relay toggle     (97, 'OPEN') -> (98, 'closed') (delta 1)
+> relay status
+relay status
+I (108685) sentry: [VALVE] closed, auto off, cycles 98
+
+> relay pulse 200
+relay pulse 200
+I (110965) sentry: [VALVE] OPEN (pulse)
+I (111195) sentry: [VALVE] CLOSED (pulse end)
+
+> relay status
+relay status
+I (112805) sentry: [VALVE] closed, auto off, cycles 100
+
+RESULT relay pulse 200  (98, 'closed') -> (100, 'closed') (delta 2)
+> relay status
+relay status
+I (116275) sentry: [VALVE] closed, auto off, cycles 100
+
+> relay on
+relay on
+I (118555) sentry: [VALVE] OPEN (command)
+
+> relay status
+relay status
+I (120485) sentry: [VALVE] OPEN, auto off, cycles 101
+I (122645) sentry: [TELEMETRY #2] 22:40:12 up 00:02:02 heap 251KB rssi -42 temp 28.2C depth 41.2m hull 5.1bar batt 24.2V valve open sonar - watch disarmed alerts 0 state NORMAL
+
+RESULT relay on         (100, 'closed') -> (101, 'OPEN') (delta 1)
+> relay status
+relay status
+I (124275) sentry: [VALVE] OPEN, auto off, cycles 101
+
+> relay off
+relay off
+I (126555) sentry: [VALVE] CLOSED (command)
+
+> relay status
+relay status
+I (128475) sentry: [VALVE] closed, auto off, cycles 102
+
+RESULT relay off        (101, 'OPEN') -> (102, 'closed') (delta 1)

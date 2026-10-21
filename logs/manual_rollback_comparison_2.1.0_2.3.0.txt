@@ -1,0 +1,26 @@
+SENTRY SWM-2 manual rollback comparison; COM6; 115200 8N1
+The previously reported valid slot was checked before each rollback. Both firmware boot checks passed.
+
+> ota status (before first rollback)
+running: v2.3.0 in ota_1 (valid)
+previous: v2.1.0 in ota_0
+
+> ota rollback
+W (749760) sentry: [OTA] rollback: v2.3.0 -> v2.1.0 (ota_0). Rebooting...
+I (456) sentry:   SENTRY SWM-2 sonar watch module fw v2.1.0
+I (646) sentry: [OTA] running v2.1.0 from ota_0
+W (656) sentry: [OTA] new firmware, PENDING_VERIFY - self-check...
+I (686) sentry: [OTA] self-check passed, firmware marked VALID
+I (686) sentry: ready. state 1 NORMAL (patrol). Type 'help'
+
+> ota status (before return rollback)
+running: v2.1.0 in ota_0 (valid)
+previous: v2.3.0 in ota_1
+
+> ota rollback
+W (311996) sentry: [OTA] rollback: v2.1.0 -> v2.3.0 (ota_1). Rebooting...
+I (459) sentry:   SENTRY SWM-2 sonar watch module fw v2.3.0
+I (659) sentry: [OTA] running v2.3.0 from ota_1
+W (659) sentry: [OTA] new firmware, PENDING_VERIFY - self-check...
+I (699) sentry: [OTA] self-check passed, firmware marked VALID
+I (699) sentry: ready. state 1 NORMAL (patrol). Type 'help'

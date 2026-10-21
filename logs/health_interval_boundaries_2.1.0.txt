@@ -1,0 +1,40 @@
+SENTRY SWM-2 health interval boundaries; v2.1.0; COM6; 115200 8N1
+Health reporting was enabled at 60 seconds before the test. No relay actuation commands were sent.
+
+> health
+I (237006) sentry: [TELEMETRY] auto on, interval 60 s (now 60 s in NORMAL)
+
+> health interval 9
+E (237626) sentry: E902 interval must be 10-300 s
+
+> health interval 10
+I (238266) sentry: [TELEMETRY] interval 10 s
+
+> health interval 300
+E (238936) sentry: E902 interval must be 10-300 s
+
+> health interval 301
+E (239566) sentry: E902 interval must be 10-300 s
+
+> health interval 60 (restore)
+I (240196) sentry: [TELEMETRY] interval 60 s
+
+> health
+I (240806) sentry: [TELEMETRY] auto on, interval 60 s (now 60 s in NORMAL)
+
+Boundary retest:
+
+> health interval 300
+E (255646) sentry: E902 interval must be 10-300 s
+
+> health interval 299
+I (256346) sentry: [TELEMETRY] interval 299 s
+
+> health interval 300 (repeat)
+E (257016) sentry: E902 interval must be 10-300 s
+
+> health interval 60 (restore)
+I (257656) sentry: [TELEMETRY] interval 60 s
+
+> health
+I (258326) sentry: [TELEMETRY] auto on, interval 60 s (now 60 s in NORMAL)

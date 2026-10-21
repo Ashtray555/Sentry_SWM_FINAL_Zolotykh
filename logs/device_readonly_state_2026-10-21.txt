@@ -1,0 +1,20 @@
+SENTRY SWM-2 read-only device state check; COM6; UART 115200 8N1
+Date: 2026-10-21
+Network identifiers, IP/MAC addresses, account identifiers and credentials are omitted.
+
+Authorization
+  User renewed a 20-minute hardware window for non-hazardous UART/OTA checks.
+  Physical setup was confirmed low-voltage. No mains, hazardous load, relay alarm,
+  Guard panic, or critical-alert actuation was attempted.
+
+Read-only checks
+  `version`: firmware v2.3.0, partition ota_1 at 0x1a0000, state valid.
+  `ota status` before Wi-Fi reconnect returned E002 (Wi-Fi required).
+  `reconnect`: associated to the saved network; IP obtained; internet check passed.
+  `ota status` after reconnect returned E003 (login required).
+  `whoami`: not logged in.
+
+No account login was attempted because the existing account username could not be
+confirmed; no username or password was guessed. No firmware, partition, or OTA
+server setting was changed. The local OTA fault matrix remains blocked pending
+account authentication; relay and Guard outputs were not actuated.

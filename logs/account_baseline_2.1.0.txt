@@ -1,0 +1,39 @@
+SENTRY SWM-2 account/auth baseline checks; v2.1.0; COM6; 115200 8N1
+Credentials generated for this test and redacted; do not reuse.
+
+> register [TEST_LOGIN_REDACTED] [TEST_PASSWORD_REDACTED]
+register [TEST_LOGIN_REDACTED] [TEST_PASSWORD_REDACTED]
+I (1196329) sentry: [AUTH] profile '[TEST_LOGIN_REDACTED]' registered. Now 'login [TEST_LOGIN_REDACTED] <password>'
+
+
+> login [TEST_LOGIN_REDACTED] [TEST_PASSWORD_REDACTED]
+login [TEST_LOGIN_REDACTED] [TEST_PASSWORD_REDACTED]
+I (1199589) sentry: [AUTH] operator [TEST_LOGIN_REDACTED] on watch, console 2
+I (1199629) sentry: [TELEMETRY] auto report every 30 s ('health off' to stop)
+
+
+> whoami
+whoami
+I (1202649) sentry: user: [TEST_LOGIN_REDACTED], access: user
+
+
+> status
+status
+I (1205659) sentry: === SWM-2 status ===
+I (1205659) sentry:   fw:       v2.1.0 (ota_0)
+I (1205659) sentry:   state:    1 NORMAL
+I (1205659) sentry:   link:     buoy link '[HOTSPOT]', ip [IP redacted], rssi -29 dBm (excellent), ch 4
+I (1205669) sentry:   internet: OK
+I (1205669) sentry:   user:     [TEST_LOGIN_REDACTED] (user)
+I (1205669) sentry:   time:     23:10:31, uptime 0h 20m 05s
+I (1205679) sentry:   valve:    closed
+I (1205679) sentry:   sonar:    no contact
+I (1205689) sentry:   carrier:  depth 42.8 m, hull 5.3 bar, water 8.0 C, battery 24.17 V (sim)
+I (1205689) sentry:   heap:     258 KB free
+
+
+> version
+version
+I (1208709) sentry: SENTRY SWM-2 sonar watch module, fw v2.1.0 (build [REDACTED])
+I (1208709) sentry:   partition: ota_0 @ 0x20000, state: valid
+

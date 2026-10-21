@@ -1,0 +1,9 @@
+SENTRY SWM-2 OTA server check; COM6; 115200 8N1
+Test date: 2026-10-20
+Running firmware: v2.3.0 beta, valid on ota_1.
+
+> ota server
+[OTA] server: https://raw.githubusercontent.com/BohdanHorbanych/esp32-ota-files/main/fw7/ (default)
+
+The read-only command confirmed the default update server. No custom server
+was configured and no OTA slot or setting was changed.
