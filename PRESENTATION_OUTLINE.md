@@ -1,6 +1,6 @@
 # SENTRY SWM-2 Project Defense — Presentation Outline
 
-**Target defense:** October 22, 2026  
+**Target defense:** October 23, 2026  
 **Target duration:** up to 10 minutes  
 **Status:** Seven-slide deck `SENTRY_SWM2_Defense.pptx` is refreshed to the Oct 22 evidence (101 rows, BUG-01 to BUG-07). Full spoken text: [`SPEAKER_SCRIPT.md`](./SPEAKER_SCRIPT.md).
 **Report source:** [`REPORT.md`](./REPORT.md); do not present its result-row counts as a planned-coverage percentage.

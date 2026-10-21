@@ -5,7 +5,7 @@
 **Device:** ESP32-S3 DevKit, expected UART port COM6  
 **UART:** 115200 baud, 8 data bits, no parity, 1 stop bit  
 **Release target:** October 21, 2026  
-**Project defense:** October 22, 2026
+**Project defense:** October 23, 2026
 
 **Coursework report:** [`REPORT.md`](./REPORT.md) assembles the per-version checklist, bug matrix, evidence, security-test status, release recommendation, and remaining limitations. It is the final report; planned coverage is not 100% and gaps are listed in its limitations.
 
@@ -127,4 +127,4 @@ For each defect record firmware version, severity, priority, preconditions, numb
 
 ## 8. Presentation and defense
 
-Prepare a visual, evidence-led presentation for a defense of up to 10 minutes. Cover the product and versions, requirements-based test approach, physical bench and future HIL/CI design, coverage, highest-impact findings, limitations, and the 2.3.0 release decision. Rehearse and prepare for questions about boundaries, OTA safety, physical-vs-automated evidence, and residual risks. Release package and presentation target: October 21; defense: October 22.
+Prepare a visual, evidence-led presentation for a defense of up to 10 minutes. Cover the product and versions, requirements-based test approach, physical bench and future HIL/CI design, coverage, highest-impact findings, limitations, and the 2.3.0 release decision. Rehearse and prepare for questions about boundaries, OTA safety, physical-vs-automated evidence, and residual risks. Release package and presentation target: October 21; defense: October 23.
