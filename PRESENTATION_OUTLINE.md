@@ -28,6 +28,7 @@ this 10-minute budget.
 - Result-row snapshot from `TEST_CASES.md`; clearly distinguish executed rows from planned total coverage
 - OTA upgrade, self-check, failure/retry and rollback evidence
 - Physical bench photo/diagram and confirmation of which components actually worked
+- [RGB photo evidence](./evidence/README.md): red, green and blue confirmed on October 23; original photos retained and linked by visible colour.
 - Confirmed bug IDs, reproducibility, severity and version matrix
 - Cross-version boundary results: `distance 20` rejected on both; `relay pulse 99` accepted on both; `health interval 300` rejected on 2.1.0 and accepted on 2.3.0
 - Explicit distinction between firmware defects and hardware/setup limitations

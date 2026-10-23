@@ -118,5 +118,11 @@ been hardware-validated with this new runner. Final run evidence:
 - [Project work plan](./PROJECT_WORK_PLAN.md)
 - [Defense presentation outline](./PRESENTATION_OUTLINE.md)
 - Sanitized UART and execution evidence: [`logs/`](./logs/)
+- [Physical photo/video evidence index](./evidence/README.md): October 23
+  [red](./evidence/photo_2026-10-23_20-38-09.jpg),
+  [green](./evidence/photo_2026-10-23_20-38-05.jpg), and
+  [blue](./evidence/photo_2026-10-23_20-37-59.jpg) lamp photos, with tester
+  confirmations and firmware RGB status. Qualitative evidence only; not an
+  automated colour measurement. Final lamp state was off.
 
 This report and its supporting evidence have been packaged as `HW-17_Zolotykh.zip`. Some planned cases have no execution row and relay contact/load behaviour was not measured; do not present this package as full coverage. Update the report and archive if further authorized test evidence is collected before formal submission.

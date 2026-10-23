@@ -22,6 +22,8 @@ The testing found seven bugs, and I will show the most important ones.
 
 [Show the bench photo or diagram; if you want, play 15–20 s of the LED video here.]
 
+[Original red, green and blue photos are linked in the evidence index: `evidence/README.md`.]
+
 This is the bench. An ESP32-S3 board connected over UART at 115200 baud, a Wi-Fi network with a local OTA server, an ultrasonic sonar, a relay module on GPIO8, an RGB lamp on GPIO48, four buttons on GPIO41, 40, 39 and 38, and a proximity LED on GPIO4.
 
 Safety came first. The relay was only used at low voltage with no load, and I did not use mains or hazardous loads. I also automated the command side with a small Python helper that logs in, sends commands and captures the output, while a human was needed for physical observation: LED colours, the relay click, button presses and placing the sonar target with a ruler.
