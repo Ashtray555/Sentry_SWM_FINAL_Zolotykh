@@ -2,22 +2,25 @@
 
 **Target defense:** October 23, 2026  
 **Target duration:** up to 10 minutes  
-**Status:** Seven-slide deck `SENTRY_SWM2_Defense.pptx` is refreshed to the Oct 22 evidence (101 rows, BUG-01 to BUG-07). Full spoken text: [`SPEAKER_SCRIPT.md`](./SPEAKER_SCRIPT.md).
+**Status:** Eight-slide, high-contrast deck `SENTRY_SWM2_Defense.pptx` includes October 23 live automated results (4 tests: 1 Pass, 3 Fail) separately from the original 101 rows. The matching spoken text is also in PowerPoint speaker notes: [`SPEAKER_SCRIPT.md`](./SPEAKER_SCRIPT.md).
 **Report source:** [`REPORT.md`](./REPORT.md); do not present its result-row counts as a planned-coverage percentage.
 
-## Suggested 7-slide talk
+## Suggested 8-slide talk
 
 | Slide | Time | Content and evidence |
 |---|---:|---|
 | 1. Project and decision question | 0:45 | SENTRY SWM-2; compare 2.1.0 stable with 2.3.0 beta; question: is 2.3.0 ready for stable? |
-| 2. Requirements and test strategy | 1:15 | PRD-driven traceability, two versions, acceptance + regression, boundary/error cases; 101 recorded result rows across 64 distinct case IDs (40 Pass, 47 Partial, 11 fail, 2 investigate, 1 not run; not total planned coverage); seven bugs incl. BUG-06 Guard attempt counter and BUG-07 calibrate reset |
-| 3. Test bench / HIL design | 1:15 | ESP32-S3 on COM6, UART, Wi-Fi/OTA host, sensor/relay/buttons/LED; show bench diagram and compatibility/safety gates |
+| 2. Requirements and strategy | 1:00 | 67 defined cases; 101 original result rows across 64 case IDs: 40 Pass, 47 Partial, 11 Fail, 2 Investigate, 1 Not run. Not a coverage percentage. Four automated tests are a separate supplement. |
+| 3. Test bench / HIL design | 1:00 | ESP32-S3 on COM6, UART, Wi-Fi/OTA host, sensor/relay/buttons/LED. Physical observations, measured targets and low-voltage safety limits. |
 | 4. OTA and version coverage | 1:15 | Upgrade, manual rollback (both directions, repeated) and `ota broken` automatic recovery verified; downgrade/force protection and persistence checked; full local-server fault matrix (garbage/truncated/corrupted/interrupted images) run on **both** 2.1.0 and 2.3.0 with no corruption; custom-server selection/persistence/restoration and server-unavailable/invalid-channel errors confirmed; slow-transfer-plus-Wi-Fi-loss remains inconclusive (UART blocked during OTA) |
-| 5. Product-feature coverage | 1:30 | Auth/states, sonar/relay/lamp/health and 2.3.0 Guard/Alert; full account/password boundary matrix and a 136-expectation functional regression suite on both versions; summarize coverage and remaining physical-observation gaps |
+| 5. Product-feature coverage | 1:00 | Auth/states, sonar/relay/lamp/health and 2.3.0 Guard/Alert; manual/semi-automated functional regression on both versions. Physical buttons, EMERGENCY, PANIC and tamper were tested; relay load verification remains open. |
 | 6. Highest-impact findings | 2:00 | BUG-01, BUG-02 and BUG-04 occur on both versions (not beta regressions); BUG-03 rejects 300 s on stable 2.1.0 but passes on 2.3.0; BUG-05 is a cosmetic stable-only lamp timer label bug. Bonus: a leaked debug `sudo` password was found and disclosed responsibly (redacted everywhere) along with a hidden `selftest` command. Show PRD boundaries and sanitized UART evidence. |
-| 7. Release recommendation and lessons | 1:00 | NO-GO for promoting 2.3.0 to stable: BUG-01, BUG-02 and BUG-04 violate PRD limits on both versions; BUG-03 is a stable-only regression risk if not already tracked; remaining risk is mainly physical-observation and Guard/critical-alert coverage requiring bench access. |
+| 7. Automated regression tests | 1:30 | Four live UART tests on 2.3.0: 1 Pass, 3 Fail, no errors. BUG-01/02/07 reproduced; health boundary passed. Assertions, sanitized logs/JSON, verified cleanup; seven offline harness checks passed. No live 2.1.0 validation with the new runner. |
+| 8. Release recommendation and lessons | 1:00 | NO-GO: PRD violations plus BUG-06 Guard false-alarm risk. Remaining limits: calibration at 5/300 cm, relay contacts under load and Wi-Fi interruption during OTA. Fix and retest. |
 
-Reserve approximately one minute for transitions/questions within the instructor's timing guidance. If the talk is strictly capped at 10 minutes before questions, use a timed rehearsal and trim detail rather than rushing.
+The slide budgets total 9:30. Reserve the remaining 30 seconds for transitions
+or an optional short LED video excerpt. Rehearse aloud; questions are outside
+this 10-minute budget.
 
 ## Evidence checklist before slides are finalized
 

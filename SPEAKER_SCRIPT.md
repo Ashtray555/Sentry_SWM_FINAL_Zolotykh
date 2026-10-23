@@ -1,6 +1,6 @@
 # SENTRY SWM-2 — 10-minute speaker script
 
-Slide numbers follow `SENTRY_SWM2_Defense.pptx` (7 slides). About 130 words per minute; the timings add up to 9:30, which leaves about 30 seconds of buffer. Bracketed text is a stage direction, not spoken.
+Slide numbers follow `SENTRY_SWM2_Defense.pptx` (8 slides). The slide budgets add up to 9:30, leaving 30 seconds for transitions or an optional short video excerpt. Rehearse aloud and shorten detail if needed. Bracketed text is a stage direction, not spoken. The same script is included in the PowerPoint speaker notes.
 
 ## Slide 1 — Project and decision question (0:45)
 
@@ -8,7 +8,7 @@ Good day. My project is acceptance and regression testing of the SENTRY SWM-2 fi
 
 The question I had to answer is simple: **is firmware 2.3.0 beta ready to replace 2.1.0 stable?** To answer it I tested both versions on the same real board, against the same requirements document, and compared the results.
 
-## Slide 2 — Requirements and test strategy (1:15)
+## Slide 2 — Requirements and test strategy (1:00)
 
 Everything starts from the PRD. I built a traceability matrix from the requirements to 67 defined test cases, so every test can be traced back to a requirement.
 
@@ -18,7 +18,7 @@ By the end I had **101 recorded result rows across 64 distinct case IDs**: 40 Pa
 
 The testing found seven bugs, and I will show the most important ones.
 
-## Slide 3 — Test bench (1:15)
+## Slide 3 — Test bench (1:00)
 
 [Show the bench photo or diagram; if you want, play 15–20 s of the LED video here.]
 
@@ -26,10 +26,7 @@ This is the bench. An ESP32-S3 board connected over UART at 115200 baud, a Wi-Fi
 
 Safety came first. The relay was only used at low voltage with no load, and I did not use mains or hazardous loads. I also automated the command side with a small Python helper that logs in, sends commands and captures the output, while a human was needed for physical observation: LED colours, the relay click, button presses and placing the sonar target with a ruler.
 
-I also added four assertion-based UART regression tests for recurring defects.
-On 2.3.0, one passed and three failed against the PRD, reproducing known bugs.
-They generate logs and restore settings; the new runner was validated on 2.3.0 only.
-Physical observations remain manual. All logs were sanitised.
+Physical observations remain manual. The new assertion-based tests are shown on slide 7. All logs were sanitised.
 
 ## Slide 4 — OTA and version coverage (1:15)
 
@@ -41,7 +38,7 @@ I also ran a local-server fault matrix on **both** versions: garbage, truncated,
 
 One thing I could not prove: Wi-Fi loss in the middle of a transfer. UART is blocked during OTA, so that case stays inconclusive, and I list it as a limitation.
 
-## Slide 5 — Product features (1:30)
+## Slide 5 — Product features (1:00)
 
 Next, the features: login and states, sonar, relay, lamp, health reports, and in 2.3.0 the new Guard and Alert Center.
 
@@ -69,7 +66,30 @@ Seven bugs. The key point is that most are **not** beta regressions.
 
 As a bonus, during authorised security exploration I found a leaked debug sudo password and a hidden selftest command. I reported them responsibly and redacted them everywhere in my evidence.
 
-## Slide 7 — Recommendation and lessons (1:00)
+## Slide 7 — Automated regression tests (1:30)
+
+To make recurring failures easy to retest, I delivered a small Python unittest
+suite that communicates with the actual board over UART. It contains four
+tests with automatic assertions against the PRD, including valid boundaries
+and neighbouring invalid inputs.
+
+On firmware 2.3.0, the live run produced one passing test and three failing
+tests, with no setup or cleanup errors. Distance count 20, the 99-millisecond
+relay pulse and the documented calibration-reset command reproduced BUG-01,
+BUG-02 and BUG-07. The health interval test passed: 300 seconds was accepted
+and 301 rejected.
+
+These red results are evidence of firmware defects, not a broken runner.
+The runner records sanitised UART transcripts, assertion results and a JSON
+summary. It closes the relay and restores the original health interval.
+Seven offline tests also passed to validate the runner itself.
+
+The new suite was hardware-validated on 2.3.0 only. It does not claim physical
+relay-contact verification or sonar accuracy, and the reset test checks syntax
+from an initially zero offset. These four tests supplement, rather than replace,
+the earlier 101 execution rows.
+
+## Slide 8 — Recommendation and lessons (1:00)
 
 My recommendation is **NO-GO for promoting 2.3.0 to stable at this time.**
 
@@ -87,6 +107,6 @@ Thank you. I am ready for questions.
 - **Firmware fault or hardware fault?** I repeated each failing case on both versions and checked the error codes. I used a ruler-placed target for sonar tests, and discarded two invalid runs where the target moved.
 - **Why is it NO-GO if 2.1.0 has the same bugs?** The bugs break PRD limits in the build that would be promoted, and 2.3.0 adds BUG-06. Promoting means shipping known violations plus a new one.
 - **How did OTA tests keep the device safe?** Each fault run was followed by a version and partition check. Rollback and self-check recovered the device every time.
-- **What is still not covered?** The three gaps on slide 7. They do not change the NO-GO, since it rests on confirmed defects.
+- **What is still not covered?** The three gaps on slide 8. They do not change the NO-GO, since it rests on confirmed defects.
 - **What does 'Partial' mean?** A pass within a limited scope, for example the logic was checked but not under real load.
 - **Why a ruler for the sonar?** The PRD sets no accuracy tolerance, so I only reported measured values: 10, 20, 30 and 50 cm read 13.0, 21.4, 30.9 and 48.6 cm, and I did not claim a defect.
