@@ -20,7 +20,7 @@ The testing found seven bugs, and I will show the most important ones.
 
 ## Slide 3 — Test bench (1:00)
 
-[Show the bench photo or diagram; if you want, play 15–20 s of the LED video here.]
+[Point to the embedded red, green and blue photos. If time permits, play 15–20 s of the separate LED video.]
 
 [Original red, green and blue photos are linked in the evidence index: `evidence/README.md`.]
 

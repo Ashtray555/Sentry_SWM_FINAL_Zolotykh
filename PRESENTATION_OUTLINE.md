@@ -5,6 +5,12 @@
 **Status:** Eight-slide, high-contrast deck `SENTRY_SWM2_Defense.pptx` includes October 23 live automated results (4 tests: 1 Pass, 3 Fail) separately from the original 101 rows. The matching spoken text is also in PowerPoint speaker notes: [`SPEAKER_SCRIPT.md`](./SPEAKER_SCRIPT.md).
 **Report source:** [`REPORT.md`](./REPORT.md); do not present its result-row counts as a planned-coverage percentage.
 
+**Visuals:** Slide 2 uses a count-based horizontal results chart (not a coverage
+percentage). Slide 3 embeds all three original RGB photographs with colour/RGB
+captions. Slide 4 diagrams upgrade and rollback, and slide 7 highlights live
+automated results in numerical cards. Light backgrounds and explicit dark text
+preserve high contrast.
+
 ## Suggested 8-slide talk
 
 | Slide | Time | Content and evidence |
