@@ -1,0 +1,106 @@
+2026-10-23T20:24:09+03:00 > whoami
+whoami
+I (302130) sentry: user: <redacted>, access: user
+
+
+2026-10-23T20:24:12+03:00 > version
+version
+I (304670) sentry: SENTRY SWM-2 sonar watch module, fw v2.3.0 (build Oct  6 2026 02:15:26)
+I (304670) sentry:   partition: ota_0 @ 0x20000, state: valid
+
+
+2026-10-23T20:24:15+03:00 > state
+state
+I (307250) sentry: state: 1 NORMAL
+I (307250) sentry:   1 normal (patrol) | 2 debug (maintenance) | 3 verbose (tactical) | 4 emergency (surfacing, only from 3)
+
+
+2026-10-23T20:24:17+03:00 > relay status
+relay status
+I (309800) sentry: [VALVE] closed, auto off, cycles 170
+
+
+2026-10-23T20:24:20+03:00 > guard status
+guard status
+I (312340) sentry: [WATCH] disarmed, zone 50 cm, last distance -1.0 cm
+
+
+2026-10-23T20:24:22+03:00 > health
+health
+I (314950) sentry: [TELEMETRY] auto on, interval 30 s (now 30 s in NORMAL)
+
+
+2026-10-23T20:24:26+03:00 > distance 1
+distance 1
+I (317580) sentry: [SONAR] 1/1: 25.8 cm
+I (317680) sentry: [SONAR] avg 25.8 cm (1/1 ok)
+I (319770) sentry: [PWR] battery bus 24.19 V, load 1.5 A
+
+
+2026-10-23T20:24:29+03:00 > distance stats
+distance stats
+I (321710) sentry: [SONAR] measurements 2, errors 0, min 21.9, max 25.8, avg 23.8 cm
+I (321710) sentry: [SONAR] calibration +0.0 cm, filter median 5, alarm off
+
+
+2026-10-23T20:24:32+03:00 > distance calibrate reset
+distance calibrate reset
+E (324290) sentry: E706 usage: distance calibrate <ref 5-300 cm>
+I (326450) sentry: [TELEMETRY #8] 20:24:31 up 00:05:26 heap 251KB rssi -50 temp 26.2C depth 42.8m hull 5.3bar batt 24.2V valve closed sonar 25.8cm watch disarmed alerts 0 state NORMAL
+
+
+2026-10-23T20:24:40+03:00 > distance 20
+distance 20
+E (326980) sentry: E704 count must be 1-20
+
+
+2026-10-23T20:24:48+03:00 > distance 21
+distance 21
+E (335060) sentry: E704 count must be 1-20
+
+
+2026-10-23T20:24:50+03:00 > health interval 300
+health interval 300
+I (343140) sentry: [TELEMETRY] interval 300 s
+
+
+2026-10-23T20:24:53+03:00 > health
+health
+I (345700) sentry: [TELEMETRY] auto on, interval 300 s (now 300 s in NORMAL)
+
+
+2026-10-23T20:24:56+03:00 > health interval 301
+health interval 301
+E (348270) sentry: E902 interval must be 10-300 s
+
+
+2026-10-23T20:24:58+03:00 > relay pulse 99
+relay pulse 99
+I (350850) sentry: [VALVE] OPEN (pulse)
+I (350960) sentry: [VALVE] CLOSED (pulse end)
+
+
+2026-10-23T20:25:01+03:00 > relay pulse 100
+relay pulse 100
+I (353510) sentry: [VALVE] OPEN (pulse)
+I (353630) sentry: [VALVE] CLOSED (pulse end)
+
+
+2026-10-23T20:25:03+03:00 > relay off
+relay off
+W (356020) sentry: W601 relay already off
+
+
+2026-10-23T20:25:06+03:00 > relay status
+relay status
+I (358590) sentry: [VALVE] closed, auto off, cycles 174
+
+
+2026-10-23T20:25:09+03:00 > health interval 30
+health interval 30
+I (361180) sentry: [TELEMETRY] interval 30 s
+
+
+2026-10-23T20:25:11+03:00 > health
+health
+I (363750) sentry: [TELEMETRY] auto on, interval 30 s (now 30 s in NORMAL)

@@ -1,0 +1,10 @@
+{
+  "firmware": "2.3.0",
+  "port": "COM6",
+  "started_local": "2026-10-23_20-24-07",
+  "tests": 4,
+  "failure_entries": 3,
+  "error_entries": 0,
+  "successful": false,
+  "note": "Failure entries include subtests; counts are not coverage percentages."
+}

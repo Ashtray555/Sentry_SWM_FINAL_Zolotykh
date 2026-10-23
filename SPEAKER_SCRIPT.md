@@ -26,7 +26,10 @@ This is the bench. An ESP32-S3 board connected over UART at 115200 baud, a Wi-Fi
 
 Safety came first. The relay was only used at low voltage with no load, and I did not use mains or hazardous loads. I also automated the command side with a small Python helper that logs in, sends commands and captures the output, while a human was needed for physical observation: LED colours, the relay click, button presses and placing the sonar target with a ruler.
 
-All logs were sanitised: no passwords, account names or network addresses.
+I also added four assertion-based UART regression tests for recurring defects.
+On 2.3.0, one passed and three failed against the PRD, reproducing known bugs.
+They generate logs and restore settings; the new runner was validated on 2.3.0 only.
+Physical observations remain manual. All logs were sanitised.
 
 ## Slide 4 — OTA and version coverage (1:15)
 

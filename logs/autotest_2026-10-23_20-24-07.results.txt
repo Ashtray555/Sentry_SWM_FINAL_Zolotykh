@@ -1,0 +1,47 @@
+test_calibration_reset_syntax_bug07 (__main__.make_suite.<locals>.Regression.test_calibration_reset_syntax_bug07)
+DS-3 / BUG-07: documented reset command is accepted. ... FAIL
+test_distance_upper_boundary_bug01 (__main__.make_suite.<locals>.Regression.test_distance_upper_boundary_bug01)
+DS-1 / BUG-01: 20 is accepted; 21 is rejected with E704. ... 
+  test_distance_upper_boundary_bug01 (__main__.make_suite.<locals>.Regression.test_distance_upper_boundary_bug01) (count=20)
+DS-1 / BUG-01: 20 is accepted; 21 is rejected with E704. ... FAIL
+test_health_upper_boundary_bug03 (__main__.make_suite.<locals>.Regression.test_health_upper_boundary_bug03)
+HL-3 / BUG-03: 300 s accepted; 301 s rejected with E902. ... ok
+test_relay_lower_boundary_bug02 (__main__.make_suite.<locals>.Regression.test_relay_lower_boundary_bug02)
+RL-3 / BUG-02: 99 ms rejected; 100 ms completes a pulse. ... 
+  test_relay_lower_boundary_bug02 (__main__.make_suite.<locals>.Regression.test_relay_lower_boundary_bug02) (duration=99)
+RL-3 / BUG-02: 99 ms rejected; 100 ms completes a pulse. ... FAIL
+
+======================================================================
+FAIL: test_calibration_reset_syntax_bug07 (__main__.make_suite.<locals>.Regression.test_calibration_reset_syntax_bug07)
+DS-3 / BUG-07: documented reset command is accepted.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Projects\Sentry_SWM_FINAL_Zolotykh\autotests\regression.py", line 178, in test_calibration_reset_syntax_bug07
+    self.assertNotRegex(response, r"\bE706\b")
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Regex matched: 'E706' matches '\\bE706\\b' in 'distance calibrate reset\r\nE (324290) sentry: E706 usage: distance calibrate <ref 5-300 cm>\r\nI (326450) sentry: [TELEMETRY #8] 20:24:31 up 00:05:26 heap 251KB rssi -50 temp 26.2C depth 42.8m hull 5.3bar batt 24.2V valve closed sonar 25.8cm watch disarmed alerts 0 state NORMAL\r\n'
+
+======================================================================
+FAIL: test_distance_upper_boundary_bug01 (__main__.make_suite.<locals>.Regression.test_distance_upper_boundary_bug01) (count=20)
+DS-1 / BUG-01: 20 is accepted; 21 is rejected with E704.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Projects\Sentry_SWM_FINAL_Zolotykh\autotests\regression.py", line 148, in test_distance_upper_boundary_bug01
+    self.assertNotRegex(response, r"\bE704\b")
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Regex matched: 'E704' matches '\\bE704\\b' in 'distance 20\r\nE (326980) sentry: E704 count must be 1-20\r\n'
+
+======================================================================
+FAIL: test_relay_lower_boundary_bug02 (__main__.make_suite.<locals>.Regression.test_relay_lower_boundary_bug02) (duration=99)
+RL-3 / BUG-02: 99 ms rejected; 100 ms completes a pulse.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "D:\Projects\Sentry_SWM_FINAL_Zolotykh\autotests\regression.py", line 159, in test_relay_lower_boundary_bug02
+    self.assertRegex(response, r"\bE603\b")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Regex didn't match: '\\bE603\\b' not found in 'relay pulse 99\r\nI (350850) sentry: [VALVE] OPEN (pulse)\r\nI (350960) sentry: [VALVE] CLOSED (pulse end)\r\n'
+
+----------------------------------------------------------------------
+Ran 4 tests in 61.674s
+
+FAILED (failures=3)

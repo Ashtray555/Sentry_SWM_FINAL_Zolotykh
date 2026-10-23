@@ -95,6 +95,21 @@ Evidence hygiene: credentials and account identifiers are excluded from the new 
 
 ## 7. Evidence index and related deliverables
 
+### October 23 automated-regression supplement
+
+A reusable [UART regression suite](./autotests/README.md) now provides automatic
+PRD assertions for BUG-01, BUG-02, BUG-03 and BUG-07. A real COM6 run on firmware
+2.3.0 produced **4 test methods: 1 Pass, 3 Fail, 0 errors**. The health interval
+boundary passed; distance count 20, relay pulse 99 ms and documented calibration
+reset failed. Invalid-input neighbours are checked as subtests. These additional
+results do not change the earlier 101-row manual/semi-automated snapshot.
+The suite restores the starting health interval and closes the relay. It does
+not automate physical observations or change firmware versions; 2.1.0 has not
+been hardware-validated with this new runner. Final run evidence:
+[assertion results](./logs/autotest_2026-10-23_20-24-07.results.txt),
+[UART transcript](./logs/autotest_2026-10-23_20-24-07.txt), and
+[JSON summary](./logs/autotest_2026-10-23_20-24-07.json).
+
 - [Test cases and execution records](./TEST_CASES.md)
 - [Requirements traceability matrix](./TRACEABILITY_MATRIX.md)
 - [Bug reports](./BUG_REPORTS.md)

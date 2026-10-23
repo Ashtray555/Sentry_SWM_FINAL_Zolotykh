@@ -3,6 +3,12 @@
 **Status:** Proposed HIL design with partial manual/semi-automated execution completed through October 20, 2026; hardware compatibility and physical-output gaps remain.
 **Purpose:** Satisfy the coursework requirement to describe a theoretical HIL bench for future automation while using available equipment for safe manual/semi-automated acceptance tests.
 
+**October 23 automation supplement:** A delivered [UART regression suite](./autotests/README.md)
+now automates four PRD checks with assertions and cleanup. Real 2.3.0 execution:
+one test passed, three reproduced known firmware defects. Seven offline tests
+validate the runner itself. This is host-side CLI automation, not automated
+physical measurement or a completed CI/HIL station.
+
 ## Current bench connection
 
 COM6 is detected as USB-Enhanced-SERIAL CH343 and is readable at 115200 8N1. With user authorization, the prior station_WiFi v1.5.0 image/NVS was erased and the fw_7 v2.1.0 merged image installed; esptool verified the written image hash. The device has since been tested on both firmware versions. Final verified state is 2.3.0 valid on `ota_1`, with restored 2.1.0 valid on `ota_0`; both passed OTA self-check. It is connected to saved Wi-Fi and was logged out after testing. Health reporting is auto-on at 60 s, relay closed/auto-off, and Guard disarmed at 50 cm. Evidence is in the project `logs/` folder; account identifiers, credentials, private network addresses and build-tag values are omitted or redacted.
